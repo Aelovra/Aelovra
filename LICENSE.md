@@ -1,4 +1,4 @@
-Copyright (c) 2024 Aelovra Studio. All rights reserved.
+Copyright (c) 2026 Aelovra Studio. All rights reserved.
 
 This software and its source code are proprietary and confidential.
 Unauthorized copying, distribution, modification, or use of this
