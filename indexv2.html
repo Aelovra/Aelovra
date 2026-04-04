@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aelovra Studio — Meaningful Software</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--o:#FF5C00;--o2:#FF7A2B;--o3:#FF3D00;--bk:#060608;--w:#F5F3EE;--g1:#0f0f12;--g2:#1A1A1F;--g3:#252528;--gm:#555;--gd:#252528;--pad:clamp(1.25rem,5vw,3rem);}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bk);color:var(--w);overflow-x:hidden;}
+@media(pointer:fine){body{cursor:none;}}
+
+/* CURSOR — desktop only */
+.c-dot,.c-ring{display:none;}
+@media(pointer:fine){
+  .c-dot{display:block;position:fixed;width:8px;height:8px;background:var(--o);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+  .c-ring{display:block;position:fixed;width:34px;height:34px;border:1px solid rgba(255,92,0,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;}
+  .c-ring.big{width:56px;height:56px;opacity:.3;}
+}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem var(--pad);border-bottom:1px solid rgba(255,255,255,.05);background:rgba(6,6,8,.94);backdrop-filter:blur(16px);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.15em;color:var(--w);text-decoration:none;display:flex;align-items:center;gap:.55rem;}
+.nav-wordmark{letter-spacing:.15em;}
+.nav-pulse{width:6px;height:6px;background:var(--o);border-radius:50%;animation:pulse 2s ease-in-out infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.15;transform:scale(.6);}}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+.nav-links a{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gm);text-decoration:none;font-family:'JetBrains Mono',monospace;transition:color .2s;}
+.nav-links a:hover{color:var(--o);}
+.nav-links .lnk-hide{display:none;}
+.nav-cta{background:var(--o)!important;color:var(--bk)!important;padding:.45rem 1rem;font-weight:700!important;transition:background .2s!important;}
+.nav-cta:hover{background:var(--o2)!important;}
+@media(min-width:640px){.nav-links .lnk-hide{display:list-item;}}
+
+/* SHARED */
+.stag{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--o);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;}
+.stag::after{content:'';width:30px;height:1px;background:var(--gd);}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,6vw,62px);line-height:.93;color:var(--w);}
+.btn-p{display:inline-flex;align-items:center;gap:.5rem;background:var(--o);color:var(--bk);font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;padding:.85rem 1.5rem;text-decoration:none;font-weight:700;position:relative;overflow:hidden;transition:transform .15s;-webkit-tap-highlight-color:transparent;}
+.btn-p::after{content:'';position:absolute;inset:0;background:var(--o2);transform:translateX(-100%);transition:transform .3s;}
+.btn-p:hover::after{transform:translateX(0);}
+.btn-p span{position:relative;z-index:1;}
+.btn-g{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:#333;text-decoration:none;transition:color .2s;}
+.btn-g:hover{color:var(--w);}
+
+/* CANVAS SECTIONS */
+.canvas-section{position:relative;overflow:hidden;}
+.canvas-section canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+.canvas-section .cs-overlay{position:absolute;inset:0;z-index:1;}
+.canvas-section .cs-content{position:relative;z-index:2;}
+
+/* HERO */
+.hero{height:100svh;min-height:560px;display:flex;flex-direction:column;justify-content:flex-end;}
+.hero .cs-overlay{background:radial-gradient(ellipse at 65% 50%,rgba(255,92,0,.06) 0%,transparent 60%),linear-gradient(to bottom,transparent 30%,var(--bk) 100%);}
+.hero-content{padding:0 var(--pad) clamp(2.5rem,6vh,4.5rem);display:flex;flex-direction:column;gap:2rem;}
+@media(min-width:768px){.hero-content{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:3rem;}}
+.hero-eyebrow{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.eyebrow-bar{width:28px;height:1px;background:var(--o);flex-shrink:0;}
+.eyebrow-txt{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--o);}
+.eyebrow-badge{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--gd);color:var(--gm);padding:.25rem .6rem;}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,13vw,140px);line-height:.88;letter-spacing:.01em;}
+.hero-h1 .l1{display:block;color:var(--w);}
+.hero-h1 .l2{display:block;-webkit-text-stroke:1px rgba(255,255,255,.18);color:transparent;position:relative;}
+.hero-h1 .l2::after{content:'CRAFTED.';position:absolute;left:0;top:0;color:var(--o);-webkit-text-stroke:0;clip-path:inset(0 100% 0 0);animation:wipe 1.4s cubic-bezier(.77,0,.18,1) .6s forwards;}
+@keyframes wipe{to{clip-path:inset(0 0% 0 0);}}
+.hero-h1 .l3{display:block;color:var(--w);}
+.hero-right{display:flex;flex-direction:column;gap:1.25rem;}
+.hero-desc{font-size:.88rem;color:var(--gm);line-height:1.85;font-weight:300;max-width:320px;}
+.hero-desc em{color:var(--w);font-style:normal;}
+.hero-btns{display:flex;flex-wrap:wrap;gap:.6rem;align-items:flex-start;}
+@media(min-width:768px){.hero-right{padding-bottom:.5rem;}.hero-btns{flex-direction:column;}}
+.hero-scroll{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:3;display:none;flex-direction:column;align-items:center;gap:.4rem;}
+@media(min-width:768px){.hero-scroll{display:flex;}}
+.hero-scroll span{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:#2a2a2a;}
+.scroll-bar{width:1px;height:36px;background:linear-gradient(to bottom,var(--o),transparent);animation:sbar 1.8s ease-in-out infinite;}
+@keyframes sbar{0%,100%{opacity:.2;}50%{opacity:1;}}
+
+/* TICKER */
+.ticker{background:var(--o);padding:.6rem 0;overflow:hidden;white-space:nowrap;position:relative;z-index:2;}
+.ticker-track{display:inline-flex;animation:tick 22s linear infinite;}
+.ticker-track:hover{animation-play-state:paused;}
+.ti{font-family:'Bebas Neue',sans-serif;font-size:.88rem;letter-spacing:.28em;color:var(--bk);padding:0 1.25rem;}
+.td{color:rgba(0,0,0,.22);}
+@keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* MANIFESTO — BIG, LEFT-ALIGNED, ORANGE STARS */
+.manifesto{min-height:520px;display:flex;align-items:center;}
+.manifesto .cs-overlay{background:linear-gradient(to bottom,var(--bk) 0%,transparent 20%,transparent 80%,var(--bk) 100%);}
+.mani-inner{padding:clamp(4rem,8vh,7rem) var(--pad);width:100%;display:flex;flex-direction:column;gap:2.5rem;}
+.mani-top{display:flex;align-items:center;gap:1rem;}
+.mani-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--o);}
+/* Orange star dots */
+.mani-stars{display:flex;align-items:center;gap:.5rem;}
+.mstar{width:6px;height:6px;background:var(--o);border-radius:50%;animation:mspulse 2.5s ease-in-out infinite;}
+.mstar:nth-child(2){animation-delay:.4s;width:4px;height:4px;opacity:.6;}
+.mstar:nth-child(3){animation-delay:.8s;width:5px;height:5px;opacity:.8;}
+.mstar:nth-child(4){animation-delay:1.2s;width:3px;height:3px;opacity:.4;}
+.mstar:nth-child(5){animation-delay:.2s;width:6px;height:6px;}
+.mstar:nth-child(6){animation-delay:.6s;width:4px;height:4px;opacity:.7;}
+@keyframes mspulse{0%,100%{transform:scale(1);opacity:inherit;}50%{transform:scale(1.5);}}
+/* Big manifesto text — LEFT ALIGNED, HUGE */
+.mani-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,7vw,90px);line-height:.95;letter-spacing:.02em;text-align:left;}
+.mani-text .dim{color:var(--g3);transition:color .35s;}
+.mani-text .dim:hover{color:var(--w);}
+.mani-text .hot{color:var(--o);}
+/* Extra star row below text */
+.mani-stars-bottom{display:flex;align-items:center;gap:.75rem;margin-top:.5rem;}
+.mstar-b{background:var(--o);border-radius:50%;animation:mspulse 3s ease-in-out infinite;}
+
+/* ABOUT */
+.about{padding:clamp(4rem,8vh,7rem) var(--pad);display:flex;flex-direction:column;gap:3rem;border-top:1px solid var(--g2);border-bottom:1px solid var(--g2);background:var(--g1);}
+@media(min-width:900px){.about{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}}
+.feat-canvas-wrap{position:relative;overflow:hidden;background:var(--bk);}
+.feat-canvas-wrap::after{content:'';position:absolute;inset:0;border:1px solid rgba(255,92,0,.12);pointer-events:none;}
+#c-feat{display:block;width:100%;height:clamp(280px,50vw,440px);}
+.about-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,58px);line-height:.93;color:var(--w);margin-bottom:1.5rem;}
+.about-p{font-size:.88rem;color:var(--gm);line-height:1.85;font-weight:300;margin-bottom:1.1rem;}
+.about-p strong{color:var(--w);font-weight:400;}
+.pills{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.25rem;}
+.pill{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--gd);color:var(--gm);padding:.28rem .7rem;transition:border-color .2s,color .2s;-webkit-tap-highlight-color:transparent;}
+.pill:hover{border-color:var(--o);color:var(--o);}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5px;background:var(--g2);}
+@media(min-width:640px){.stats{grid-template-columns:repeat(4,1fr);}}
+.stat{background:var(--bk);padding:clamp(1.5rem,4vw,2.5rem) clamp(1rem,3vw,2rem);position:relative;overflow:hidden;}
+.stat::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--o);transform:scaleY(0);transition:transform .3s;}
+.stat:hover::before{transform:scaleY(1);}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,3.8rem);line-height:1;color:var(--w);}
+.stat-n sup{font-size:1.2rem;color:var(--o);}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.15em;color:var(--gm);text-transform:uppercase;margin-top:.2rem;}
+.stat-hot{background:var(--o);}
+.stat-hot::before{display:none;}
+.stat-hot .stat-n,.stat-hot .stat-tag{color:var(--bk);}
+.stat-hot .stat-l{color:rgba(0,0,0,.5);}
+.stat-hot .stat-tag{font-family:'Bebas Neue',sans-serif;font-size:clamp(.9rem,2vw,1.2rem);margin-top:.35rem;}
+
+/* OUR APPS */
+.apps-section{min-height:auto;}
+.apps-section .cs-overlay{background:linear-gradient(to left,var(--bk) 20%,transparent 60%),linear-gradient(to bottom,var(--bk) 0%,transparent 12%,transparent 88%,var(--bk) 100%);}
+.apps-inner{padding:clamp(4rem,8vh,7rem) var(--pad);width:100%;}
+.apps-head{display:flex;flex-direction:column;gap:1.5rem;margin-bottom:3rem;}
+@media(min-width:768px){.apps-head{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:end;margin-bottom:4rem;}}
+.apps-head-p{font-size:.84rem;color:var(--gm);line-height:1.8;font-weight:300;}
+.app-list{display:flex;flex-direction:column;gap:1.5px;background:rgba(255,255,255,.04);}
+
+/* APP ROW */
+.app-row{display:flex;flex-direction:column;gap:1.25rem;padding:1.75rem clamp(1rem,4vw,2.5rem);background:rgba(6,6,8,.88);backdrop-filter:blur(8px);border-left:3px solid transparent;transition:border-color .3s,background .3s;text-decoration:none;color:inherit;}
+@media(min-width:640px){.app-row{display:grid;grid-template-columns:60px 1fr auto;align-items:center;gap:2rem;padding:2.5rem clamp(1.25rem,4vw,2.5rem);}}
+@media(min-width:900px){.app-row{grid-template-columns:80px 1fr auto;gap:3rem;}}
+.app-row:hover{border-left-color:var(--o);background:rgba(15,15,18,.96);}
+.app-row-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);line-height:1;color:var(--g3);transition:color .3s;display:none;}
+@media(min-width:640px){.app-row-num{display:block;}}
+.app-row:hover .app-row-num{color:var(--o);}
+.app-row-body{}
+.app-row-top{display:flex;align-items:center;gap:.75rem;margin-bottom:.55rem;flex-wrap:wrap;}
+.app-row-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,4vw,2rem);letter-spacing:.04em;color:var(--w);}
+.app-row-badge{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;background:rgba(255,92,0,.08);color:var(--o);border:1px solid rgba(255,92,0,.2);}
+.app-row-badge.free{background:rgba(255,255,255,.04);color:var(--gm);border-color:var(--gd);}
+.app-row-desc{font-size:.83rem;color:var(--gm);line-height:1.7;font-weight:300;}
+.app-row-desc strong{color:var(--w);font-weight:400;}
+.app-row-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.75rem;}
+.app-row-tag{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--gd);color:#2a2a2a;padding:.18rem .5rem;}
+.app-row-right{display:flex;flex-direction:row;gap:.75rem;align-items:center;flex-wrap:wrap;}
+@media(min-width:640px){.app-row-right{flex-direction:column;align-items:flex-end;flex-shrink:0;gap:.6rem;}}
+.app-row-price{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,4vw,2.2rem);color:var(--w);line-height:1;}
+.app-row-price.fp{color:var(--gm);font-size:clamp(1rem,3vw,1.4rem);}
+.app-row-price sup{font-size:.9rem;color:var(--o);}
+.app-row-cta{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.55rem 1rem;text-decoration:none;border:1px solid var(--gd);color:var(--gm);transition:all .2s;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
+.app-row:hover .app-row-cta{border-color:var(--o);color:var(--o);}
+.app-row-cta.primary{background:var(--o);color:var(--bk);border-color:var(--o);font-weight:700;}
+.app-row-coming{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:#2a2a2a;}
+.app-row-featured{background:rgba(10,10,14,.92);border-left:3px solid var(--o);}
+.app-row-featured .app-row-num{color:rgba(255,92,0,.2);}
+.app-row-featured .app-row-name{font-size:clamp(1.6rem,5vw,2.8rem);}
+
+/* PATREON STRIP */
+.patreon-strip{margin-top:1.5px;background:rgba(255,92,0,.06);backdrop-filter:blur(8px);border:1px solid rgba(255,92,0,.15);border-left:3px solid var(--o);padding:clamp(1.5rem,4vw,2rem) clamp(1rem,4vw,2.5rem);display:flex;flex-direction:column;gap:1.5rem;}
+@media(min-width:640px){.patreon-strip{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;}}
+.patreon-strip-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--o);margin-bottom:.55rem;}
+.patreon-strip-text{font-size:.85rem;color:var(--gm);line-height:1.65;font-weight:300;}
+.patreon-strip-text strong{color:var(--w);font-weight:400;}
+.patreon-strip-right{display:flex;flex-direction:row;align-items:center;gap:1rem;flex-wrap:wrap;}
+@media(min-width:640px){.patreon-strip-right{flex-direction:column;align-items:flex-end;}}
+.patreon-strip-price{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,2.8rem);color:var(--o);line-height:1;}
+.patreon-strip-price span{font-size:1.1rem;color:rgba(255,92,0,.5);}
+.patreon-strip-sub{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gm);}
+
+/* CONNECT */
+.connect-section{min-height:500px;display:flex;align-items:center;border-top:1px solid var(--g2);}
+.connect-section .cs-overlay{background:linear-gradient(to right,var(--bk) 35%,transparent 75%),linear-gradient(to bottom,var(--bk) 0%,transparent 18%,transparent 82%,var(--bk) 100%);}
+.connect-inner{padding:clamp(4rem,8vh,7rem) var(--pad);display:flex;flex-direction:column;gap:3rem;width:100%;}
+@media(min-width:768px){.connect-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}}
+.connect-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,6vw,62px);line-height:.93;color:var(--w);margin-bottom:1.25rem;}
+.connect-p{font-size:.86rem;color:var(--gm);line-height:1.85;font-weight:300;margin-bottom:1.75rem;}
+.connect-mail{display:inline-flex;align-items:center;gap:.7rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--w);text-decoration:none;border:1px solid var(--gd);padding:.8rem 1.1rem;transition:border-color .2s,color .2s;}
+.connect-mail:hover{border-color:var(--o);color:var(--o);}
+.mail-dot{width:6px;height:6px;background:var(--o);border-radius:50%;flex-shrink:0;}
+.sl{display:flex;flex-direction:column;}
+.sl-item{display:grid;grid-template-columns:1fr auto;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--g2);text-decoration:none;transition:padding-left .3s cubic-bezier(.4,0,.2,1);-webkit-tap-highlight-color:transparent;}
+.sl-item:first-child{border-top:1px solid var(--g2);}
+.sl-item:hover{padding-left:.8rem;}
+.sl-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,4vw,1.45rem);letter-spacing:.05em;color:var(--w);transition:color .2s;}
+.sl-handle{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:#282828;letter-spacing:.1em;margin-top:.12rem;}
+.sl-item:hover .sl-name{color:var(--o);}
+.sl-arr{color:#252528;transition:color .2s,transform .2s;font-size:.9rem;}
+.sl-item:hover .sl-arr{color:var(--o);transform:translate(3px,-3px);}
+
+/* FOOTER */
+footer{padding:2rem var(--pad);border-top:1px solid var(--g2);background:var(--g1);display:flex;flex-direction:column;gap:.75rem;align-items:center;text-align:center;}
+@media(min-width:640px){footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;text-align:left;gap:2rem;}}
+.footer-logo{display:flex;align-items:center;gap:.55rem;}
+.footer-wordmark{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.15em;color:#2a2a2a;}
+.fc{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.12em;color:#252528;text-transform:uppercase;}
+.fc em{color:var(--o);opacity:.5;font-style:normal;}
+.fr{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.12em;color:#252528;text-transform:uppercase;}
+@media(min-width:640px){.fr{text-align:right;}}
+</style>
+</head>
+<body>
+
+<div class="c-dot" id="cdot"></div>
+<div class="c-ring" id="cring"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="34" height="34" style="flex-shrink:0;display:block;">
+      <defs>
+        <linearGradient id="nl" x1="0" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#FFB347"/><stop offset="40%" stop-color="#FF7A2B"/><stop offset="100%" stop-color="#FF5C00"/></linearGradient>
+        <linearGradient id="nr" x1="1" y1="0" x2="0.3" y2="1"><stop offset="0%" stop-color="#FF9A4D"/><stop offset="50%" stop-color="#FF6820"/><stop offset="100%" stop-color="#D94400"/></linearGradient>
+        <clipPath id="nf"><rect x="0" y="0" width="512" height="512" rx="96"/></clipPath>
+      </defs>
+      <rect width="512" height="512" rx="96" fill="#060608"/>
+      <g clip-path="url(#nf)">
+        <path d="M256 60 L90 452 L196 452 L226 378 L256 378 Z" fill="url(#nl)"/>
+        <path d="M256 60 L422 452 L316 452 L286 378 L256 378 Z" fill="url(#nr)"/>
+        <path d="M256 188 L196 368 L222 368 L256 278 L290 368 L316 368 Z" fill="#060608"/>
+      </g>
+    </svg>
+    <span class="nav-wordmark">AELOVRA</span>
+    <span class="nav-pulse"></span>
+  </a>
+  <ul class="nav-links">
+    <li class="lnk-hide"><a href="#about">Studio</a></li>
+    <li class="lnk-hide"><a href="#apps">Our Apps</a></li>
+    <li><a href="https://patreon.com/Aelovra" target="_blank" class="nav-cta">Patreon ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="canvas-section hero">
+  <canvas id="c-hero"></canvas>
+  <div class="cs-overlay"></div>
+  <div class="cs-content hero-content">
+    <div>
+      <div class="hero-eyebrow">
+        <div class="eyebrow-bar"></div>
+        <div class="eyebrow-txt">Aelovra Studio — 2026</div>
+        <div class="eyebrow-badge">Indie Software Studio</div>
+      </div>
+      <h1 class="hero-h1">
+        <span class="l1">SOFTWARE</span>
+        <span class="l2">CRAFTED.</span>
+        <span class="l3">WITH PURPOSE.</span>
+      </h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-desc">We're an independent software studio making <em>meaningful apps</em> for developers and builders. Every product we ship earns its place.</p>
+      <div class="hero-btns">
+        <a href="#apps" class="btn-p"><span>Explore Our Apps →</span></a>
+        <a href="#connect" class="btn-g">↗ Follow the Build</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-bar"></div><span>scroll</span></div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ti">AELOVRA STUDIO</span><span class="td"> ◆ </span><span class="ti">MEANINGFUL SOFTWARE</span><span class="td"> ◆ </span><span class="ti">BUILT FOR DEVS</span><span class="td"> ◆ </span><span class="ti">ZERO BLOAT</span><span class="td"> ◆ </span><span class="ti">EST. 2026</span><span class="td"> ◆ </span><span class="ti">INTENTIONAL DESIGN</span><span class="td"> ◆ </span>
+    <span class="ti">AELOVRA STUDIO</span><span class="td"> ◆ </span><span class="ti">MEANINGFUL SOFTWARE</span><span class="td"> ◆ </span><span class="ti">BUILT FOR DEVS</span><span class="td"> ◆ </span><span class="ti">ZERO BLOAT</span><span class="td"> ◆ </span><span class="ti">EST. 2026</span><span class="td"> ◆ </span><span class="ti">INTENTIONAL DESIGN</span><span class="td"> ◆ </span>
+  </div>
+</div>
+
+<!-- MANIFESTO — BIG + STARS -->
+<section class="canvas-section manifesto" id="manifesto">
+  <canvas id="c-mani"></canvas>
+  <div class="cs-overlay"></div>
+  <div class="cs-content mani-inner">
+    <div class="mani-top">
+      <div class="mani-label">What We Believe</div>
+      <div class="mani-stars">
+        <div class="mstar"></div>
+        <div class="mstar"></div>
+        <div class="mstar"></div>
+        <div class="mstar"></div>
+        <div class="mstar"></div>
+        <div class="mstar"></div>
+      </div>
+    </div>
+    <div class="mani-text">
+      <span class="dim">EVERY APP SHOULD HAVE A </span><span class="hot">REASON TO EXIST.</span><br>
+      <span class="dim">IT SHOULD BE </span><span class="hot">FAST.</span><span class="dim"> HONEST.</span><span class="hot"> FOCUSED.</span><br>
+      <span class="dim">IT SHOULD SOLVE SOMETHING </span><span class="hot">REAL</span><br>
+      <span class="dim">FOR PEOPLE WHO </span><span class="hot">ACTUALLY BUILD THINGS.</span><br>
+      <span class="dim">IF IT DOESN'T —</span><span class="hot"> IT DOESN'T SHIP.</span>
+    </div>
+    <div class="mani-stars-bottom">
+      <div class="mstar-b" style="width:8px;height:8px;animation-delay:0s;"></div>
+      <div class="mstar-b" style="width:5px;height:5px;animation-delay:.3s;opacity:.5;"></div>
+      <div class="mstar-b" style="width:10px;height:10px;animation-delay:.7s;"></div>
+      <div class="mstar-b" style="width:4px;height:4px;animation-delay:1s;opacity:.4;"></div>
+      <div class="mstar-b" style="width:7px;height:7px;animation-delay:.5s;opacity:.7;"></div>
+      <div class="mstar-b" style="width:5px;height:5px;animation-delay:1.3s;opacity:.6;"></div>
+      <div class="mstar-b" style="width:9px;height:9px;animation-delay:.2s;"></div>
+      <div class="mstar-b" style="width:4px;height:4px;animation-delay:.9s;opacity:.35;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="feat-canvas-wrap">
+    <canvas id="c-feat"></canvas>
+  </div>
+  <div>
+    <div class="stag">The Studio</div>
+    <h2 class="about-h">AN INDIE STUDIO<br>THAT GIVES<br>A DAMN.</h2>
+    <p class="about-p">Aelovra builds software the way it <strong>should be</strong> — fast, focused, and free of nonsense. We're not a factory churning out features. We make apps that solve real problems for people who actually build things.</p>
+    <p class="about-p">Every product is <strong>deliberate</strong>. Every feature earns its place. If it doesn't make your workflow meaningfully better — it doesn't ship.</p>
+    <div class="pills">
+      <div class="pill">Desktop Apps</div><div class="pill">Dev Tools</div><div class="pill">macOS</div><div class="pill">Windows</div><div class="pill">PyQt6</div><div class="pill">Zero Bloat</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-n">20<sup>+</sup></div><div class="stat-l">Features in flagship</div></div>
+  <div class="stat"><div class="stat-n">5</div><div class="stat-l">Themes, zero compromise</div></div>
+  <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Apps in the pipeline</div></div>
+  <div class="stat stat-hot"><div class="stat-n">v9</div><div class="stat-tag">MINITOOLS — LIVE NOW</div><div class="stat-l">macOS · Free Download</div></div>
+</div>
+
+<!-- OUR APPS -->
+<section class="canvas-section apps-section" id="apps">
+  <canvas id="c-apps"></canvas>
+  <div class="cs-overlay"></div>
+  <div class="cs-content apps-inner">
+    <div class="apps-head">
+      <div>
+        <div class="stag">Our Apps</div>
+        <h2 class="sec-h">OUR<br>APPS.</h2>
+      </div>
+      <p class="apps-head-p">Every app Aelovra ships has one job: make a developer's life meaningfully better. No feature creep. No bloat. Just software that earns its place on your machine.</p>
+    </div>
+    <div class="app-list">
+
+      <div class="app-row app-row-featured">
+        <div class="app-row-num">01</div>
+        <div class="app-row-body">
+          <div class="app-row-top">
+            <div class="app-row-name">MINITOOLS</div>
+            <div class="app-row-badge free">v9 LITE</div>
+            <div class="app-row-badge">macOS</div>
+          </div>
+          <div class="app-row-desc">Your everyday dev toolkit in one clean desktop app. <strong>20+ utilities</strong> — text converters, formatters, encoders, generators, color tools and more. Everything runs <strong>offline and instant</strong>. No telemetry, no background processes, no nonsense.</div>
+          <div class="app-row-tags">
+            <div class="app-row-tag">Text Tools</div><div class="app-row-tag">Converters</div><div class="app-row-tag">Formatters</div><div class="app-row-tag">Generators</div><div class="app-row-tag">Offline</div><div class="app-row-tag">PyQt6</div>
+          </div>
+        </div>
+        <div class="app-row-right">
+          <div class="app-row-price fp">FREE</div>
+          <a href="https://github.com/Aelovra/minitools/releases/download/v.9.0.0/MiniTools.-.V.9.app.zip" class="app-row-cta primary">Download ↓</a>
+        </div>
+      </div>
+
+      <div class="app-row">
+        <div class="app-row-num">02</div>
+        <div class="app-row-body">
+          <div class="app-row-top">
+            <div class="app-row-name">MINITOOLS PRO</div>
+            <div class="app-row-badge">v1 · Coming Soon</div>
+          </div>
+          <div class="app-row-desc">Everything in LITE — taken further. <strong>PRO-exclusive tools</strong>, deeper functionality, and features built for devs who live in their workflow. Support on Patreon to get <strong>early access on launch day</strong>.</div>
+          <div class="app-row-tags">
+            <div class="app-row-tag">PRO Tools</div><div class="app-row-tag">Early Access</div><div class="app-row-tag">macOS</div><div class="app-row-tag">Windows</div><div class="app-row-tag">One-time</div>
+          </div>
+        </div>
+        <div class="app-row-right">
+          <div class="app-row-price"><sup>€</sup>9.85</div>
+          <a href="https://patreon.com/Aelovra" target="_blank" class="app-row-cta primary">Patreon ↗</a>
+          <div class="app-row-coming">One-time · Yours forever</div>
+        </div>
+      </div>
+
+      <div class="app-row">
+        <div class="app-row-num">03</div>
+        <div class="app-row-body">
+          <div class="app-row-top">
+            <div class="app-row-name">MINITOOLS FOR WINDOWS</div>
+            <div class="app-row-badge free">On Roadmap</div>
+          </div>
+          <div class="app-row-desc">The full MiniTools experience coming to Windows. Same zero-bloat philosophy, same design, full cross-platform parity. No compromises.</div>
+          <div class="app-row-tags"><div class="app-row-tag">Windows</div><div class="app-row-tag">Cross-Platform</div><div class="app-row-tag">In Development</div></div>
+        </div>
+        <div class="app-row-right">
+          <div class="app-row-price fp">TBA</div>
+          <div class="app-row-coming">Watch this space</div>
+        </div>
+      </div>
+
+      <div class="app-row">
+        <div class="app-row-num">04</div>
+        <div class="app-row-body">
+          <div class="app-row-top">
+            <div class="app-row-name">WHAT'S NEXT</div>
+            <div class="app-row-badge free">In the Lab</div>
+          </div>
+          <div class="app-row-desc">More apps are being built. They ship when they're <strong>sharp enough</strong> — not before. Follow on Patreon or GitHub and you'll be the first to know.</div>
+          <div class="app-row-tags"><div class="app-row-tag">Aelovra Studio</div><div class="app-row-tag">Stay Tuned</div></div>
+        </div>
+        <div class="app-row-right">
+          <div class="app-row-price fp">???</div>
+          <a href="https://patreon.com/Aelovra" target="_blank" class="app-row-cta">Follow Along ↗</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="patreon-strip">
+      <div>
+        <div class="patreon-strip-label">Support Aelovra on Patreon</div>
+        <div class="patreon-strip-text">Get <strong>early access to MiniTools PRO v.1</strong> on launch day, support indie software development, and be part of building something real. Every supporter directly funds the next app.</div>
+      </div>
+      <div class="patreon-strip-right">
+        <div class="patreon-strip-price"><span>€</span>9.85</div>
+        <div class="patreon-strip-sub">One-time · PRO forever</div>
+        <a href="https://patreon.com/Aelovra" target="_blank" class="btn-p"><span>Join on Patreon ↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section class="canvas-section connect-section" id="connect">
+  <canvas id="c-connect"></canvas>
+  <div class="cs-overlay"></div>
+  <div class="cs-content connect-inner">
+    <div>
+      <div class="stag">Find Us</div>
+      <h2 class="connect-h">BUILDING<br>IN PUBLIC.</h2>
+      <p class="connect-p">Every update, every release, every behind-the-scenes moment — we share it. Follow along, support the studio, or just reach out.</p>
+      <a class="connect-mail" href="mailto:aelovra@outlook.com"><div class="mail-dot"></div>aelovra@outlook.com</a>
+    </div>
+    <div class="sl">
+      <a class="sl-item" href="https://github.com/Aelovra" target="_blank"><div><div class="sl-name">GitHub</div><div class="sl-handle">github.com/Aelovra</div></div><div class="sl-arr">↗</div></a>
+      <a class="sl-item" href="https://youtube.com/@Aelovra" target="_blank"><div><div class="sl-name">YouTube</div><div class="sl-handle">@Aelovra</div></div><div class="sl-arr">↗</div></a>
+      <a class="sl-item" href="https://instagram.com/aelovra.studio" target="_blank"><div><div class="sl-name">Instagram</div><div class="sl-handle">aelovra.studio</div></div><div class="sl-arr">↗</div></a>
+      <a class="sl-item" href="https://patreon.com/Aelovra" target="_blank"><div><div class="sl-name">Patreon</div><div class="sl-handle">patreon.com/Aelovra</div></div><div class="sl-arr">↗</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24" style="opacity:.32;display:block;flex-shrink:0;">
+      <defs>
+        <linearGradient id="fl2" x1="0" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#FFB347"/><stop offset="40%" stop-color="#FF7A2B"/><stop offset="100%" stop-color="#FF5C00"/></linearGradient>
+        <linearGradient id="fr2" x1="1" y1="0" x2="0.3" y2="1"><stop offset="0%" stop-color="#FF9A4D"/><stop offset="50%" stop-color="#FF6820"/><stop offset="100%" stop-color="#D94400"/></linearGradient>
+        <clipPath id="ff"><rect x="0" y="0" width="512" height="512" rx="96"/></clipPath>
+      </defs>
+      <rect width="512" height="512" rx="96" fill="#060608"/>
+      <g clip-path="url(#ff)">
+        <path d="M256 60 L90 452 L196 452 L226 378 L256 378 Z" fill="url(#fl2)"/>
+        <path d="M256 60 L422 452 L316 452 L286 378 L256 378 Z" fill="url(#fr2)"/>
+        <path d="M256 188 L196 368 L222 368 L256 278 L290 368 L316 368 Z" fill="#060608"/>
+      </g>
+    </svg>
+    <span class="footer-wordmark">AELOVRA</span>
+  </div>
+  <div class="fc">© 2026 Aelovra Studio — <em>All Rights Reserved</em></div>
+  <div class="fr">Built with intention.</div>
+</footer>
+
+<script>
+// CURSOR — desktop only
+const cdot=document.getElementById('cdot'),cring=document.getElementById('cring');
+if(window.matchMedia('(pointer:fine)').matches){
+  let rx=0,ry=0,mx=innerWidth/2,my=innerHeight/2;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cdot.style.left=mx+'px';cdot.style.top=my+'px';});
+  (function rl(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cring.style.left=rx+'px';cring.style.top=ry+'px';requestAnimationFrame(rl);})();
+  document.querySelectorAll('a,button,.pill,.sl-item,.stat,.app-row,.patreon-strip').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cring.classList.add('big'));
+    el.addEventListener('mouseleave',()=>cring.classList.remove('big'));
+  });
+}
+
+// 3D FACTORY
+function make3D(id,setupFn){
+  const canvas=document.getElementById(id);if(!canvas)return;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'low-power'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,window.matchMedia('(max-width:768px)').matches?1:2));
+  renderer.setClearColor(0x000000,0);
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(60,2,.1,200);
+  function resize(){const w=canvas.parentElement.clientWidth,h=canvas.parentElement.clientHeight||600;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+  resize();window.addEventListener('resize',resize);
+  setupFn(scene,camera,renderer,canvas);
+}
+const MAT={
+  wireOrange:()=>new THREE.MeshBasicMaterial({color:0xFF5C00,wireframe:true,transparent:true,opacity:.22}),
+  solidOrange:(op=.12)=>new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:.8,roughness:.2,transparent:true,opacity:op}),
+  glow:()=>new THREE.MeshStandardMaterial({color:0xFF7A2B,metalness:1,roughness:0,transparent:true,opacity:.8,emissive:0xFF3D00,emissiveIntensity:.35}),
+  wireWhite:(op=.05)=>new THREE.MeshBasicMaterial({color:0xffffff,wireframe:true,transparent:true,opacity:op}),
+  metal:()=>new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:1,roughness:.05,transparent:true,opacity:.85,emissive:0xFF3D00,emissiveIntensity:.25}),
+};
+function mkPts(scene,count,spread,size=.04,op=.4){
+  const p=new Float32Array(count*3);
+  for(let i=0;i<count;i++){p[i*3]=(Math.random()-.5)*spread;p[i*3+1]=(Math.random()-.5)*spread*.6;p[i*3+2]=(Math.random()-.5)*spread*.4-2;}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));
+  const m=new THREE.Points(g,new THREE.PointsMaterial({color:0xFF5C00,size,transparent:true,opacity:op}));
+  scene.add(m);return m;
+}
+function mkLights(scene){
+  scene.add(new THREE.AmbientLight(0xffffff,.2));
+  const p1=new THREE.PointLight(0xFF5C00,5,25);p1.position.set(4,4,4);scene.add(p1);
+  const p2=new THREE.PointLight(0xffffff,2,20);p2.position.set(-5,2,2);scene.add(p2);
+}
+function mkObjs(scene,defs){
+  const objs=[];
+  defs.forEach(([m,pos,d])=>{m.position.set(...pos);scene.add(m);objs.push({m,rx:d[0],ry:d[1],rz:d[2],fy:d[3],fa:d[4],fs:d[5]});});
+  return objs;
+}
+// Mobile: reduce shape count
+const isMobile=window.matchMedia('(max-width:768px)').matches;
+
+// HERO
+make3D('c-hero',(scene,camera,renderer)=>{
+  camera.position.set(0,0,6);mkLights(scene);
+  const defs=[
+    [new THREE.Mesh(new THREE.IcosahedronGeometry(1.6,1),MAT.wireOrange()),[3,0,0],[.003,.005,.002,0,.18,.8]],
+    [new THREE.Mesh(new THREE.IcosahedronGeometry(1.25,0),MAT.solidOrange(.1)),[3,0,0],[.003,.005,.002,0,.18,.8]],
+    [new THREE.Mesh(new THREE.TorusKnotGeometry(.7,.16,100,14),new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:.9,roughness:.08,transparent:true,opacity:.5,emissive:0xFF3D00,emissiveIntensity:.2})),[-3.5,-.5,-1.5],[.005,.003,.007,-.5,.22,.9]],
+    [new THREE.Mesh(new THREE.OctahedronGeometry(.55,0),new THREE.MeshBasicMaterial({color:0xFF5C00,wireframe:true,transparent:true,opacity:.35})),[5,2.5,-1],[.009,.006,.004,2.5,.28,1.1]],
+    [new THREE.Mesh(new THREE.IcosahedronGeometry(.38,0),MAT.glow()),[-1.5,2,-1],[.01,.015,.006,2,.35,1.3]],
+    [new THREE.Mesh(new THREE.SphereGeometry(4.5,16,12),MAT.wireWhite(.04)),[3,0,-3],[.001,.002,0,0,0,0]],
+    [new THREE.Mesh(new THREE.TorusGeometry(2.2,.02,8,64),new THREE.MeshBasicMaterial({color:0xFF5C00,transparent:true,opacity:.15})),[3,0,0],[0,.004,.002,0,0,0]],
+  ];
+  const useDefs=isMobile?defs.slice(0,4):defs;
+  const objs=mkObjs(scene,useDefs);
+  const pts=mkPts(scene,isMobile?120:280,28,.04,.38);
+  let hx=0,hy=0,t=0;
+  document.addEventListener('mousemove',e=>{hx=(e.clientX/innerWidth-.5)*2;hy=-(e.clientY/innerHeight-.5)*2;});
+  (function loop(){requestAnimationFrame(loop);t+=.01;
+    objs.forEach(o=>{o.m.rotation.x+=o.rx;o.m.rotation.y+=o.ry;o.m.rotation.z+=o.rz;if(o.fa>0)o.m.position.y=o.fy+Math.sin(t*o.fs)*o.fa;});
+    if(!isMobile){camera.position.x+=(hx*.6-camera.position.x)*.03;camera.position.y+=(hy*.4-camera.position.y)*.03;}
+    camera.lookAt(0,0,0);pts.rotation.y+=.0004;renderer.render(scene,camera);
+  })();
+});
+
+// MANIFESTO
+make3D('c-mani',(scene,camera,renderer)=>{
+  camera.position.set(0,0,7);mkLights(scene);
+  const defs=[
+    [new THREE.Mesh(new THREE.TorusKnotGeometry(.9,.2,120,16),new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:.9,roughness:.05,transparent:true,opacity:.55,emissive:0xFF3D00,emissiveIntensity:.2})),[isMobile?2:3.5,.5,0],[.004,.006,.003,.5,.25,.7]],
+    [new THREE.Mesh(new THREE.IcosahedronGeometry(.5,0),MAT.glow()),[isMobile?1.5:-2,1.5,-1],[.009,.013,.007,1.5,.4,1.4]],
+    [new THREE.Mesh(new THREE.OctahedronGeometry(.7,0),MAT.wireOrange()),[isMobile?2.5:4.5,-1.5,-1],[.007,.005,.009,-1.5,.3,1.0]],
+    [new THREE.Mesh(new THREE.SphereGeometry(2.5,16,12),MAT.wireWhite(.05)),[3.5,0,-3],[.001,.002,0,0,0,0]],
+  ];
+  const objs=mkObjs(scene,isMobile?defs.slice(0,2):defs);
+  const pts=mkPts(scene,isMobile?80:180,22,.05,.28);
+  let hx=0,hy=0,t=0;
+  document.addEventListener('mousemove',e=>{hx=(e.clientX/innerWidth-.5)*2;hy=-(e.clientY/innerHeight-.5)*2;});
+  (function loop(){requestAnimationFrame(loop);t+=.01;
+    objs.forEach(o=>{o.m.rotation.x+=o.rx;o.m.rotation.y+=o.ry;o.m.rotation.z+=o.rz;if(o.fa>0)o.m.position.y=o.fy+Math.sin(t*o.fs)*o.fa;});
+    if(!isMobile){camera.position.x+=(hx*.4-camera.position.x)*.025;camera.position.y+=(hy*.3-camera.position.y)*.025;}
+    camera.lookAt(0,0,0);pts.rotation.y+=.0003;renderer.render(scene,camera);
+  })();
+});
+
+// ABOUT / FEAT
+(function(){
+  const canvas=document.getElementById('c-feat');if(!canvas)return;
+  const wrap=canvas.parentElement;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'low-power'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,isMobile?1:2));
+  renderer.setClearColor(0x0a0a0d,1);
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(55,1,.1,100);
+  camera.position.set(0,0,4.5);
+  function resize(){const w=wrap.clientWidth,h=wrap.clientHeight||300;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+  resize();window.addEventListener('resize',resize);
+  scene.add(new THREE.AmbientLight(0xffffff,.18));
+  const pl=new THREE.PointLight(0xFF5C00,5,15);pl.position.set(2,2,3);scene.add(pl);
+  const pl2=new THREE.PointLight(0xffa040,2,10);pl2.position.set(-3,-1,1);scene.add(pl2);
+  const diamond=new THREE.Mesh(new THREE.OctahedronGeometry(1.1,0),MAT.metal());scene.add(diamond);
+  const dWire=new THREE.Mesh(new THREE.OctahedronGeometry(1.16,0),new THREE.MeshBasicMaterial({color:0xFF5C00,wireframe:true,transparent:true,opacity:.38}));scene.add(dWire);
+  const rGeo=new THREE.TorusGeometry(1.9,.018,8,64);
+  const r1=new THREE.Mesh(rGeo,new THREE.MeshBasicMaterial({color:0xFF5C00,transparent:true,opacity:.28}));r1.rotation.x=Math.PI/2;scene.add(r1);
+  const r2=new THREE.Mesh(rGeo,new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.05}));r2.rotation.x=Math.PI/3;r2.rotation.z=Math.PI/4;scene.add(r2);
+  const orb=[];
+  for(let i=0;i<(isMobile?4:6);i++){const s=new THREE.Mesh(new THREE.SphereGeometry(.055,8,8),new THREE.MeshStandardMaterial({color:0xFF5C00,emissive:0xFF3D00,emissiveIntensity:.9,metalness:1,roughness:0}));scene.add(s);orb.push({mesh:s,angle:i*(Math.PI*2/(isMobile?4:6)),r:1.9,spd:.35+i*.04,tilt:Math.random()*.6-.3});}
+  mkPts(scene,isMobile?80:160,14,.05,.25);
+  let mx2=0,my2=0,t=0;
+  if(!isMobile)wrap.addEventListener('mousemove',e=>{const r=wrap.getBoundingClientRect();mx2=((e.clientX-r.left)/wrap.clientWidth-.5)*2;my2=-((e.clientY-r.top)/wrap.clientHeight-.5)*2;});
+  (function loop(){requestAnimationFrame(loop);t+=.01;
+    diamond.rotation.y+=.007;diamond.rotation.x+=.004;diamond.position.y=Math.sin(t*.7)*.08;
+    dWire.rotation.y=diamond.rotation.y;dWire.rotation.x=diamond.rotation.x;dWire.position.y=diamond.position.y;
+    r1.rotation.z+=.005;r2.rotation.y+=.003;
+    orb.forEach(o=>{o.angle+=o.spd*.01;o.mesh.position.x=Math.cos(o.angle)*o.r;o.mesh.position.z=Math.sin(o.angle)*o.r*Math.cos(o.tilt);o.mesh.position.y=Math.sin(o.angle)*o.r*Math.sin(o.tilt);});
+    if(!isMobile){camera.position.x+=(mx2*.35-camera.position.x)*.04;camera.position.y+=(my2*.25-camera.position.y)*.04;}
+    camera.lookAt(0,0,0);renderer.render(scene,camera);
+  })();
+})();
+
+// APPS
+make3D('c-apps',(scene,camera,renderer)=>{
+  camera.position.set(0,0,7);mkLights(scene);
+  const defs=[
+    [new THREE.Mesh(new THREE.IcosahedronGeometry(1.4,1),MAT.wireOrange()),[5.5,1,0],[.002,.004,.001,1,.2,.8]],
+    [new THREE.Mesh(new THREE.TorusKnotGeometry(.65,.15,90,12),new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:.9,roughness:.1,transparent:true,opacity:.45,emissive:0xFF3D00,emissiveIntensity:.18})),[6,-2,-1],[.005,.003,.007,-2,.25,.95]],
+    [new THREE.Mesh(new THREE.OctahedronGeometry(.6,0),MAT.glow()),[4.5,3,-1],[.01,.008,.006,3,.35,1.2]],
+    [new THREE.Mesh(new THREE.OctahedronGeometry(.35,0),MAT.glow()),[-5,2,-1],[.012,.009,.01,2,.3,1.4]],
+    [new THREE.Mesh(new THREE.SphereGeometry(3.5,14,10),MAT.wireWhite(.04)),[6,0,-4],[.001,.001,0,0,0,0]],
+    [new THREE.Mesh(new THREE.TorusGeometry(1.4,.025,8,60),new THREE.MeshBasicMaterial({color:0xFF5C00,transparent:true,opacity:.18})),[5,0,-2],[0,.003,.002,0,0,0]],
+  ];
+  const objs=mkObjs(scene,isMobile?defs.slice(0,3):defs);
+  const pts=mkPts(scene,isMobile?100:240,26,.045,.32);
+  let hx=0,hy=0,t=0;
+  document.addEventListener('mousemove',e=>{hx=(e.clientX/innerWidth-.5)*2;hy=-(e.clientY/innerHeight-.5)*2;});
+  (function loop(){requestAnimationFrame(loop);t+=.01;
+    objs.forEach(o=>{o.m.rotation.x+=o.rx;o.m.rotation.y+=o.ry;o.m.rotation.z+=o.rz;if(o.fa>0)o.m.position.y=o.fy+Math.sin(t*o.fs)*o.fa;});
+    if(!isMobile){camera.position.x+=(hx*.5-camera.position.x)*.025;camera.position.y+=(hy*.35-camera.position.y)*.025;}
+    camera.lookAt(0,0,0);pts.rotation.y+=.0004;renderer.render(scene,camera);
+  })();
+});
+
+// CONNECT
+make3D('c-connect',(scene,camera,renderer)=>{
+  camera.position.set(0,0,6);mkLights(scene);
+  const defs=[
+    [new THREE.Mesh(new THREE.TorusKnotGeometry(.8,.18,110,14),new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:1,roughness:.05,transparent:true,opacity:.55,emissive:0xFF3D00,emissiveIntensity:.22})),[4,.5,0],[.004,.006,.003,.5,.2,.8]],
+    [new THREE.Mesh(new THREE.IcosahedronGeometry(.45,0),MAT.glow()),[-1,2.5,-1],[.01,.012,.008,2.5,.38,1.3]],
+    [new THREE.Mesh(new THREE.OctahedronGeometry(.55,0),MAT.wireOrange()),[5.5,-2,-1],[.008,.005,.007,-2,.28,1.0]],
+    [new THREE.Mesh(new THREE.SphereGeometry(3,14,10),MAT.wireWhite(.04)),[4,0,-3.5],[.001,.002,0,0,0,0]],
+  ];
+  const objs=mkObjs(scene,isMobile?defs.slice(0,2):defs);
+  const pts=mkPts(scene,isMobile?80:180,20,.04,.3);
+  let hx=0,hy=0,t=0;
+  document.addEventListener('mousemove',e=>{hx=(e.clientX/innerWidth-.5)*2;hy=-(e.clientY/innerHeight-.5)*2;});
+  (function loop(){requestAnimationFrame(loop);t+=.01;
+    objs.forEach(o=>{o.m.rotation.x+=o.rx;o.m.rotation.y+=o.ry;o.m.rotation.z+=o.rz;if(o.fa>0)o.m.position.y=o.fy+Math.sin(t*o.fs)*o.fa;});
+    if(!isMobile){camera.position.x+=(hx*.5-camera.position.x)*.03;camera.position.y+=(hy*.35-camera.position.y)*.03;}
+    camera.lookAt(0,0,0);pts.rotation.y+=.0004;renderer.render(scene,camera);
+  })();
+});
+</script>
+</body>
+</html>
