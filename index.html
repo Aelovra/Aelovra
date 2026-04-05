@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,10 +24,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-:root{--o:#FF5C00;--o2:#FF7A2B;--bk:#060608;--w:#F5F3EE;--g1:#0f0f12;--g2:#1A1A1F;--g3:#252528;--gm:#555;--gd:#252528;--pad:clamp(1.25rem,5vw,3rem);}
+:root{--o:#52b788;--o2:#40916c;--bk:#0A1410;--w:#F5F3EE;--g1:#0d1f17;--g2:#1a3d28;--g3:#1e4433;--gm:#555;--gd:#1e4433;--pad:clamp(1.25rem,5vw,3rem);}
 html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',sans-serif;background:var(--bk);color:var(--w);overflow-x:hidden;}
-@media(pointer:fine){body{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M3 2 L17 10 L10 11 L7 18 Z' fill='%23FF5C00' stroke='%23060608' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2,auto;}}
+@media(pointer:fine){body{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M3 2 L17 10 L10 11 L7 18 Z' fill='%2352b788' stroke='%23060608' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2,auto;}}
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem var(--pad);border-bottom:1px solid rgba(255,255,255,.05);background:rgba(6,6,8,.94);backdrop-filter:blur(16px);}
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.15em;color:var(--w);text-decoration:none;display:flex;align-items:center;gap:.55rem;}
 .nav-wordmark{letter-spacing:.15em;}
@@ -52,7 +54,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .canvas-section .cs-overlay{position:absolute;inset:0;z-index:1;}
 .canvas-section .cs-content{position:relative;z-index:2;}
 .hero{height:100svh;min-height:560px;display:flex;flex-direction:column;justify-content:flex-end;}
-.hero .cs-overlay{background:radial-gradient(ellipse at 65% 50%,rgba(255,92,0,.06) 0%,transparent 60%),linear-gradient(to bottom,transparent 30%,var(--bk) 100%);}
+.hero .cs-overlay{background:radial-gradient(ellipse at 65% 50%,rgba(82,183,136,.06) 0%,transparent 60%),linear-gradient(to bottom,transparent 30%,var(--bk) 100%);}
 .hero-content{padding:0 var(--pad) clamp(2.5rem,6vh,4.5rem);display:flex;flex-direction:column;gap:2rem;}
 @media(min-width:768px){.hero-content{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:3rem;}}
 .hero-eyebrow{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem;flex-wrap:wrap;}
@@ -103,7 +105,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .about{padding:clamp(4rem,8vh,7rem) var(--pad);display:flex;flex-direction:column;gap:3rem;border-top:1px solid var(--g2);border-bottom:1px solid var(--g2);background:var(--g1);}
 @media(min-width:900px){.about{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}}
 .feat-canvas-wrap{position:relative;overflow:hidden;background:var(--bk);}
-.feat-canvas-wrap::after{content:'';position:absolute;inset:0;border:1px solid rgba(255,92,0,.12);pointer-events:none;}
+.feat-canvas-wrap::after{content:'';position:absolute;inset:0;border:1px solid rgba(82,183,136,.12);pointer-events:none;}
 #c-feat{display:block;width:100%;height:clamp(280px,50vw,440px);}
 .about-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,58px);line-height:.93;color:var(--w);margin-bottom:1.5rem;}
 .about-p{font-size:.88rem;color:var(--gm);line-height:1.85;font-weight:300;margin-bottom:1.1rem;}
@@ -137,7 +139,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .mt-row-head{display:flex;flex-direction:column;gap:1.25rem;padding:1.75rem clamp(1rem,4vw,2.5rem);transition:background .3s;}
 @media(min-width:640px){.mt-row-head{display:grid;grid-template-columns:80px 1fr auto;align-items:center;gap:3rem;padding:2.5rem clamp(1.25rem,4vw,2.5rem);}}
 .mt-row:hover .mt-row-head{background:rgba(12,12,16,.96);}
-.mt-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);line-height:1;color:rgba(255,92,0,.2);display:none;}
+.mt-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);line-height:1;color:rgba(82,183,136,.2);display:none;}
 @media(min-width:640px){.mt-num{display:block;}}
 .mt-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,3rem);letter-spacing:.04em;color:var(--w);margin-bottom:.5rem;}
 .mt-tagline{font-size:.85rem;color:var(--gm);font-weight:300;line-height:1.6;}
@@ -161,7 +163,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .mt-tier-desc{font-size:.78rem;color:var(--gm);line-height:1.65;font-weight:300;}
 .mt-tier-desc strong{color:var(--w);font-weight:400;}
 .mt-tier-badges{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem;}
-.mt-tier-badge{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;background:rgba(255,92,0,.08);color:var(--o);border:1px solid rgba(255,92,0,.2);}
+.mt-tier-badge{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;background:rgba(82,183,136,.08);color:var(--o);border:1px solid rgba(82,183,136,.2);}
 .mt-tier-badge.neutral{background:rgba(255,255,255,.04);color:var(--gm);border-color:var(--gd);}
 .mt-tier-right{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
 @media(min-width:640px){.mt-tier-right{flex-direction:column;align-items:flex-end;gap:.5rem;flex-shrink:0;}}
@@ -185,7 +187,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .mt-next-badge{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;background:rgba(255,255,255,.04);color:var(--gm);border:1px solid var(--gd);display:inline-block;margin-top:.5rem;}
 .mt-next-right{display:flex;align-items:center;gap:.75rem;}
 @media(min-width:640px){.mt-next-right{flex-direction:column;align-items:flex-end;gap:.5rem;flex-shrink:0;}}
-.patreon-strip{margin-top:1.5px;background:rgba(255,92,0,.06);backdrop-filter:blur(8px);border:1px solid rgba(255,92,0,.15);border-left:3px solid var(--o);padding:clamp(1.5rem,4vw,2rem) clamp(1rem,4vw,2.5rem);display:flex;flex-direction:column;gap:1.5rem;}
+.patreon-strip{margin-top:1.5px;background:rgba(82,183,136,.06);backdrop-filter:blur(8px);border:1px solid rgba(82,183,136,.15);border-left:3px solid var(--o);padding:clamp(1.5rem,4vw,2rem) clamp(1rem,4vw,2.5rem);display:flex;flex-direction:column;gap:1.5rem;}
 @media(min-width:640px){.patreon-strip{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;}}
 .patreon-strip-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--o);margin-bottom:.55rem;}
 .patreon-strip-text{font-size:.85rem;color:var(--gm);line-height:1.65;font-weight:300;}
@@ -193,7 +195,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .patreon-strip-right{display:flex;flex-direction:row;align-items:center;gap:1rem;flex-wrap:wrap;}
 @media(min-width:640px){.patreon-strip-right{flex-direction:column;align-items:flex-end;}}
 .patreon-strip-price{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,2.8rem);color:var(--o);line-height:1;}
-.patreon-strip-price span{font-size:1.1rem;color:rgba(255,92,0,.5);}
+.patreon-strip-price span{font-size:1.1rem;color:rgba(82,183,136,.5);}
 .patreon-strip-sub{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gm);}
 .connect-section{min-height:500px;display:flex;align-items:center;border-top:1px solid var(--g2);}
 .connect-section .cs-overlay{background:linear-gradient(to right,var(--bk) 35%,transparent 75%),linear-gradient(to bottom,var(--bk) 0%,transparent 18%,transparent 82%,var(--bk) 100%);}
@@ -231,15 +233,15 @@ footer{padding:2rem var(--pad);border-top:1px solid var(--g2);background:var(--g
   <a class="nav-logo" href="#">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="34" height="34" style="flex-shrink:0;display:block;">
       <defs>
-        <linearGradient id="nl" x1="0" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#FFB347"/><stop offset="40%" stop-color="#FF7A2B"/><stop offset="100%" stop-color="#FF5C00"/></linearGradient>
-        <linearGradient id="nr" x1="1" y1="0" x2="0.3" y2="1"><stop offset="0%" stop-color="#FF9A4D"/><stop offset="50%" stop-color="#FF6820"/><stop offset="100%" stop-color="#D94400"/></linearGradient>
+        <linearGradient id="nl" x1="0" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#B2E8BC"/><stop offset="40%" stop-color="#40916c"/><stop offset="100%" stop-color="#52b788"/></linearGradient>
+        <linearGradient id="nr" x1="1" y1="0" x2="0.3" y2="1"><stop offset="0%" stop-color="#7AD492"/><stop offset="50%" stop-color="#3A9955"/><stop offset="100%" stop-color="#28703E"/></linearGradient>
         <clipPath id="nf"><rect x="0" y="0" width="512" height="512" rx="96"/></clipPath>
       </defs>
-      <rect width="512" height="512" rx="96" fill="#060608"/>
+      <rect width="512" height="512" rx="96" fill="#0A1410"/>
       <g clip-path="url(#nf)">
         <path d="M256 60 L90 452 L196 452 L226 378 L256 378 Z" fill="url(#nl)"/>
         <path d="M256 60 L422 452 L316 452 L286 378 L256 378 Z" fill="url(#nr)"/>
-        <path d="M256 188 L196 368 L222 368 L256 278 L290 368 L316 368 Z" fill="#060608"/>
+        <path d="M256 188 L196 368 L222 368 L256 278 L290 368 L316 368 Z" fill="#0A1410"/>
       </g>
     </svg>
     <span class="nav-wordmark">AELOVRA</span>
@@ -437,7 +439,7 @@ footer{padding:2rem var(--pad);border-top:1px solid var(--g2);background:var(--g
       <div class="stag">Find Us</div>
       <h2 class="connect-h">BUILDING<br>IN PUBLIC.</h2>
       <p class="connect-p">Every update, every release, every behind-the-scenes moment — we share it. Follow along, support the studio, or just reach out.</p>
-      <a class="connect-mail" href="mailto:aelovra@outlook.com"><div class="mail-dot"></div>aelovra@outlook.com</a>
+      <a class="connect-mail" href="mailto:aelovra@aelovra.com"><div class="mail-dot"></div>aelovra@aelovra.com</a>
     </div>
     <div class="sl">
       <a class="sl-item" href="https://github.com/Aelovra" target="_blank"><div><div class="sl-name">GitHub</div><div class="sl-handle">github.com/Aelovra</div></div><div class="sl-arr">↗</div></a>
@@ -453,15 +455,15 @@ footer{padding:2rem var(--pad);border-top:1px solid var(--g2);background:var(--g
   <div class="footer-logo">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24" style="opacity:.32;display:block;flex-shrink:0;">
       <defs>
-        <linearGradient id="fl2" x1="0" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#FFB347"/><stop offset="40%" stop-color="#FF7A2B"/><stop offset="100%" stop-color="#FF5C00"/></linearGradient>
-        <linearGradient id="fr2" x1="1" y1="0" x2="0.3" y2="1"><stop offset="0%" stop-color="#FF9A4D"/><stop offset="50%" stop-color="#FF6820"/><stop offset="100%" stop-color="#D94400"/></linearGradient>
+        <linearGradient id="fl2" x1="0" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#B2E8BC"/><stop offset="40%" stop-color="#40916c"/><stop offset="100%" stop-color="#52b788"/></linearGradient>
+        <linearGradient id="fr2" x1="1" y1="0" x2="0.3" y2="1"><stop offset="0%" stop-color="#7AD492"/><stop offset="50%" stop-color="#3A9955"/><stop offset="100%" stop-color="#28703E"/></linearGradient>
         <clipPath id="ff"><rect x="0" y="0" width="512" height="512" rx="96"/></clipPath>
       </defs>
-      <rect width="512" height="512" rx="96" fill="#060608"/>
+      <rect width="512" height="512" rx="96" fill="#0A1410"/>
       <g clip-path="url(#ff)">
         <path d="M256 60 L90 452 L196 452 L226 378 L256 378 Z" fill="url(#fl2)"/>
         <path d="M256 60 L422 452 L316 452 L286 378 L256 378 Z" fill="url(#fr2)"/>
-        <path d="M256 188 L196 368 L222 368 L256 278 L290 368 L316 368 Z" fill="#060608"/>
+        <path d="M256 188 L196 368 L222 368 L256 278 L290 368 L316 368 Z" fill="#0A1410"/>
       </g>
     </svg>
     <span class="footer-wordmark">AELOVRA</span>
@@ -489,24 +491,24 @@ function make3D(id,fn){
 }
 
 const M={
-  wo:()=>new THREE.MeshBasicMaterial({color:0xFF5C00,wireframe:true,transparent:true,opacity:.22}),
-  so:(op=.12)=>new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:.8,roughness:.2,transparent:true,opacity:op}),
-  gl:()=>new THREE.MeshStandardMaterial({color:0xFF7A2B,metalness:1,roughness:0,transparent:true,opacity:.8,emissive:0xFF3D00,emissiveIntensity:.35}),
+  wo:()=>new THREE.MeshBasicMaterial({color:0x52b788,wireframe:true,transparent:true,opacity:.22}),
+  so:(op=.12)=>new THREE.MeshStandardMaterial({color:0x52b788,metalness:.8,roughness:.2,transparent:true,opacity:op}),
+  gl:()=>new THREE.MeshStandardMaterial({color:0x40916c,metalness:1,roughness:0,transparent:true,opacity:.8,emissive:0x2d6a4f,emissiveIntensity:.35}),
   ww:(op=.05)=>new THREE.MeshBasicMaterial({color:0xffffff,wireframe:true,transparent:true,opacity:op}),
-  mt:()=>new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:1,roughness:.05,transparent:true,opacity:.85,emissive:0xFF3D00,emissiveIntensity:.25}),
+  mt:()=>new THREE.MeshStandardMaterial({color:0x52b788,metalness:1,roughness:.05,transparent:true,opacity:.85,emissive:0x2d6a4f,emissiveIntensity:.25}),
 };
 
 function pts(scene,n,sp,sz=.04,op=.4){
   const p=new Float32Array(n*3);
   for(let i=0;i<n;i++){p[i*3]=(Math.random()-.5)*sp;p[i*3+1]=(Math.random()-.5)*sp*.6;p[i*3+2]=(Math.random()-.5)*sp*.4-2;}
   const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));
-  const m=new THREE.Points(g,new THREE.PointsMaterial({color:0xFF5C00,size:sz,transparent:true,opacity:op}));
+  const m=new THREE.Points(g,new THREE.PointsMaterial({color:0x52b788,size:sz,transparent:true,opacity:op}));
   scene.add(m);return m;
 }
 
 function lights(scene){
   scene.add(new THREE.AmbientLight(0xffffff,.2));
-  const a=new THREE.PointLight(0xFF5C00,5,25);a.position.set(4,4,4);scene.add(a);
+  const a=new THREE.PointLight(0x52b788,5,25);a.position.set(4,4,4);scene.add(a);
   const b=new THREE.PointLight(0xffffff,2,20);b.position.set(-5,2,2);scene.add(b);
 }
 
@@ -539,18 +541,18 @@ make3D('c-hero',(scene,cam,r)=>{
   const icoS=new THREE.Mesh(new THREE.IcosahedronGeometry(1.4,0),M.so(.08));icoS.position.set(2.8,0,0);scene.add(icoS);
   // 3 orbital rings around the icosahedron
   const rg=new THREE.TorusGeometry(2.3,.02,8,80);
-  const ring1=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0xFF5C00,transparent:true,opacity:.35}));ring1.position.set(2.8,0,0);ring1.rotation.x=Math.PI/2;scene.add(ring1);
-  const ring2=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0xFF5C00,transparent:true,opacity:.18}));ring2.position.set(2.8,0,0);ring2.rotation.x=Math.PI/3;ring2.rotation.z=Math.PI/5;scene.add(ring2);
+  const ring1=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0x52b788,transparent:true,opacity:.35}));ring1.position.set(2.8,0,0);ring1.rotation.x=Math.PI/2;scene.add(ring1);
+  const ring2=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0x52b788,transparent:true,opacity:.18}));ring2.position.set(2.8,0,0);ring2.rotation.x=Math.PI/3;ring2.rotation.z=Math.PI/5;scene.add(ring2);
   const ring3=new THREE.Mesh(new THREE.TorusGeometry(2.8,.015,8,80),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.06}));ring3.position.set(2.8,0,0);ring3.rotation.x=Math.PI/6;ring3.rotation.y=Math.PI/4;scene.add(ring3);
   // Orbiting glowing spheres around the icosahedron
   const orbs=[];
-  for(let i=0;i<8;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(.06,8,8),new THREE.MeshStandardMaterial({color:0xFF5C00,emissive:0xFF3D00,emissiveIntensity:1,metalness:1,roughness:0}));scene.add(s);orbs.push({m:s,a:i*(Math.PI*2/8),r:2.3,sp:.3+i*.02,tl:(i%2===0?.3:-.3)});}
+  for(let i=0;i<8;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(.06,8,8),new THREE.MeshStandardMaterial({color:0x52b788,emissive:0x2d6a4f,emissiveIntensity:1,metalness:1,roughness:0}));scene.add(s);orbs.push({m:s,a:i*(Math.PI*2/8),r:2.3,sp:.3+i*.02,tl:(i%2===0?.3:-.3)});}
   // Torus knot far left
-  const tk=new THREE.Mesh(new THREE.TorusKnotGeometry(.75,.18,120,16),new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:.9,roughness:.05,transparent:true,opacity:.55,emissive:0xFF3D00,emissiveIntensity:.25}));tk.position.set(-3.5,-.3,-1.5);scene.add(tk);
+  const tk=new THREE.Mesh(new THREE.TorusKnotGeometry(.75,.18,120,16),new THREE.MeshStandardMaterial({color:0x52b788,metalness:.9,roughness:.05,transparent:true,opacity:.55,emissive:0x2d6a4f,emissiveIntensity:.25}));tk.position.set(-3.5,-.3,-1.5);scene.add(tk);
   // Small glowing octas scattered
   const oct1=new THREE.Mesh(new THREE.OctahedronGeometry(.45,0),M.gl());oct1.position.set(-1.5,2.2,-1);scene.add(oct1);
   const oct2=new THREE.Mesh(new THREE.OctahedronGeometry(.3,0),M.gl());oct2.position.set(5.5,-1.8,-1.5);scene.add(oct2);
-  const oct3=new THREE.Mesh(new THREE.OctahedronGeometry(.35,0),new THREE.MeshBasicMaterial({color:0xFF5C00,wireframe:true,transparent:true,opacity:.4}));oct3.position.set(5.2,2.5,-1);scene.add(oct3);
+  const oct3=new THREE.Mesh(new THREE.OctahedronGeometry(.35,0),new THREE.MeshBasicMaterial({color:0x52b788,wireframe:true,transparent:true,opacity:.4}));oct3.position.set(5.2,2.5,-1);scene.add(oct3);
   // Big bg sphere wireframe
   const bgs=new THREE.Mesh(new THREE.SphereGeometry(5,18,14),M.ww(.035));bgs.position.set(2.8,0,-3.5);scene.add(bgs);
   const pc=pts(scene,isMobile?120:300,30,.038,.4);
@@ -578,14 +580,14 @@ make3D('c-hero',(scene,cam,r)=>{
 make3D('c-mani',(scene,cam,r)=>{
   cam.position.set(0,0,7);lights(scene);
   // Big torus knot right side
-  const tk=new THREE.Mesh(new THREE.TorusKnotGeometry(1.1,.24,140,18),new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:.95,roughness:.04,transparent:true,opacity:.65,emissive:0xFF3D00,emissiveIntensity:.28}));tk.position.set(isMobile?2:3.8,.5,0);scene.add(tk);
+  const tk=new THREE.Mesh(new THREE.TorusKnotGeometry(1.1,.24,140,18),new THREE.MeshStandardMaterial({color:0x52b788,metalness:.95,roughness:.04,transparent:true,opacity:.65,emissive:0x2d6a4f,emissiveIntensity:.28}));tk.position.set(isMobile?2:3.8,.5,0);scene.add(tk);
   // Rings around the torus knot
   const tkR=new THREE.TorusGeometry(1.9,.018,8,80);
-  const tkRing1=new THREE.Mesh(tkR,new THREE.MeshBasicMaterial({color:0xFF5C00,transparent:true,opacity:.25}));tkRing1.position.set(isMobile?2:3.8,.5,0);tkRing1.rotation.x=Math.PI/2;scene.add(tkRing1);
+  const tkRing1=new THREE.Mesh(tkR,new THREE.MeshBasicMaterial({color:0x52b788,transparent:true,opacity:.25}));tkRing1.position.set(isMobile?2:3.8,.5,0);tkRing1.rotation.x=Math.PI/2;scene.add(tkRing1);
   const tkRing2=new THREE.Mesh(tkR,new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.06}));tkRing2.position.set(isMobile?2:3.8,.5,0);tkRing2.rotation.x=Math.PI/3;tkRing2.rotation.z=Math.PI/4;scene.add(tkRing2);
   // Small glowing orbs orbiting the knot
   const korbs=[];
-  for(let i=0;i<5;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(.07,8,8),new THREE.MeshStandardMaterial({color:0xFF5C00,emissive:0xFF3D00,emissiveIntensity:1,metalness:1,roughness:0}));scene.add(s);korbs.push({m:s,a:i*(Math.PI*2/5),r:1.9,sp:.4+i*.05});}
+  for(let i=0;i<5;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(.07,8,8),new THREE.MeshStandardMaterial({color:0x52b788,emissive:0x2d6a4f,emissiveIntensity:1,metalness:1,roughness:0}));scene.add(s);korbs.push({m:s,a:i*(Math.PI*2/5),r:1.9,sp:.4+i*.05});}
   // Glowing icosahedra scattered
   const gi1=new THREE.Mesh(new THREE.IcosahedronGeometry(.55,0),M.gl());gi1.position.set(isMobile?1:-2.2,1.8,-1);scene.add(gi1);
   const gi2=new THREE.Mesh(new THREE.IcosahedronGeometry(.35,0),M.gl());gi2.position.set(-3.5,-.8,0);scene.add(gi2);
@@ -618,30 +620,30 @@ make3D('c-mani',(scene,cam,r)=>{
   const wrap=c.parentElement;
   const r=new THREE.WebGLRenderer({canvas:c,antialias:true,alpha:true,powerPreference:'low-power'});
   r.setPixelRatio(Math.min(devicePixelRatio,isMobile?1:2));
-  r.setClearColor(0x0a0a0d,1);
+  r.setClearColor(0x0d1f17,1);
   const scene=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(55,1,.1,100);
   cam.position.set(0,0,4.5);
   function resize(){const w=wrap.clientWidth,h=wrap.clientHeight||300;r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
   resize();window.addEventListener('resize',resize);
   scene.add(new THREE.AmbientLight(0xffffff,.18));
-  const p1=new THREE.PointLight(0xFF5C00,6,18);p1.position.set(2,2,3);scene.add(p1);
+  const p1=new THREE.PointLight(0x52b788,6,18);p1.position.set(2,2,3);scene.add(p1);
   const p2=new THREE.PointLight(0xffa040,2.5,12);p2.position.set(-3,-1,1);scene.add(p2);
-  const p3=new THREE.PointLight(0xFF3D00,1.5,10);p3.position.set(0,0,4);scene.add(p3);
+  const p3=new THREE.PointLight(0x2d6a4f,1.5,10);p3.position.set(0,0,4);scene.add(p3);
   // Central diamond
   const d=new THREE.Mesh(new THREE.OctahedronGeometry(1.1,0),M.mt());scene.add(d);
-  const dw=new THREE.Mesh(new THREE.OctahedronGeometry(1.18,0),new THREE.MeshBasicMaterial({color:0xFF5C00,wireframe:true,transparent:true,opacity:.4}));scene.add(dw);
+  const dw=new THREE.Mesh(new THREE.OctahedronGeometry(1.18,0),new THREE.MeshBasicMaterial({color:0x52b788,wireframe:true,transparent:true,opacity:.4}));scene.add(dw);
   // 3 rings at different tilts
   const rg=new THREE.TorusGeometry(1.95,.02,8,80);
-  const r1=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0xFF5C00,transparent:true,opacity:.32}));r1.rotation.x=Math.PI/2;scene.add(r1);
-  const r2=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0xFF7A2B,transparent:true,opacity:.2}));r2.rotation.x=Math.PI/3;r2.rotation.z=Math.PI/5;scene.add(r2);
+  const r1=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0x52b788,transparent:true,opacity:.32}));r1.rotation.x=Math.PI/2;scene.add(r1);
+  const r2=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0x40916c,transparent:true,opacity:.2}));r2.rotation.x=Math.PI/3;r2.rotation.z=Math.PI/5;scene.add(r2);
   const r3=new THREE.Mesh(new THREE.TorusGeometry(2.5,.012,8,80),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.07}));r3.rotation.x=Math.PI/6;r3.rotation.y=Math.PI/4;scene.add(r3);
   // Orbiting glowing spheres — 8 of them
   const orbs=[];
   const n=isMobile?5:8;
   for(let i=0;i<n;i++){
     const size=i%3===0?.08:.055;
-    const s=new THREE.Mesh(new THREE.SphereGeometry(size,8,8),new THREE.MeshStandardMaterial({color:0xFF5C00,emissive:0xFF3D00,emissiveIntensity:i%2===0?.9:1.2,metalness:1,roughness:0}));
+    const s=new THREE.Mesh(new THREE.SphereGeometry(size,8,8),new THREE.MeshStandardMaterial({color:0x52b788,emissive:0x2d6a4f,emissiveIntensity:i%2===0?.9:1.2,metalness:1,roughness:0}));
     scene.add(s);orbs.push({m:s,a:i*(Math.PI*2/n),r:1.95,sp:.3+i*.03,tl:(i%2===0?.35:-.35)});
   }
   // Small corner icosahedra
@@ -664,13 +666,13 @@ make3D('c-mani',(scene,cam,r)=>{
 
 // STATS — rings + glowing orbs from corners
 make3D('c-stats',(scene,cam,r)=>{
-  r.setClearColor(0x060608,1);
+  r.setClearColor(0x0A1410,1);
   cam.position.set(0,0,5);lights(scene);
   // Corner shapes with rings
   const oc1=new THREE.Mesh(new THREE.OctahedronGeometry(.7,0),M.wo());oc1.position.set(-5,1,-2);scene.add(oc1);
-  const oc1r=new THREE.Mesh(new THREE.TorusGeometry(1.1,.015,8,60),new THREE.MeshBasicMaterial({color:0xFF5C00,transparent:true,opacity:.28}));oc1r.position.set(-5,1,-2);oc1r.rotation.x=Math.PI/2;scene.add(oc1r);
+  const oc1r=new THREE.Mesh(new THREE.TorusGeometry(1.1,.015,8,60),new THREE.MeshBasicMaterial({color:0x52b788,transparent:true,opacity:.28}));oc1r.position.set(-5,1,-2);oc1r.rotation.x=Math.PI/2;scene.add(oc1r);
   const gl1=new THREE.Mesh(new THREE.IcosahedronGeometry(.45,0),M.gl());gl1.position.set(5.5,.5,-1);scene.add(gl1);
-  const gl1r=new THREE.Mesh(new THREE.TorusGeometry(.8,.012,8,60),new THREE.MeshBasicMaterial({color:0xFF5C00,transparent:true,opacity:.22}));gl1r.position.set(5.5,.5,-1);gl1r.rotation.x=Math.PI/3;scene.add(gl1r);
+  const gl1r=new THREE.Mesh(new THREE.TorusGeometry(.8,.012,8,60),new THREE.MeshBasicMaterial({color:0x52b788,transparent:true,opacity:.22}));gl1r.position.set(5.5,.5,-1);gl1r.rotation.x=Math.PI/3;scene.add(gl1r);
   const gl2=new THREE.Mesh(new THREE.OctahedronGeometry(.38,0),M.gl());gl2.position.set(-4.5,-1.2,-1);scene.add(gl2);
   const ico1=new THREE.Mesh(new THREE.IcosahedronGeometry(.55,1),M.wo());ico1.position.set(5,-1.8,-2);scene.add(ico1);
   const pc=pts(scene,isMobile?50:140,20,.04,.28);
@@ -692,13 +694,13 @@ make3D('c-apps',(scene,cam,r)=>{
   // Big icosahedron with rings — right side
   const ico=new THREE.Mesh(new THREE.IcosahedronGeometry(1.5,1),M.wo());ico.position.set(5.5,1,0);scene.add(ico);
   const icoR=new THREE.TorusGeometry(2.1,.018,8,80);
-  const iR1=new THREE.Mesh(icoR,new THREE.MeshBasicMaterial({color:0xFF5C00,transparent:true,opacity:.28}));iR1.position.set(5.5,1,0);iR1.rotation.x=Math.PI/2;scene.add(iR1);
+  const iR1=new THREE.Mesh(icoR,new THREE.MeshBasicMaterial({color:0x52b788,transparent:true,opacity:.28}));iR1.position.set(5.5,1,0);iR1.rotation.x=Math.PI/2;scene.add(iR1);
   const iR2=new THREE.Mesh(icoR,new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.06}));iR2.position.set(5.5,1,0);iR2.rotation.x=Math.PI/3;iR2.rotation.z=Math.PI/4;scene.add(iR2);
   // Orbiting orbs around icosahedron
   const orbs2=[];
-  for(let i=0;i<6;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(.065,8,8),new THREE.MeshStandardMaterial({color:0xFF5C00,emissive:0xFF3D00,emissiveIntensity:1,metalness:1,roughness:0}));scene.add(s);orbs2.push({m:s,a:i*(Math.PI*2/6),r:2.1,sp:.32+i*.04,tl:(i%2===0?.3:-.3)});}
+  for(let i=0;i<6;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(.065,8,8),new THREE.MeshStandardMaterial({color:0x52b788,emissive:0x2d6a4f,emissiveIntensity:1,metalness:1,roughness:0}));scene.add(s);orbs2.push({m:s,a:i*(Math.PI*2/6),r:2.1,sp:.32+i*.04,tl:(i%2===0?.3:-.3)});}
   // Torus knot bottom right
-  const tk=new THREE.Mesh(new THREE.TorusKnotGeometry(.7,.16,100,14),new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:.9,roughness:.08,transparent:true,opacity:.5,emissive:0xFF3D00,emissiveIntensity:.2}));tk.position.set(6.2,-2.2,-1);scene.add(tk);
+  const tk=new THREE.Mesh(new THREE.TorusKnotGeometry(.7,.16,100,14),new THREE.MeshStandardMaterial({color:0x52b788,metalness:.9,roughness:.08,transparent:true,opacity:.5,emissive:0x2d6a4f,emissiveIntensity:.2}));tk.position.set(6.2,-2.2,-1);scene.add(tk);
   // Glowing orbs scattered left
   const gl1=new THREE.Mesh(new THREE.OctahedronGeometry(.5,0),M.gl());gl1.position.set(-5,2,-1);scene.add(gl1);
   const gl2=new THREE.Mesh(new THREE.IcosahedronGeometry(.38,0),M.gl());gl2.position.set(-4.5,-2,0);scene.add(gl2);
@@ -726,14 +728,14 @@ make3D('c-apps',(scene,cam,r)=>{
 make3D('c-connect',(scene,cam,r)=>{
   cam.position.set(0,0,6);lights(scene);
   // Big torus knot right
-  const tk=new THREE.Mesh(new THREE.TorusKnotGeometry(.95,.2,130,16),new THREE.MeshStandardMaterial({color:0xFF5C00,metalness:1,roughness:.04,transparent:true,opacity:.6,emissive:0xFF3D00,emissiveIntensity:.28}));tk.position.set(4,.5,0);scene.add(tk);
+  const tk=new THREE.Mesh(new THREE.TorusKnotGeometry(.95,.2,130,16),new THREE.MeshStandardMaterial({color:0x52b788,metalness:1,roughness:.04,transparent:true,opacity:.6,emissive:0x2d6a4f,emissiveIntensity:.28}));tk.position.set(4,.5,0);scene.add(tk);
   // Rings around it
   const tkR=new THREE.TorusGeometry(1.8,.018,8,80);
-  const tR1=new THREE.Mesh(tkR,new THREE.MeshBasicMaterial({color:0xFF5C00,transparent:true,opacity:.28}));tR1.position.set(4,.5,0);tR1.rotation.x=Math.PI/2;scene.add(tR1);
+  const tR1=new THREE.Mesh(tkR,new THREE.MeshBasicMaterial({color:0x52b788,transparent:true,opacity:.28}));tR1.position.set(4,.5,0);tR1.rotation.x=Math.PI/2;scene.add(tR1);
   const tR2=new THREE.Mesh(tkR,new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.06}));tR2.position.set(4,.5,0);tR2.rotation.x=Math.PI/3;tR2.rotation.z=Math.PI/4;scene.add(tR2);
   // Orbiting spheres
   const orbs3=[];
-  for(let i=0;i<5;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(.065,8,8),new THREE.MeshStandardMaterial({color:0xFF5C00,emissive:0xFF3D00,emissiveIntensity:1,metalness:1,roughness:0}));scene.add(s);orbs3.push({m:s,a:i*(Math.PI*2/5),r:1.8,sp:.38+i*.04});}
+  for(let i=0;i<5;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(.065,8,8),new THREE.MeshStandardMaterial({color:0x52b788,emissive:0x2d6a4f,emissiveIntensity:1,metalness:1,roughness:0}));scene.add(s);orbs3.push({m:s,a:i*(Math.PI*2/5),r:1.8,sp:.38+i*.04});}
   // Glowing orbs scattered
   const gl1=new THREE.Mesh(new THREE.IcosahedronGeometry(.45,0),M.gl());gl1.position.set(-1.2,2.8,-1);scene.add(gl1);
   const gl2=new THREE.Mesh(new THREE.OctahedronGeometry(.35,0),M.gl());gl2.position.set(5.8,-2.2,-1);scene.add(gl2);
@@ -752,7 +754,6 @@ make3D('c-connect',(scene,cam,r)=>{
     gl1.rotation.x+=.01;gl1.rotation.y+=.012;gl1.position.y=2.8+Math.sin(t*1.3)*.38;
     gl2.rotation.x+=.012;gl2.rotation.y+=.008;gl2.position.y=-2.2+Math.sin(t*1.1)*.28;
     wo.rotation.x+=.007;wo.rotation.y+=.005;wo.position.y=-.5+Math.sin(t*.95)*.25;
-    bgs.rotation.y+=.002;
     if(!isMobile){cam.position.x+=(hx.v*.5-cam.position.x)*.03;cam.position.y+=(hy.v*.35-cam.position.y)*.03;}
     cam.lookAt(0,0,0);pc.rotation.y+=.0004;r.render(scene,cam);
   })();
