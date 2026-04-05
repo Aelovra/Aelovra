@@ -1,9 +1,26 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aelovra Studio — Meaningful Software</title>
+<meta name="description" content="Aelovra is an independent software studio building meaningful apps for developers. Zero bloat. Intentional design. Built with purpose.">
+<meta property="og:title" content="Aelovra Studio — Meaningful Software">
+<meta property="og:description" content="Independent software studio making meaningful apps for developers. Zero bloat. Built with purpose.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aelovra.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@aelovra">
+<meta name="twitter:title" content="Aelovra Studio — Meaningful Software">
+<meta name="twitter:description" content="Independent software studio. Zero bloat. Built with purpose.">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'none'; frame-src 'none';">
+<link rel="canonical" href="https://aelovra.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
@@ -11,15 +28,9 @@
 :root{--o:#FF5C00;--o2:#FF7A2B;--o3:#FF3D00;--bk:#060608;--w:#F5F3EE;--g1:#0f0f12;--g2:#1A1A1F;--g3:#252528;--gm:#555;--gd:#252528;--pad:clamp(1.25rem,5vw,3rem);}
 html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',sans-serif;background:var(--bk);color:var(--w);overflow-x:hidden;}
-@media(pointer:fine){body{cursor:none;}}
-
-/* CURSOR — desktop only */
+@media(pointer:fine){body{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M3 2 L17 10 L10 11 L7 18 Z' fill='%23FF5C00' stroke='%23060608' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2,auto;}}
+/* no dot/ring elements needed */
 .c-dot,.c-ring{display:none;}
-@media(pointer:fine){
-  .c-dot{display:block;position:fixed;width:8px;height:8px;background:var(--o);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
-  .c-ring{display:block;position:fixed;width:34px;height:34px;border:1px solid rgba(255,92,0,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;}
-  .c-ring.big{width:56px;height:56px;opacity:.3;}
-}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem var(--pad);border-bottom:1px solid rgba(255,255,255,.05);background:rgba(6,6,8,.94);backdrop-filter:blur(16px);}
@@ -124,6 +135,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .pill:hover{border-color:var(--o);color:var(--o);}
 
 /* STATS */
+.stats-wrap{position:relative;overflow:hidden;}
+.stats-wrap canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+.stats-wrap .stats{position:relative;z-index:1;}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .7s ease,transform .7s ease;}
+.reveal-left.visible{opacity:1;transform:none;}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .7s ease,transform .7s ease;}
+.reveal-right.visible{opacity:1;transform:none;}
+
+/* STATS */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5px;background:var(--g2);}
 @media(min-width:640px){.stats{grid-template-columns:repeat(4,1fr);}}
 .stat{background:var(--bk);padding:clamp(1.5rem,4vw,2.5rem) clamp(1rem,3vw,2rem);position:relative;overflow:hidden;}
@@ -177,6 +201,64 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .app-row-featured .app-row-num{color:rgba(255,92,0,.2);}
 .app-row-featured .app-row-name{font-size:clamp(1.6rem,5vw,2.8rem);}
 
+/* MINITOOLS EXPAND ROW */
+.mt-row{background:rgba(6,6,8,.88);backdrop-filter:blur(8px);border-left:3px solid var(--o);position:relative;overflow:hidden;cursor:default;}
+.mt-row-head{display:flex;flex-direction:column;gap:1.25rem;padding:1.75rem clamp(1rem,4vw,2.5rem);transition:background .3s;}
+@media(min-width:640px){.mt-row-head{display:grid;grid-template-columns:80px 1fr auto;align-items:center;gap:3rem;padding:2.5rem clamp(1.25rem,4vw,2.5rem);}}
+.mt-row:hover .mt-row-head{background:rgba(12,12,16,.96);}
+.mt-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);line-height:1;color:rgba(255,92,0,.2);display:none;}
+@media(min-width:640px){.mt-num{display:block;}}
+.mt-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,3rem);letter-spacing:.04em;color:var(--w);margin-bottom:.5rem;}
+.mt-tagline{font-size:.85rem;color:var(--gm);font-weight:300;line-height:1.6;}
+.mt-tagline em{color:var(--w);font-style:normal;}
+.mt-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem;}
+.mt-tag{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--gd);color:#2a2a2a;padding:.18rem .5rem;}
+.mt-head-right{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+@media(min-width:640px){.mt-head-right{flex-direction:column;align-items:flex-end;gap:.6rem;flex-shrink:0;}}
+.mt-hint{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:#2a2a2a;display:flex;align-items:center;gap:.4rem;transition:color .3s;}
+.mt-hint-arrow{transition:transform .4s cubic-bezier(.4,0,.2,1);}
+.mt-row:hover .mt-hint{color:var(--gm);}
+.mt-row:hover .mt-hint-arrow{transform:translateY(4px);}
+/* EXPAND PANEL */
+.mt-expand{max-height:0;overflow:hidden;transition:max-height .55s cubic-bezier(.4,0,.2,1);}
+.mt-row:hover .mt-expand{max-height:600px;}
+.mt-expand-inner{padding:0 clamp(1rem,4vw,2.5rem) 2rem;display:flex;flex-direction:column;gap:1.5px;background:rgba(255,255,255,.02);}
+@media(min-width:640px){.mt-expand-inner{padding-left:calc(80px + 3rem);}}
+/* Tier cards inside expand */
+.mt-tier{display:flex;flex-direction:column;gap:1rem;padding:1.5rem;background:rgba(6,6,8,.7);border-left:2px solid var(--gd);transition:border-color .2s;}
+@media(min-width:640px){.mt-tier{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;}}
+.mt-tier:hover{border-left-color:var(--o);}
+.mt-tier-name{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;color:var(--w);margin-bottom:.3rem;}
+.mt-tier-desc{font-size:.78rem;color:var(--gm);line-height:1.65;font-weight:300;}
+.mt-tier-desc strong{color:var(--w);font-weight:400;}
+.mt-tier-badges{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem;}
+.mt-tier-badge{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;background:rgba(255,92,0,.08);color:var(--o);border:1px solid rgba(255,92,0,.2);}
+.mt-tier-badge.neutral{background:rgba(255,255,255,.04);color:var(--gm);border-color:var(--gd);}
+.mt-tier-right{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
+@media(min-width:640px){.mt-tier-right{flex-direction:column;align-items:flex-end;gap:.5rem;flex-shrink:0;}}
+.mt-tier-price{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--w);line-height:1;}
+.mt-tier-price.fp{color:var(--gm);font-size:1.1rem;}
+.mt-tier-price sup{font-size:.8rem;color:var(--o);}
+.mt-tier-cta{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.55rem 1rem;text-decoration:none;border:1px solid var(--gd);color:var(--gm);transition:all .2s;white-space:nowrap;}
+.mt-tier-cta:hover{border-color:var(--o);color:var(--o);}
+.mt-tier-cta.primary{background:var(--o);color:var(--bk)!important;border-color:var(--o);font-weight:700;}
+.mt-tier-cta.primary:hover{background:var(--o2);border-color:var(--o2);color:var(--bk)!important;}
+.mt-tier:hover .mt-tier-cta:not(.primary){border-color:var(--o);color:var(--o);}
+.mt-tier-note{font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:#252528;}
+/* WHAT'S NEXT row — simpler */
+.mt-next{display:flex;flex-direction:column;gap:1rem;padding:1.75rem clamp(1rem,4vw,2.5rem);background:rgba(6,6,8,.88);backdrop-filter:blur(8px);border-left:3px solid var(--gd);transition:border-color .3s;}
+@media(min-width:640px){.mt-next{display:grid;grid-template-columns:80px 1fr auto;align-items:center;gap:3rem;padding:2.5rem clamp(1.25rem,4vw,2.5rem);}}
+.mt-next:hover{border-left-color:var(--o);}
+.mt-next-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);line-height:1;color:var(--g3);display:none;}
+@media(min-width:640px){.mt-next-num{display:block;}}
+.mt-next:hover .mt-next-num{color:var(--o);}
+.mt-next-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,4vw,2rem);letter-spacing:.04em;color:var(--w);margin-bottom:.4rem;}
+.mt-next-desc{font-size:.8rem;color:var(--gm);line-height:1.65;font-weight:300;}
+.mt-next-desc strong{color:var(--w);font-weight:400;}
+.mt-next-badge{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;background:rgba(255,255,255,.04);color:var(--gm);border:1px solid var(--gd);display:inline-block;margin-top:.5rem;}
+.mt-next-right{display:flex;align-items:center;gap:.75rem;}
+@media(min-width:640px){.mt-next-right{flex-direction:column;align-items:flex-end;gap:.5rem;flex-shrink:0;}}
+
 /* PATREON STRIP */
 .patreon-strip{margin-top:1.5px;background:rgba(255,92,0,.06);backdrop-filter:blur(8px);border:1px solid rgba(255,92,0,.15);border-left:3px solid var(--o);padding:clamp(1.5rem,4vw,2rem) clamp(1rem,4vw,2.5rem);display:flex;flex-direction:column;gap:1.5rem;}
 @media(min-width:640px){.patreon-strip{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;}}
@@ -221,9 +303,6 @@ footer{padding:2rem var(--pad);border-top:1px solid var(--g2);background:var(--g
 </style>
 </head>
 <body>
-
-<div class="c-dot" id="cdot"></div>
-<div class="c-ring" id="cring"></div>
 
 <!-- NAV -->
 <nav>
@@ -329,10 +408,10 @@ footer{padding:2rem var(--pad);border-top:1px solid var(--g2);background:var(--g
     <canvas id="c-feat"></canvas>
   </div>
   <div>
-    <div class="stag">The Studio</div>
-    <h2 class="about-h">AN INDIE STUDIO<br>THAT GIVES<br>A DAMN.</h2>
-    <p class="about-p">Aelovra builds software the way it <strong>should be</strong> — fast, focused, and free of nonsense. We're not a factory churning out features. We make apps that solve real problems for people who actually build things.</p>
-    <p class="about-p">Every product is <strong>deliberate</strong>. Every feature earns its place. If it doesn't make your workflow meaningfully better — it doesn't ship.</p>
+    <div class="stag reveal">The Studio</div>
+    <h2 class="about-h reveal">AN INDIE STUDIO<br>THAT GIVES<br>A DAMN.</h2>
+    <p class="about-p reveal">Aelovra builds software the way it <strong>should be</strong> — fast, focused, and free of nonsense. We're not a factory churning out features. We make apps that solve real problems for people who actually build things.</p>
+    <p class="about-p reveal">Every product is <strong>deliberate</strong>. Every feature earns its place. If it doesn't make your workflow meaningfully better — it doesn't ship. And yes, sometimes we build something <strong>goofy or just for fun</strong> — but even those ship clean, with zero of the clutter everyone else packs in.</p>
     <div class="pills">
       <div class="pill">Desktop Apps</div><div class="pill">Dev Tools</div><div class="pill">macOS</div><div class="pill">Windows</div><div class="pill">PyQt6</div><div class="pill">Zero Bloat</div>
     </div>
@@ -340,11 +419,14 @@ footer{padding:2rem var(--pad);border-top:1px solid var(--g2);background:var(--g
 </section>
 
 <!-- STATS -->
-<div class="stats">
-  <div class="stat"><div class="stat-n">20<sup>+</sup></div><div class="stat-l">Features in flagship</div></div>
-  <div class="stat"><div class="stat-n">5</div><div class="stat-l">Themes, zero compromise</div></div>
-  <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Apps in the pipeline</div></div>
-  <div class="stat stat-hot"><div class="stat-n">v9</div><div class="stat-tag">MINITOOLS — LIVE NOW</div><div class="stat-l">macOS · Free Download</div></div>
+<div class="stats-wrap">
+  <canvas id="c-stats"></canvas>
+  <div class="stats">
+    <div class="stat reveal"><div class="stat-n">20<sup>+</sup></div><div class="stat-l">Features in flagship</div></div>
+    <div class="stat reveal"><div class="stat-n">5</div><div class="stat-l">Themes, zero compromise</div></div>
+    <div class="stat reveal"><div class="stat-n">∞</div><div class="stat-l">Apps in the pipeline</div></div>
+    <div class="stat stat-hot reveal"><div class="stat-n">v9</div><div class="stat-tag">MINITOOLS — LIVE NOW</div><div class="stat-l">macOS · Free Download</div></div>
+  </div>
 </div>
 
 <!-- OUR APPS -->
@@ -361,73 +443,78 @@ footer{padding:2rem var(--pad);border-top:1px solid var(--g2);background:var(--g
     </div>
     <div class="app-list">
 
-      <div class="app-row app-row-featured">
-        <div class="app-row-num">01</div>
-        <div class="app-row-body">
-          <div class="app-row-top">
-            <div class="app-row-name">MINITOOLS</div>
-            <div class="app-row-badge free">v9 LITE</div>
-            <div class="app-row-badge">macOS</div>
+      <!-- MINITOOLS — single collapsible row -->
+      <div class="mt-row">
+        <div class="mt-row-head">
+          <div class="mt-num">01</div>
+          <div>
+            <div class="mt-name">MINITOOLS</div>
+            <div class="mt-tagline">Your everyday dev toolkit in one clean desktop app. <em>20+ utilities</em> — all offline, all instant. Two editions available.</div>
+            <div class="mt-tags">
+              <div class="mt-tag">Desktop App</div><div class="mt-tag">PyQt6</div><div class="mt-tag">macOS</div><div class="mt-tag">Windows Soon</div><div class="mt-tag">Offline</div>
+            </div>
           </div>
-          <div class="app-row-desc">Your everyday dev toolkit in one clean desktop app. <strong>20+ utilities</strong> — text converters, formatters, encoders, generators, color tools and more. Everything runs <strong>offline and instant</strong>. No telemetry, no background processes, no nonsense.</div>
-          <div class="app-row-tags">
-            <div class="app-row-tag">Text Tools</div><div class="app-row-tag">Converters</div><div class="app-row-tag">Formatters</div><div class="app-row-tag">Generators</div><div class="app-row-tag">Offline</div><div class="app-row-tag">PyQt6</div>
+          <div class="mt-head-right">
+            <div class="mt-hint">
+              <span>Hover to explore</span>
+              <span class="mt-hint-arrow">↓</span>
+            </div>
+            <a href="/minitools/" class="mt-tier-cta" style="margin-top:.25rem;">Full Site ↗</a>
           </div>
         </div>
-        <div class="app-row-right">
-          <div class="app-row-price fp">FREE</div>
-          <a href="https://github.com/Aelovra/minitools/releases/download/v.9.0.0/MiniTools.-.V.9.app.zip" class="app-row-cta primary">Download ↓</a>
+        <!-- Expand on hover -->
+        <div class="mt-expand">
+          <div class="mt-expand-inner">
+
+            <!-- LITE -->
+            <div class="mt-tier">
+              <div>
+                <div class="mt-tier-name">MINITOOLS LITE</div>
+                <div class="mt-tier-desc">The full v9 app — <strong>20+ dev utilities</strong> in one clean window. Text tools, converters, formatters, encoders, generators. Runs completely offline. No telemetry, no background processes. Just open and use.</div>
+                <div class="mt-tier-badges">
+                  <div class="mt-tier-badge neutral">v9 · macOS</div>
+                  <div class="mt-tier-badge neutral">Free Forever</div>
+                  <div class="mt-tier-badge neutral">Offline</div>
+                </div>
+              </div>
+              <div class="mt-tier-right">
+                <div class="mt-tier-price fp">FREE</div>
+                <a href="/minitools/" class="mt-tier-cta primary">Explore ↗</a>
+              </div>
+            </div>
+
+            <!-- PRO -->
+            <div class="mt-tier">
+              <div>
+                <div class="mt-tier-name">MINITOOLS PRO</div>
+                <div class="mt-tier-desc">Everything in LITE — taken further. <strong>PRO-exclusive tools</strong>, deeper functionality, early access on launch day. Support Aelovra on Patreon and get it the moment it drops.</div>
+                <div class="mt-tier-badges">
+                  <div class="mt-tier-badge">v1 · Coming Soon</div>
+                  <div class="mt-tier-badge">macOS + Windows</div>
+                  <div class="mt-tier-badge">Early Access</div>
+                </div>
+              </div>
+              <div class="mt-tier-right">
+                <div class="mt-tier-price"><sup>€</sup>9.85</div>
+                <a href="https://patreon.com/Aelovra" target="_blank" class="mt-tier-cta primary">Patreon ↗</a>
+                <div class="mt-tier-note">One-time · Yours forever</div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
 
-      <div class="app-row">
-        <div class="app-row-num">02</div>
-        <div class="app-row-body">
-          <div class="app-row-top">
-            <div class="app-row-name">MINITOOLS PRO</div>
-            <div class="app-row-badge">v1 · Coming Soon</div>
-          </div>
-          <div class="app-row-desc">Everything in LITE — taken further. <strong>PRO-exclusive tools</strong>, deeper functionality, and features built for devs who live in their workflow. Support on Patreon to get <strong>early access on launch day</strong>.</div>
-          <div class="app-row-tags">
-            <div class="app-row-tag">PRO Tools</div><div class="app-row-tag">Early Access</div><div class="app-row-tag">macOS</div><div class="app-row-tag">Windows</div><div class="app-row-tag">One-time</div>
-          </div>
+      <!-- WHAT'S NEXT -->
+      <div class="mt-next">
+        <div class="mt-next-num">02</div>
+        <div>
+          <div class="mt-next-name">WHAT'S NEXT</div>
+          <div class="mt-next-desc">More apps are being built. They ship when they're <strong>sharp enough</strong> — not before. Follow on Patreon or GitHub to be first.</div>
+          <div class="mt-next-badge">In the Lab</div>
         </div>
-        <div class="app-row-right">
-          <div class="app-row-price"><sup>€</sup>9.85</div>
-          <a href="https://patreon.com/Aelovra" target="_blank" class="app-row-cta primary">Patreon ↗</a>
-          <div class="app-row-coming">One-time · Yours forever</div>
-        </div>
-      </div>
-
-      <div class="app-row">
-        <div class="app-row-num">03</div>
-        <div class="app-row-body">
-          <div class="app-row-top">
-            <div class="app-row-name">MINITOOLS FOR WINDOWS</div>
-            <div class="app-row-badge free">On Roadmap</div>
-          </div>
-          <div class="app-row-desc">The full MiniTools experience coming to Windows. Same zero-bloat philosophy, same design, full cross-platform parity. No compromises.</div>
-          <div class="app-row-tags"><div class="app-row-tag">Windows</div><div class="app-row-tag">Cross-Platform</div><div class="app-row-tag">In Development</div></div>
-        </div>
-        <div class="app-row-right">
-          <div class="app-row-price fp">TBA</div>
-          <div class="app-row-coming">Watch this space</div>
-        </div>
-      </div>
-
-      <div class="app-row">
-        <div class="app-row-num">04</div>
-        <div class="app-row-body">
-          <div class="app-row-top">
-            <div class="app-row-name">WHAT'S NEXT</div>
-            <div class="app-row-badge free">In the Lab</div>
-          </div>
-          <div class="app-row-desc">More apps are being built. They ship when they're <strong>sharp enough</strong> — not before. Follow on Patreon or GitHub and you'll be the first to know.</div>
-          <div class="app-row-tags"><div class="app-row-tag">Aelovra Studio</div><div class="app-row-tag">Stay Tuned</div></div>
-        </div>
-        <div class="app-row-right">
-          <div class="app-row-price fp">???</div>
-          <a href="https://patreon.com/Aelovra" target="_blank" class="app-row-cta">Follow Along ↗</a>
+        <div class="mt-next-right">
+          <a href="https://patreon.com/Aelovra" target="_blank" class="mt-tier-cta">Follow Along ↗</a>
         </div>
       </div>
 
@@ -456,10 +543,11 @@ footer{padding:2rem var(--pad);border-top:1px solid var(--g2);background:var(--g
       <div class="stag">Find Us</div>
       <h2 class="connect-h">BUILDING<br>IN PUBLIC.</h2>
       <p class="connect-p">Every update, every release, every behind-the-scenes moment — we share it. Follow along, support the studio, or just reach out.</p>
-      <a class="connect-mail" href="mailto:aelovra@outlook.com"><div class="mail-dot"></div>aelovra@outlook.com</a>
+      <a class="connect-mail" href="/cdn-cgi/l/email-protection#8eefebe2e1f8fcefcee1fbfae2e1e1e5a0ede1e3"><div class="mail-dot"></div><span class="__cf_email__" data-cfemail="2e4f4b4241585c4f6e415b5a42414145004d4143">[email&#160;protected]</span></a>
     </div>
     <div class="sl">
       <a class="sl-item" href="https://github.com/Aelovra" target="_blank"><div><div class="sl-name">GitHub</div><div class="sl-handle">github.com/Aelovra</div></div><div class="sl-arr">↗</div></a>
+      <a class="sl-item" href="https://x.com/aelovra" target="_blank"><div><div class="sl-name">X / Twitter</div><div class="sl-handle">x.com/aelovra</div></div><div class="sl-arr">↗</div></a>
       <a class="sl-item" href="https://youtube.com/@Aelovra" target="_blank"><div><div class="sl-name">YouTube</div><div class="sl-handle">@Aelovra</div></div><div class="sl-arr">↗</div></a>
       <a class="sl-item" href="https://instagram.com/aelovra.studio" target="_blank"><div><div class="sl-name">Instagram</div><div class="sl-handle">aelovra.studio</div></div><div class="sl-arr">↗</div></a>
       <a class="sl-item" href="https://patreon.com/Aelovra" target="_blank"><div><div class="sl-name">Patreon</div><div class="sl-handle">patreon.com/Aelovra</div></div><div class="sl-arr">↗</div></a>
@@ -489,18 +577,15 @@ footer{padding:2rem var(--pad);border-top:1px solid var(--g2);background:var(--g
   <div class="fr">Built with intention.</div>
 </footer>
 
-<script>
-// CURSOR — desktop only
-const cdot=document.getElementById('cdot'),cring=document.getElementById('cring');
-if(window.matchMedia('(pointer:fine)').matches){
-  let rx=0,ry=0,mx=innerWidth/2,my=innerHeight/2;
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cdot.style.left=mx+'px';cdot.style.top=my+'px';});
-  (function rl(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cring.style.left=rx+'px';cring.style.top=ry+'px';requestAnimationFrame(rl);})();
-  document.querySelectorAll('a,button,.pill,.sl-item,.stat,.app-row,.patreon-strip').forEach(el=>{
-    el.addEventListener('mouseenter',()=>cring.classList.add('big'));
-    el.addEventListener('mouseleave',()=>cring.classList.remove('big'));
-  });
-}
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Mobile detection
+const isMobile=window.matchMedia('(max-width:768px)').matches;
+
+// SCROLL REVEAL
+const revealObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+},{threshold:0.15});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>revealObs.observe(el));
 
 // 3D FACTORY
 function make3D(id,setupFn){
@@ -540,6 +625,26 @@ function mkObjs(scene,defs){
 }
 // Mobile: reduce shape count
 const isMobile=window.matchMedia('(max-width:768px)').matches;
+
+// STATS PARTICLES
+make3D('c-stats',(scene,camera,renderer)=>{
+  renderer.setClearColor(0x060608,1);
+  camera.position.set(0,0,5);mkLights(scene);
+  // Subtle floating shapes peeking from corners
+  const defs=[
+    [new THREE.Mesh(new THREE.OctahedronGeometry(.6,0),MAT.wireOrange()),[-5,1,-2],[.005,.007,.003,1,.2,1.0]],
+    [new THREE.Mesh(new THREE.IcosahedronGeometry(.4,0),MAT.glow()),[5.5,.5,-1],[.008,.01,.006,.5,.25,1.2]],
+    [new THREE.Mesh(new THREE.OctahedronGeometry(.35,0),MAT.glow()),[-4.5,-1,-1],[.01,.008,.007,-1,.3,0.9]],
+    [new THREE.Mesh(new THREE.IcosahedronGeometry(.5,1),MAT.wireOrange()),[5,-1.5,-2],[.004,.006,.003,-1.5,.18,.8]],
+  ];
+  const objs=mkObjs(scene,isMobile?defs.slice(0,2):defs);
+  const pts=mkPts(scene,isMobile?60:140,18,.035,.28);
+  let t=0;
+  (function loop(){requestAnimationFrame(loop);t+=.01;
+    objs.forEach(o=>{o.m.rotation.x+=o.rx;o.m.rotation.y+=o.ry;o.m.rotation.z+=o.rz;if(o.fa>0)o.m.position.y=o.fy+Math.sin(t*o.fs)*o.fa;});
+    pts.rotation.y+=.0003;renderer.render(scene,camera);
+  })();
+});
 
 // HERO
 make3D('c-hero',(scene,camera,renderer)=>{
@@ -656,11 +761,4 @@ make3D('c-connect',(scene,camera,renderer)=>{
   let hx=0,hy=0,t=0;
   document.addEventListener('mousemove',e=>{hx=(e.clientX/innerWidth-.5)*2;hy=-(e.clientY/innerHeight-.5)*2;});
   (function loop(){requestAnimationFrame(loop);t+=.01;
-    objs.forEach(o=>{o.m.rotation.x+=o.rx;o.m.rotation.y+=o.ry;o.m.rotation.z+=o.rz;if(o.fa>0)o.m.position.y=o.fy+Math.sin(t*o.fs)*o.fa;});
-    if(!isMobile){camera.position.x+=(hx*.5-camera.position.x)*.03;camera.position.y+=(hy*.35-camera.position.y)*.03;}
-    camera.lookAt(0,0,0);pts.rotation.y+=.0004;renderer.render(scene,camera);
-  })();
-});
-</script>
-</body>
-</html>
+    objs.forEach(o=>{o.m.rotation.x+=o.rx;o.m.rotation.y+=o.ry;o.m.rotation.z+=o.rz;if(o.fa>0)o.m.position.y=o.fy+Math.sin(t*o.fs)*o
