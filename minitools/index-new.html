@@ -1,0 +1,812 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MiniTools — 20+ Dev Tools. One App. Free.</title>
+<meta name="description" content="MiniTools — 20+ developer utilities in one clean desktop app. Free forever. Built by Aelovra Studio.">
+<meta property="og:title" content="MiniTools by Aelovra Studio">
+<meta property="og:description" content="20+ dev tools. 5 themes. Zero bloat. Free forever.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@aelovra">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<link rel="canonical" href="https://aelovra.com/minitools">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0A1410;--bg2:#0d1f17;--bg3:#1a3d28;
+  --w:#F0EEE9;--wm:rgba(240,238,233,.6);--wd:rgba(240,238,233,.25);
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+  --glass:rgba(255,255,255,.04);
+  --pad:clamp(1.25rem,5vw,3rem);
+  --ac:#52b788;--ac2:#40916c;--ac3:#2d6a4f;--ac-rgb:82,183,136;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--w);overflow-x:hidden;}
+@media(pointer:fine){body{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M3 2 L17 10 L10 11 L7 18 Z' fill='%2352b788' stroke='%230A1410' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2,auto;}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:.55rem var(--pad);background:rgba(10,20,16,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);height:48px;}
+.nav-left{display:flex;align-items:center;gap:.75rem;}
+.nav-back{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--wd);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:.3rem;}
+.nav-back:hover{color:var(--ac);}
+.nav-div{width:1px;height:14px;background:var(--border);}
+.nav-logo{display:flex;align-items:center;gap:.45rem;text-decoration:none;}
+.nav-logo-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.12em;color:var(--w);}
+.nav-badge{font-family:'JetBrains Mono',monospace;font-size:.42rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ac);background:rgba(var(--ac-rgb),.1);border:1px solid rgba(var(--ac-rgb),.2);padding:.12rem .4rem;border-radius:2rem;transition:all .5s;}
+.nav-links{display:flex;gap:1.25rem;list-style:none;align-items:center;}
+.nav-links a{font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--wm);text-decoration:none;font-family:'JetBrains Mono',monospace;transition:color .2s;}
+.nav-links a:hover{color:var(--ac);}
+.nav-lh{display:none;}
+@media(min-width:640px){.nav-lh{display:list-item;}}
+.nav-dl{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.38rem .9rem;background:var(--ac);color:#080808;font-weight:700;text-decoration:none;transition:opacity .2s;border-radius:2px;}
+.nav-dl:hover{opacity:.85;}
+
+/* SHARED */
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ac);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;transition:color .5s;}
+.sec-label::after{content:'';width:24px;height:1px;background:rgba(var(--ac-rgb),.3);transition:background .5s;}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,58px);line-height:.92;color:var(--w);}
+.sec-h .out{-webkit-text-stroke:1px rgba(255,255,255,.2);color:transparent;}
+.btn-p{display:inline-flex;align-items:center;gap:.5rem;background:var(--ac);color:#080808;font-family:'JetBrains Mono',monospace;font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;padding:.88rem 1.6rem;text-decoration:none;font-weight:700;transition:opacity .2s,transform .15s;border-radius:2px;}
+.btn-p:hover{opacity:.88;transform:translateY(-2px);}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--wm);font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:.84rem 1.4rem;text-decoration:none;border:1px solid var(--border2);transition:all .2s;border-radius:2px;}
+.btn-ghost:hover{border-color:var(--ac);color:var(--ac);}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* HERO */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;padding-top:48px;}
+.hero-bg{position:absolute;inset:0;z-index:0;}
+.hero-bg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:64px 64px;}
+.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(var(--ac-rgb),.1) 0%,transparent 60%);transition:background .6s;}
+/* Floating MT logo */
+
+.hero-content{position:relative;z-index:2;padding:0 var(--pad) clamp(2.5rem,6vh,4rem);display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.5rem;}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ac);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center;gap:.65rem;transition:color .5s;}
+.hero-eyebrow::before{content:'';width:22px;height:1px;background:var(--ac);flex-shrink:0;transition:background .5s;}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,12vw,140px);line-height:.86;letter-spacing:.01em;text-align:center;width:100%;}
+.hero-h1 .l1{display:block;color:var(--w);}
+.hero-h1 .l2{display:block;color:var(--ac);transition:color .5s;}
+.hero-h1 .l3{display:block;-webkit-text-stroke:1.5px rgba(255,255,255,.2);color:transparent;position:relative;display:inline-block;}
+.hero-h1 .l3::after{content:'AMPLIFIED.';position:absolute;left:0;top:0;-webkit-text-stroke:0;color:var(--ac);clip-path:inset(0 100% 0 0);animation:ampreveal 1.6s cubic-bezier(.77,0,.18,1) .8s forwards;transition:color .5s;white-space:nowrap;}
+@keyframes ampreveal{to{clip-path:inset(0 0% 0 0);}}
+.hero-right{display:flex;flex-direction:column;align-items:center;gap:1.25rem;}
+
+.hero-desc{font-size:.88rem;color:var(--wm);line-height:1.85;font-weight:300;max-width:480px;text-align:center;}
+.hero-desc em{color:var(--w);font-style:normal;}
+.hero-btns{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;}
+.hero-scroll{position:absolute;bottom:1.25rem;left:50%;transform:translateX(-50%);z-index:3;display:none;flex-direction:column;align-items:center;gap:.35rem;}
+@media(min-width:768px){.hero-scroll{display:flex;}}
+.hero-scroll span{font-family:'JetBrains Mono',monospace;font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:#2a2a2a;}
+.scroll-bar{width:1px;height:32px;background:linear-gradient(to bottom,var(--ac),transparent);animation:sbar 1.8s ease-in-out infinite;transition:background .5s;}
+@keyframes sbar{0%,100%{opacity:.2;}50%{opacity:1;}}
+
+/* THEME SWITCHER */
+.themes-sec{padding:clamp(3rem,6vh,5rem) var(--pad);border-bottom:1px solid var(--border);}
+.themes-header{display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem;}
+@media(min-width:640px){.themes-header{flex-direction:row;align-items:center;justify-content:space-between;}}
+.themes-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,44px);line-height:.92;color:var(--w);}
+.themes-h span{color:var(--ac);transition:color .5s;}
+.theme-btns{display:flex;flex-wrap:wrap;gap:.6rem;}
+.tbtn{display:flex;align-items:center;gap:.6rem;padding:.6rem 1rem;background:var(--glass);border:1px solid var(--border);cursor:pointer;transition:all .25s;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--wm);border-radius:2px;}
+.tbtn:hover{border-color:var(--border2);color:var(--w);}
+.tbtn.active{border-color:var(--ac);color:var(--ac);background:rgba(var(--ac-rgb),.08);}
+.tbtn-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+
+/* APP PREVIEW */
+.app-preview{border-radius:14px;overflow:hidden;border:1px solid rgba(var(--ac-rgb),.18);background:rgba(var(--ac-rgb),.04);box-shadow:0 32px 80px rgba(0,0,0,.55),0 0 60px rgba(var(--ac-rgb),.06);transition:all .5s;max-width:780px;margin:0 auto;}
+.app-titlebar{background:rgba(0,0,0,.45);padding:.6rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid var(--border);}
+.tb-dot{width:10px;height:10px;border-radius:50%;}
+.tb-dot.r{background:#ff5f57;}.tb-dot.y{background:#febc2e;}.tb-dot.g{background:#28c840;}
+.tb-title{flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.1em;color:var(--wd);}
+.app-body{display:flex;height:360px;}
+.app-sidebar{width:160px;background:rgba(0,0,0,.28);border-right:1px solid var(--border);padding:.7rem .5rem;display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;}
+.app-brand-row{display:flex;align-items:center;gap:.5rem;padding:.35rem .5rem .65rem;border-bottom:1px solid var(--border);margin-bottom:.5rem;}
+.app-brand-name{font-family:'Bebas Neue',sans-serif;font-size:.7rem;letter-spacing:.1em;color:var(--w);}
+.app-brand-sub{font-family:'JetBrains Mono',monospace;font-size:.42rem;color:var(--wd);margin-top:.08rem;}
+.app-sec-lbl{font-family:'JetBrains Mono',monospace;font-size:.45rem;letter-spacing:.18em;text-transform:uppercase;color:var(--wd);padding:.3rem .5rem;margin-top:.4rem;}
+.app-nav{padding:.32rem .5rem;border-radius:3px;font-size:.55rem;color:var(--wm);font-family:'JetBrains Mono',monospace;cursor:pointer;transition:background .15s,color .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.app-nav:hover{background:rgba(255,255,255,.05);color:var(--w);}
+.app-nav.active{background:var(--ac);color:var(--bg);font-weight:700;transition:background .5s;}
+.app-content{flex:1;padding:1rem 1.1rem;overflow:hidden;display:flex;flex-direction:column;gap:.55rem;}
+.app-tool-view{display:none;flex-direction:column;gap:.55rem;height:100%;}
+.app-tool-view.active{display:flex;}
+.app-tool-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.06em;color:var(--ac);transition:color .5s;}
+.app-tool-sub{font-size:.5rem;color:var(--wd);font-family:'JetBrains Mono',monospace;}
+.app-input{background:rgba(0,0,0,.3);border:1px solid rgba(var(--ac-rgb),.25);border-radius:4px;padding:.42rem .65rem;font-size:.53rem;color:var(--ac);font-family:'JetBrains Mono',monospace;width:100%;transition:border-color .5s,color .5s;}
+.app-input.dim{color:var(--wm);border-color:var(--border);}
+.app-btn-row{display:flex;gap:.38rem;}
+.app-btn{border:none;border-radius:3px;padding:.32rem .72rem;font-size:.5rem;font-weight:700;font-family:'JetBrains Mono',monospace;cursor:pointer;background:var(--ac);color:var(--bg);transition:background .5s;}
+.app-btn.flat{background:rgba(255,255,255,.07);color:var(--wm);}
+.app-output{background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:4px;padding:.5rem .65rem;font-family:'JetBrains Mono',monospace;font-size:.5rem;color:var(--wm);line-height:1.6;flex:1;overflow:hidden;}
+.app-output .hi{color:var(--ac);transition:color .5s;}
+.app-tags{display:flex;flex-wrap:wrap;gap:.28rem;margin-top:auto;}
+.app-tag{background:rgba(var(--ac-rgb),.1);color:var(--ac);padding:.18rem .5rem;border-radius:2rem;font-family:'JetBrains Mono',monospace;font-size:.46rem;transition:background .5s,color .5s;}
+.app-grid2{display:grid;grid-template-columns:1fr 1fr;gap:.38rem;}
+
+/* CAROUSEL */
+.carousel-sec{padding:clamp(3rem,6vh,5rem) 0;border-bottom:1px solid var(--border);overflow:hidden;background:rgba(0,0,0,.15);}
+.carousel-header{padding:0 var(--pad) 1.75rem;display:flex;align-items:center;justify-content:space-between;}
+.carousel-track-wrap{overflow:hidden;position:relative;}
+.carousel-track-wrap::before,.carousel-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;}
+.carousel-track-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent);}
+.carousel-track-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent);}
+.carousel-track{display:flex;gap:1rem;padding:0 var(--pad);animation:cscroll 30s linear infinite;width:max-content;}
+.carousel-track:hover{animation-play-state:paused;}
+@keyframes cscroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.c-card{min-width:210px;max-width:210px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:1.35rem 1.2rem;flex-shrink:0;backdrop-filter:blur(12px);transition:border-color .3s;}
+.c-card:hover{border-color:rgba(var(--ac-rgb),.3);}
+.c-card-icon{font-size:1.25rem;margin-bottom:.75rem;display:block;}
+.c-card-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--w);margin-bottom:.4rem;}
+.c-card-desc{font-size:.7rem;color:var(--wm);line-height:1.6;font-weight:300;}
+.c-card-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.7rem;}
+.c-tag{font-family:'JetBrains Mono',monospace;font-size:.44rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--border);color:var(--wd);padding:.12rem .4rem;border-radius:1rem;}
+
+/* EDITIONS */
+.editions{padding:clamp(4rem,8vh,6.5rem) var(--pad);border-bottom:1px solid var(--border);background:rgba(0,0,0,.12);}
+.editions-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);margin-top:3rem;}
+@media(min-width:640px){.editions-grid{grid-template-columns:1fr 1fr;}}
+.edition{background:var(--bg);padding:2.5rem 2rem;position:relative;overflow:hidden;}
+.edition-pro{background:rgba(var(--ac-rgb),.04);border:1px solid rgba(var(--ac-rgb),.18);}
+.edition-pro::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ac);transition:background .5s;}
+.edition-badge{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;padding:.22rem .6rem;display:inline-block;margin-bottom:1.25rem;border-radius:2rem;}
+.badge-lite{background:rgba(255,255,255,.06);color:var(--wm);border:1px solid var(--border);}
+.badge-pro{background:rgba(var(--ac-rgb),.12);color:var(--ac);border:1px solid rgba(var(--ac-rgb),.25);transition:all .5s;}
+.edition-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4.5vw,3.5rem);line-height:1;color:var(--w);margin-bottom:.3rem;}
+.edition-pro .edition-name{color:var(--ac);transition:color .5s;}
+.edition-price{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;color:var(--wm);margin-bottom:1.75rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);}
+.edition-feats{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:2rem;}
+.edition-feats li{font-size:.78rem;color:var(--wm);display:flex;align-items:flex-start;gap:.7rem;line-height:1.5;font-weight:300;}
+.edition-feats li::before{content:'—';color:var(--wd);font-family:'JetBrains Mono',monospace;font-size:.62rem;flex-shrink:0;}
+.edition-feats li.on{color:var(--w);}
+.edition-feats li.on::before{content:'✓';color:var(--ac);transition:color .5s;}
+
+/* DEV CALLOUT */
+.dev-call{padding:clamp(3.5rem,7vh,5.5rem) var(--pad);border-bottom:1px solid var(--border);background:rgba(var(--ac-rgb),.04);position:relative;overflow:hidden;}
+.dev-call::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(var(--ac-rgb),.08) 0%,transparent 60%);transition:background .5s;}
+.dev-call-inner{max-width:800px;margin:0 auto;text-align:center;position:relative;z-index:1;}
+.dev-call-icon{font-size:2.2rem;margin-bottom:1.1rem;display:block;}
+.dev-call-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,58px);line-height:.92;color:var(--w);margin-bottom:1rem;}
+.dev-call-h span{color:var(--ac);transition:color .5s;}
+.dev-call-p{font-size:.86rem;color:var(--wm);line-height:1.85;font-weight:300;margin-bottom:2rem;max-width:540px;margin-left:auto;margin-right:auto;}
+.dev-call-links{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;}
+.dev-link{display:flex;align-items:center;gap:.55rem;padding:.65rem 1.15rem;background:rgba(255,255,255,.04);border:1px solid var(--border2);font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--wm);text-decoration:none;border-radius:2px;transition:all .2s;}
+.dev-link:hover{border-color:var(--ac);color:var(--ac);background:rgba(var(--ac-rgb),.06);}
+
+/* INSTALL */
+.install{padding:clamp(4rem,8vh,6.5rem) var(--pad);border-bottom:1px solid var(--border);}
+.install-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);margin-top:3rem;}
+@media(min-width:640px){.install-grid{grid-template-columns:1fr 1fr;}}
+.install-box{background:rgba(0,0,0,.15);padding:2.25rem 2rem;position:relative;}
+.install-box.mac{border-top:2px solid var(--ac);}
+.install-box.win{border-top:2px solid var(--border2);opacity:.72;}
+.install-plat{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;color:var(--w);margin-bottom:1.25rem;}
+.install-step{display:flex;gap:.85rem;margin-bottom:1rem;align-items:flex-start;}
+.step-n{width:24px;height:24px;border-radius:50%;background:var(--ac);color:var(--bg);font-family:'Bebas Neue',sans-serif;font-size:.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem;transition:background .5s;}
+.step-n.w{background:rgba(255,255,255,.08);color:var(--wm);}
+.step-t{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:.04em;color:var(--w);margin-bottom:.14rem;}
+.step-d{font-size:.72rem;color:var(--wm);line-height:1.65;font-weight:300;}
+.install-warn{margin-top:1.5rem;padding:1.1rem 1.25rem;background:rgba(var(--ac-rgb),.05);border:1px solid rgba(var(--ac-rgb),.15);border-left:2px solid var(--ac);transition:all .5s;}
+.warn-t{font-family:'Bebas Neue',sans-serif;font-size:.92rem;letter-spacing:.04em;color:var(--ac);margin-bottom:.35rem;transition:color .5s;}
+.warn-p{font-size:.7rem;color:var(--wm);line-height:1.7;font-weight:300;}
+
+/* FAQ */
+.faq{padding:clamp(4rem,8vh,6.5rem) var(--pad);border-bottom:1px solid var(--border);background:rgba(0,0,0,.12);}
+.faq-list{display:flex;flex-direction:column;gap:1px;background:var(--border);margin-top:3rem;}
+.faq-item{background:var(--bg);}
+.faq-q{padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .2s;user-select:none;gap:1rem;}
+.faq-q:hover{background:rgba(255,255,255,.03);}
+.faq-qt{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.04em;color:var(--w);}
+.faq-arr{color:var(--ac);font-family:'JetBrains Mono',monospace;font-size:1.1rem;transition:transform .3s,color .5s;flex-shrink:0;}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.faq-a p{padding:0 1.5rem 1.2rem;font-size:.78rem;color:var(--wm);line-height:1.8;font-weight:300;}
+.faq-a a{color:var(--ac);text-decoration:none;transition:color .5s;}
+.faq-item.open .faq-a{max-height:300px;}
+.faq-item.open .faq-arr{transform:rotate(45deg);}
+.faq-item.open .faq-q{background:rgba(var(--ac-rgb),.04);}
+
+/* LEGAL */
+.legal{padding:clamp(2.5rem,5vh,4rem) var(--pad);border-top:1px solid var(--border);background:rgba(0,0,0,.25);}
+.legal-grid{display:grid;grid-template-columns:1fr;gap:2rem;margin-bottom:2.5rem;}
+@media(min-width:640px){.legal-grid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:900px){.legal-grid{grid-template-columns:repeat(3,1fr);}}
+.legal-t{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.06em;color:var(--ac);margin-bottom:.6rem;transition:color .5s;}
+.legal-p{font-size:.68rem;color:var(--wd);line-height:1.75;font-weight:300;}
+.legal-p a{color:var(--wm);text-decoration:none;border-bottom:1px solid var(--border);}
+.legal-p a:hover{color:var(--ac);}
+.legal-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;flex-direction:column;gap:.6rem;align-items:center;text-align:center;}
+@media(min-width:640px){.legal-bottom{flex-direction:row;justify-content:space-between;text-align:left;}}
+.legal-copy{font-family:'JetBrains Mono',monospace;font-size:.48rem;letter-spacing:.1em;color:rgba(255,255,255,.18);text-transform:uppercase;}
+.legal-links{display:flex;gap:1.25rem;flex-wrap:wrap;justify-content:center;}
+.legal-links a{font-family:'JetBrains Mono',monospace;font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.22);text-decoration:none;transition:color .2s;}
+.legal-links a:hover{color:var(--ac);}
+
+/* FOOTER */
+footer{padding:1.75rem var(--pad);border-top:1px solid var(--border);background:rgba(0,0,0,.2);display:flex;flex-direction:column;gap:.65rem;align-items:center;text-align:center;}
+@media(min-width:640px){footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;text-align:left;gap:2rem;}}
+.footer-logo{display:flex;align-items:center;gap:.5rem;}
+.footer-wm{font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.15em;color:rgba(255,255,255,.18);}
+.fc{font-family:'JetBrains Mono',monospace;font-size:.48rem;letter-spacing:.12em;color:rgba(255,255,255,.16);text-transform:uppercase;text-align:center;}
+.fr a{color:rgba(255,255,255,.2);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;transition:color .2s;}
+.fr a:hover{color:var(--ac);}
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav-back,.nav-div{display:none;}
+  .hero-mt-float svg{width:clamp(120px,40vw,200px);height:auto;}
+  .app-sidebar{width:120px;}
+  .app-nav{font-size:.48rem;}
+  .dev-call-links{flex-direction:column;align-items:center;}
+  .dev-link{width:100%;max-width:280px;justify-content:center;}
+}
+@media(max-width:480px){
+  .app-sidebar{display:none;}
+  .app-content{padding:.75rem;}
+  .tbtn-dot{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a class="nav-back" href="/">← Aelovra</a>
+    <div class="nav-div"></div>
+    <a class="nav-logo" href="/minitools/">
+      <svg id="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="28" height="28" style="display:block;flex-shrink:0;border-radius:7px;">
+        <defs>
+          <linearGradient id="nav-mg" x1="0" y1="0" x2="1" y2="1">
+            <stop id="nav-s1" offset="0%" stop-color="#D4F5DD"/>
+            <stop id="nav-s2" offset="40%" stop-color="#52b788"/>
+            <stop id="nav-s3" offset="100%" stop-color="#2d6a4f"/>
+          </linearGradient>
+          <clipPath id="nav-cp"><rect width="512" height="512" rx="112"/></clipPath>
+        </defs>
+        <rect id="nav-bg" width="512" height="512" rx="112" fill="#0A1410"/>
+        <g clip-path="url(#nav-cp)">
+          <path d="M80 360 L80 152 L180 152 L256 280 L332 152 L432 152 L432 360 L380 360 L380 240 L280 400 L232 400 L132 240 L132 360 Z" fill="url(#nav-mg)"/>
+          <rect id="nav-t1" x="96" y="152" width="320" height="52" rx="6" fill="#2d6a4f"/>
+          <rect id="nav-t2" x="230" y="152" width="52" height="208" rx="6" fill="#2d6a4f"/>
+        </g>
+      </svg>
+      <span class="nav-logo-name">MINITOOLS</span>
+      <span class="nav-badge" id="nav-badge">v9 · LITE</span>
+    </a>
+  </div>
+  <ul class="nav-links">
+    <li class="nav-lh"><a href="#themes">Themes</a></li>
+    <li class="nav-lh"><a href="#features">Features</a></li>
+    <li class="nav-lh"><a href="#editions">Editions</a></li>
+    <li class="nav-lh"><a href="#install">Install</a></li>
+    <li class="nav-lh"><a href="#faq">FAQ</a></li>
+    <li><a href="https://github.com/Aelovra/minitools/releases/download/v.9.0.0/MiniTools.-.V.9.app.zip" target="_blank" class="nav-dl">↓ Download</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <canvas id="c-hero" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
+  <div class="hero-content" style="position:relative;z-index:2;">
+    <div class="hero-eyebrow">Aelovra Studio · 2026 · v9.0 · macOS</div>
+    <h1 class="hero-h1">
+      <span class="l1">MINITOOLS</span>
+      <span class="l2" id="hero-l2">YOUR WORKFLOW,</span>
+      <span class="l3">AMPLIFIED.</span>
+    </h1>
+    <div class="hero-right">
+      <p class="hero-desc"><em>20+ dev utilities</em> in one clean desktop app. Offline, instant, no telemetry. Five themes. Lite is free forever.</p>
+      <div class="hero-btns">
+        <a href="https://github.com/Aelovra/minitools/releases/download/v.9.0.0/MiniTools.-.V.9.app.zip" target="_blank" class="btn-p">↓ Download for macOS</a>
+        <a href="#editions" class="btn-ghost">Editions →</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll" style="z-index:3;"><div class="scroll-bar"></div><span>scroll</span></div>
+</section>
+
+<!-- THEME SWITCHER -->
+<section class="themes-sec" id="themes">
+  <div class="themes-header">
+    <div>
+      <div class="sec-label">Live Theme Engine</div>
+      <h2 class="themes-h">ACTIVE: <span id="active-theme-name">AELOVRA GREEN</span></h2>
+    </div>
+    <div class="theme-btns">
+      <button class="tbtn active" onclick="setTheme('green',this)"><div class="tbtn-dot" style="background:#52b788;"></div>Aelovra Green</button>
+      <button class="tbtn" onclick="setTheme('dark',this)"><div class="tbtn-dot" style="background:#e94560;"></div>Dark Pro</button>
+      <button class="tbtn" onclick="setTheme('blue',this)"><div class="tbtn-dot" style="background:#4a9eff;"></div>Midnight Blue</button>
+      <button class="tbtn" onclick="setTheme('cyber',this)"><div class="tbtn-dot" style="background:#f0ff44;"></div>Cyberpunk</button>
+      <button class="tbtn" onclick="setTheme('teal',this)"><div class="tbtn-dot" style="background:#00d4d4;"></div>Ocean Teal</button>
+    </div>
+  </div>
+  <!-- App preview -->
+  <div class="app-preview" id="app-preview">
+    <div class="app-titlebar">
+      <div class="tb-dot r"></div><div class="tb-dot y"></div><div class="tb-dot g"></div>
+      <span class="tb-title">MiniTools · v9.0 · Aelovra Studio · LITE</span>
+    </div>
+    <div class="app-body">
+      <div class="app-sidebar">
+        <div class="app-brand-row">
+          <svg id="sb-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20" style="display:block;flex-shrink:0;border-radius:5px;">
+            <defs>
+              <linearGradient id="sb-mg" x1="0" y1="0" x2="1" y2="1">
+                <stop id="sb-s1" offset="0%" stop-color="#D4F5DD"/>
+                <stop id="sb-s2" offset="40%" stop-color="#52b788"/>
+                <stop id="sb-s3" offset="100%" stop-color="#2d6a4f"/>
+              </linearGradient>
+              <clipPath id="sb-cp"><rect width="512" height="512" rx="112"/></clipPath>
+            </defs>
+            <rect id="sb-bg" width="512" height="512" rx="112" fill="#0A1410"/>
+            <g clip-path="url(#sb-cp)">
+              <path d="M80 360 L80 152 L180 152 L256 280 L332 152 L432 152 L432 360 L380 360 L380 240 L280 400 L232 400 L132 240 L132 360 Z" fill="url(#sb-mg)"/>
+              <rect id="sb-t1" x="96" y="152" width="320" height="52" rx="6" fill="#2d6a4f"/>
+              <rect id="sb-t2" x="230" y="152" width="52" height="208" rx="6" fill="#2d6a4f"/>
+            </g>
+          </svg>
+          <div><div class="app-brand-name">MINITOOLS</div><div class="app-brand-sub">Aelovra · v9</div></div>
+        </div>
+        <div class="app-sec-lbl">Dev Tools</div>
+        <div class="app-nav active" id="nav-json" onclick="switchTool('json')">JSON Formatter</div>
+        <div class="app-nav" id="nav-jwt" onclick="switchTool('jwt')">JWT Decoder</div>
+        <div class="app-nav" id="nav-regex" onclick="switchTool('regex')">Regex Tester</div>
+        <div class="app-nav" id="nav-diff" onclick="switchTool('diff')">Diff Viewer</div>
+        <div class="app-sec-lbl">Data Tools</div>
+        <div class="app-nav" id="nav-hash" onclick="switchTool('hash')">Hash Generator</div>
+        <div class="app-nav" id="nav-ts" onclick="switchTool('ts')">Timestamp</div>
+        <div class="app-sec-lbl">Utilities</div>
+        <div class="app-nav" id="nav-color" onclick="switchTool('color')">Color Picker</div>
+        <div class="app-nav" id="nav-pwd" onclick="switchTool('pwd')">Password Gen</div>
+      </div>
+      <div class="app-content">
+        <div class="app-tool-view active" id="tool-json">
+          <div class="app-tool-title">JSON Formatter</div>
+          <div class="app-tool-sub">Paste · Format · Validate · Minify</div>
+          <div class="app-input">{"user":"ada","id":42,"active":true}</div>
+          <div class="app-btn-row"><button class="app-btn">▶ Format</button><button class="app-btn flat">Minify</button><button class="app-btn flat">Copy</button></div>
+          <div class="app-output"><span class="hi">{</span><br>&nbsp;&nbsp;<span class="hi">"user"</span>: "ada",<br>&nbsp;&nbsp;<span class="hi">"id"</span>: 42,<br>&nbsp;&nbsp;<span class="hi">"active"</span>: true<br><span class="hi">}</span></div>
+          <div class="app-tags"><span class="app-tag">Format</span><span class="app-tag">Validate</span><span class="app-tag">Minify</span></div>
+        </div>
+        <div class="app-tool-view" id="tool-jwt">
+          <div class="app-tool-title">JWT Decoder</div>
+          <div class="app-tool-sub">Paste a token to decode and inspect</div>
+          <div class="app-input">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</div>
+          <div class="app-btn-row"><button class="app-btn">▶ Decode</button><button class="app-btn flat">Copy Payload</button></div>
+          <div class="app-output"><span class="hi">Header:</span> {"alg":"HS256","typ":"JWT"}<br><span class="hi">Payload:</span> {"sub":"ada","iat":1700000000}<br><span class="hi">Signature:</span> ✓ Valid structure</div>
+          <div class="app-tags"><span class="app-tag">Decode</span><span class="app-tag">Inspect</span></div>
+        </div>
+        <div class="app-tool-view" id="tool-regex">
+          <div class="app-tool-title">Regex Tester</div>
+          <div class="app-tool-sub">Live pattern matching</div>
+          <div class="app-input">Pattern: ^[\w.]+@[\w.]+\.[a-z]{2,}$</div>
+          <div class="app-input dim">Test: dev@example.com</div>
+          <div class="app-btn-row"><button class="app-btn">▶ Test</button><button class="app-btn flat">Flags</button></div>
+          <div class="app-output"><span class="hi">✓ Match found</span><br>dev@example.com → <span class="hi">PASS</span></div>
+          <div class="app-tags"><span class="app-tag">Live</span><span class="app-tag">Groups</span><span class="app-tag">Flags</span></div>
+        </div>
+        <div class="app-tool-view" id="tool-diff">
+          <div class="app-tool-title">Diff Viewer</div>
+          <div class="app-tool-sub">Side-by-side comparison</div>
+          <div class="app-grid2">
+            <div class="app-output" style="font-size:.46rem;">Original:<br><span class="hi">const x = 1;</span><br>const y = 2;</div>
+            <div class="app-output" style="font-size:.46rem;">Modified:<br><span class="hi">const x = 10;</span><br>const z = 3;</div>
+          </div>
+          <div class="app-tags"><span class="app-tag">2 changes</span><span class="app-tag">Side-by-side</span></div>
+        </div>
+        <div class="app-tool-view" id="tool-hash">
+          <div class="app-tool-title">Hash Generator</div>
+          <div class="app-tool-sub">MD5 · SHA1 · SHA256 · SHA512</div>
+          <div class="app-input">Input: hello world</div>
+          <div class="app-btn-row"><button class="app-btn">▶ Generate</button><button class="app-btn flat">Copy</button></div>
+          <div class="app-output"><span class="hi">MD5:</span> 5eb63bbbe01eeed...<br><span class="hi">SHA256:</span> b94d27b9934d3e0...</div>
+          <div class="app-tags"><span class="app-tag">MD5</span><span class="app-tag">SHA256</span><span class="app-tag">SHA512</span></div>
+        </div>
+        <div class="app-tool-view" id="tool-ts">
+          <div class="app-tool-title">Timestamp</div>
+          <div class="app-tool-sub">Unix ↔ human readable</div>
+          <div class="app-input">Unix: 1700000000</div>
+          <div class="app-btn-row"><button class="app-btn">▶ Convert</button><button class="app-btn flat">Now</button></div>
+          <div class="app-output"><span class="hi">Local:</span> Mon Nov 14 2023 22:13:20<br><span class="hi">UTC:</span> 2023-11-14T22:13:20Z<br><span class="hi">Relative:</span> 2 years ago</div>
+          <div class="app-tags"><span class="app-tag">Unix</span><span class="app-tag">UTC</span><span class="app-tag">Relative</span></div>
+        </div>
+        <div class="app-tool-view" id="tool-color">
+          <div class="app-tool-title">Color Picker</div>
+          <div class="app-tool-sub">HEX · RGB · HSL converter</div>
+          <div class="app-input">HEX: #52b788</div>
+          <div class="app-btn-row"><button class="app-btn">▶ Convert</button><button class="app-btn flat">Copy</button></div>
+          <div class="app-output"><span class="hi">RGB:</span> rgb(82, 183, 136)<br><span class="hi">HSL:</span> hsl(151, 41%, 52%)</div>
+          <div class="app-tags"><span class="app-tag">HEX</span><span class="app-tag">RGB</span><span class="app-tag">HSL</span></div>
+        </div>
+        <div class="app-tool-view" id="tool-pwd">
+          <div class="app-tool-title">Password Gen</div>
+          <div class="app-tool-sub">Secure random passwords</div>
+          <div class="app-input">Length: 24 · Symbols: on</div>
+          <div class="app-btn-row"><button class="app-btn">▶ Generate</button><button class="app-btn flat">Copy</button></div>
+          <div class="app-output"><span class="hi">xK#9mPqL@2wRvN$8jYc&amp;3uFd</span><br>Strength: <span class="hi">Very Strong</span></div>
+          <div class="app-tags"><span class="app-tag">Secure</span><span class="app-tag">Offline</span><span class="app-tag">Bulk</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAROUSEL -->
+<div class="carousel-sec" id="features">
+  <div class="carousel-header">
+    <div class="sec-label">All 20+ Tools</div>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--wd);">Hover to pause</span>
+  </div>
+  <div class="carousel-track-wrap">
+    <div class="carousel-track">
+      <div class="c-card"><span class="c-card-icon">{ }</span><div class="c-card-name">JSON Formatter</div><p class="c-card-desc">Format, validate and minify JSON instantly.</p><div class="c-card-tags"><span class="c-tag">Format</span><span class="c-tag">Validate</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🔑</span><div class="c-card-name">JWT Decoder</div><p class="c-card-desc">Decode and inspect JWT tokens offline.</p><div class="c-card-tags"><span class="c-tag">Decode</span><span class="c-tag">Inspect</span></div></div>
+      <div class="c-card"><span class="c-card-icon">.*</span><div class="c-card-name">Regex Tester</div><p class="c-card-desc">Live regex pattern testing with highlights.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Groups</span></div></div>
+      <div class="c-card"><span class="c-card-icon">#</span><div class="c-card-name">Hash Generator</div><p class="c-card-desc">MD5, SHA1, SHA256, SHA512 instantly.</p><div class="c-card-tags"><span class="c-tag">MD5</span><span class="c-tag">SHA256</span></div></div>
+      <div class="c-card"><span class="c-card-icon">↔</span><div class="c-card-name">Diff Viewer</div><p class="c-card-desc">Side-by-side text comparison with changes.</p><div class="c-card-tags"><span class="c-tag">Compare</span><span class="c-tag">Files</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🗄</span><div class="c-card-name">SQLite Viewer</div><p class="c-card-desc">Browse and query local SQLite databases.</p><div class="c-card-tags"><span class="c-tag">Browse</span><span class="c-tag">Query</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🐍</span><div class="c-card-name">Py → App</div><p class="c-card-desc">Build Python scripts via PyInstaller or Nuitka.</p><div class="c-card-tags"><span class="c-tag">PyInstaller</span><span class="c-tag">Nuitka</span></div></div>
+      <div class="c-card"><span class="c-card-icon">⧉</span><div class="c-card-name">UUID Generator</div><p class="c-card-desc">Bulk UUID v4 generation with export.</p><div class="c-card-tags"><span class="c-tag">Bulk</span><span class="c-tag">Export</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🕐</span><div class="c-card-name">Timestamp</div><p class="c-card-desc">Convert Unix timestamps, any timezone.</p><div class="c-card-tags"><span class="c-tag">Unix</span><span class="c-tag">UTC</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🎨</span><div class="c-card-name">Color Picker</div><p class="c-card-desc">Pick and convert HEX, RGB, HSL, CMYK.</p><div class="c-card-tags"><span class="c-tag">HEX</span><span class="c-tag">RGB</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🔒</span><div class="c-card-name">Password Gen</div><p class="c-card-desc">Secure random passwords, offline.</p><div class="c-card-tags"><span class="c-tag">Secure</span><span class="c-tag">Offline</span></div></div>
+      <div class="c-card"><span class="c-card-icon">📋</span><div class="c-card-name">Logs Viewer</div><p class="c-card-desc">Live log tailing, filtering and export.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Filter</span></div></div>
+      <div class="c-card"><span class="c-card-icon">64</span><div class="c-card-name">Base64</div><p class="c-card-desc">Encode and decode Base64 strings.</p><div class="c-card-tags"><span class="c-tag">Encode</span><span class="c-tag">Decode</span></div></div>
+      <div class="c-card"><span class="c-card-icon">⏱</span><div class="c-card-name">Cron Parser</div><p class="c-card-desc">Cron expressions to plain English.</p><div class="c-card-tags"><span class="c-tag">Parse</span><span class="c-tag">Preview</span></div></div>
+      <div class="c-card"><span class="c-card-icon">📡</span><div class="c-card-name">Server Manager</div><p class="c-card-desc">Manage local dev servers in one place.</p><div class="c-card-tags"><span class="c-tag">Start</span><span class="c-tag">Monitor</span></div></div>
+      <!-- duplicate for seamless loop -->
+      <div class="c-card"><span class="c-card-icon">{ }</span><div class="c-card-name">JSON Formatter</div><p class="c-card-desc">Format, validate and minify JSON instantly.</p><div class="c-card-tags"><span class="c-tag">Format</span><span class="c-tag">Validate</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🔑</span><div class="c-card-name">JWT Decoder</div><p class="c-card-desc">Decode and inspect JWT tokens offline.</p><div class="c-card-tags"><span class="c-tag">Decode</span><span class="c-tag">Inspect</span></div></div>
+      <div class="c-card"><span class="c-card-icon">.*</span><div class="c-card-name">Regex Tester</div><p class="c-card-desc">Live regex pattern testing with highlights.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Groups</span></div></div>
+      <div class="c-card"><span class="c-card-icon">#</span><div class="c-card-name">Hash Generator</div><p class="c-card-desc">MD5, SHA1, SHA256, SHA512 instantly.</p><div class="c-card-tags"><span class="c-tag">MD5</span><span class="c-tag">SHA256</span></div></div>
+      <div class="c-card"><span class="c-card-icon">↔</span><div class="c-card-name">Diff Viewer</div><p class="c-card-desc">Side-by-side text comparison.</p><div class="c-card-tags"><span class="c-tag">Compare</span><span class="c-tag">Files</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🗄</span><div class="c-card-name">SQLite Viewer</div><p class="c-card-desc">Browse local SQLite databases.</p><div class="c-card-tags"><span class="c-tag">Browse</span><span class="c-tag">Query</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🐍</span><div class="c-card-name">Py → App</div><p class="c-card-desc">PyInstaller or Nuitka builds.</p><div class="c-card-tags"><span class="c-tag">PyInstaller</span><span class="c-tag">Nuitka</span></div></div>
+      <div class="c-card"><span class="c-card-icon">⧉</span><div class="c-card-name">UUID Generator</div><p class="c-card-desc">Bulk UUID v4 with export.</p><div class="c-card-tags"><span class="c-tag">Bulk</span><span class="c-tag">Export</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🕐</span><div class="c-card-name">Timestamp</div><p class="c-card-desc">Unix timestamps, any timezone.</p><div class="c-card-tags"><span class="c-tag">Unix</span><span class="c-tag">UTC</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🎨</span><div class="c-card-name">Color Picker</div><p class="c-card-desc">HEX, RGB, HSL, CMYK.</p><div class="c-card-tags"><span class="c-tag">HEX</span><span class="c-tag">RGB</span></div></div>
+      <div class="c-card"><span class="c-card-icon">🔒</span><div class="c-card-name">Password Gen</div><p class="c-card-desc">Secure offline passwords.</p><div class="c-card-tags"><span class="c-tag">Secure</span><span class="c-tag">Offline</span></div></div>
+      <div class="c-card"><span class="c-card-icon">📋</span><div class="c-card-name">Logs Viewer</div><p class="c-card-desc">Live tailing and filtering.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Filter</span></div></div>
+      <div class="c-card"><span class="c-card-icon">64</span><div class="c-card-name">Base64</div><p class="c-card-desc">Encode and decode strings.</p><div class="c-card-tags"><span class="c-tag">Encode</span><span class="c-tag">Decode</span></div></div>
+      <div class="c-card"><span class="c-card-icon">⏱</span><div class="c-card-name">Cron Parser</div><p class="c-card-desc">Cron to plain English.</p><div class="c-card-tags"><span class="c-tag">Parse</span><span class="c-tag">Preview</span></div></div>
+      <div class="c-card"><span class="c-card-icon">📡</span><div class="c-card-name">Server Manager</div><p class="c-card-desc">Manage local dev servers.</p><div class="c-card-tags"><span class="c-tag">Start</span><span class="c-tag">Monitor</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- EDITIONS -->
+<section class="editions" id="editions">
+  <div class="sec-label">Pick Your Tier</div>
+  <h2 class="sec-h">LITE OR <span class="out">PRO.</span></h2>
+  <div class="editions-grid">
+    <div class="edition reveal">
+      <div class="edition-badge badge-lite">Free · Lite</div>
+      <div class="edition-name">LITE</div>
+      <div class="edition-price">Free forever · No card needed</div>
+      <ul class="edition-feats">
+        <li class="on">Full MiniTools v9 desktop app</li>
+        <li class="on">20+ dev utilities — all offline</li>
+        <li class="on">5 themes included</li>
+        <li class="on">macOS · Windows coming</li>
+        <li class="on">Zero telemetry, always</li>
+        <li>PRO-exclusive tools</li>
+        <li>Early access builds</li>
+        <li>Patreon supporter perks</li>
+      </ul>
+      <a href="https://github.com/Aelovra/minitools/releases/download/v.9.0.0/MiniTools.-.V.9.app.zip" target="_blank" class="btn-ghost" style="width:100%;justify-content:center;">↓ Download Free</a>
+    </div>
+    <div class="edition edition-pro reveal">
+      <div class="edition-badge badge-pro" id="pro-badge">Coming Soon · Pro</div>
+      <div class="edition-name">PRO</div>
+      <div class="edition-price">€9.85 · One-time · Yours forever</div>
+      <ul class="edition-feats">
+        <li class="on">Everything in LITE</li>
+        <li class="on">PRO-exclusive tools & features</li>
+        <li class="on">Early access on v1 launch day</li>
+        <li class="on">Patreon supporter perks</li>
+        <li class="on">Support indie dev directly</li>
+        <li class="on">Priority updates</li>
+        <li class="on">macOS + Windows</li>
+        <li class="on">Be part of building Aelovra</li>
+      </ul>
+      <a href="https://patreon.com/Aelovra" target="_blank" class="btn-p" style="width:100%;justify-content:center;">Support on Patreon ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- DEV CALL TO ARMS -->
+<section class="dev-call">
+  <div class="dev-call-inner">
+    <span class="dev-call-icon">⚒</span>
+    <h2 class="dev-call-h">GOT AN IDEA?<br><span id="dev-call-accent">WE'RE LISTENING.</span></h2>
+    <p class="dev-call-p">MiniTools is built for developers, by a developer. Want a tool added, a feature improved, or found a bug? Tell us. Every suggestion gets read. The best ones get shipped.</p>
+    <div class="dev-call-links">
+      <a class="dev-link" href="mailto:aelovra@aelovra.com">✉ aelovra@aelovra.com</a>
+      <a class="dev-link" href="https://x.com/aelovra" target="_blank">𝕏 @aelovra</a>
+      <a class="dev-link" href="https://github.com/Aelovra" target="_blank">⌥ GitHub Issues</a>
+      <a class="dev-link" href="https://instagram.com/aelovra.studio" target="_blank">◎ Instagram</a>
+      <a class="dev-link" href="https://patreon.com/Aelovra" target="_blank">♥ Patreon</a>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section class="install" id="install">
+  <div class="sec-label">Getting Started</div>
+  <h2 class="sec-h">HOW TO <span class="out">INSTALL.</span></h2>
+  <div class="install-grid">
+    <div class="install-box mac reveal">
+      <div class="install-plat">macOS</div>
+      <a href="https://github.com/Aelovra/minitools/releases/download/v.9.0.0/MiniTools.-.V.9.app.zip" target="_blank" class="btn-p" style="margin-bottom:1.5rem;font-size:.58rem;">↓ Download v9 for macOS</a>
+      <div class="install-step"><div class="step-n">1</div><div><div class="step-t">Download & Unzip</div><p class="step-d">Click above — a .zip downloads. Double click to unzip.</p></div></div>
+      <div class="install-step"><div class="step-n">2</div><div><div class="step-t">Drag to Applications</div><p class="step-d">Drag MiniTools.app into your Applications folder.</p></div></div>
+      <div class="install-step"><div class="step-n">3</div><div><div class="step-t">Right Click → Open</div><p class="step-d">Right click the app and click Open — don't double click first.</p></div></div>
+      <div class="install-step"><div class="step-n">4</div><div><div class="step-t">Click Open Anyway</div><p class="step-d">Security popup appears — click Open Anyway. Only needed once.</p></div></div>
+      <div class="install-warn">
+        <div class="warn-t">Why the security warning?</div>
+        <p class="warn-p">MiniTools is 100% safe. Apple requires a $99/yr developer certificate before apps are auto-trusted. We're working on getting certified via Patreon. You only do this once. 🔒</p>
+      </div>
+    </div>
+    <div class="install-box win reveal">
+      <div class="install-plat">Windows</div>
+      <div style="display:inline-flex;font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.05);color:var(--wm);border:1px solid var(--border);padding:.22rem .6rem;border-radius:2rem;margin-bottom:1.25rem;">Coming Soon</div>
+      <div class="install-step"><div class="step-n w">1</div><div><div class="step-t">In Development</div><p class="step-d">Windows .exe build in progress — same zero-bloat app, full parity.</p></div></div>
+      <div class="install-step"><div class="step-n w">2</div><div><div class="step-t">Get Notified</div><p class="step-d">Star us on GitHub to be notified the moment Windows drops.</p></div></div>
+      <div class="install-step"><div class="step-n w">3</div><div><div class="step-t">Support the Build</div><p class="step-d">Patreon supporters help us ship Windows faster and unlock PRO.</p></div></div>
+      <a href="https://patreon.com/Aelovra" target="_blank" class="btn-ghost" style="margin-top:1rem;">Support on Patreon ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="sec-label">Questions</div>
+  <h2 class="sec-h">FAQ.</h2>
+  <div class="faq-list">
+    <div class="faq-item"><div class="faq-q"><span class="faq-qt">Is MiniTools really free?</span><span class="faq-arr">+</span></div><div class="faq-a"><p>Yes. MiniTools Lite is free forever. No trial, no credit card, no expiry. Download it, use it, keep it. PRO is a one-time purchase when it launches.</p></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="faq-qt">Does it collect any data?</span><span class="faq-arr">+</span></div><div class="faq-a"><p>Zero. MiniTools runs 100% offline — no telemetry, no analytics, no network calls. Your data never leaves your machine.</p></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="faq-qt">Why does macOS show a security warning?</span><span class="faq-arr">+</span></div><div class="faq-a"><p>Apple requires a paid developer certificate ($99/yr) before apps are auto-trusted. MiniTools is completely safe — right-click → Open → Open Anyway. You only do this once.</p></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="faq-qt">When is Windows coming?</span><span class="faq-arr">+</span></div><div class="faq-a"><p>In active development. Star us on <a href="https://github.com/Aelovra" target="_blank">GitHub</a> or support on <a href="https://patreon.com/Aelovra" target="_blank">Patreon</a> to get notified the moment it drops.</p></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="faq-qt">What's in MiniTools PRO?</span><span class="faq-arr">+</span></div><div class="faq-a"><p>PRO-exclusive tools, deeper functionality, and features for devs who live in their workflow. €9.85 one-time via Patreon — early access on v1 launch day.</p></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="faq-qt">What's the tech stack?</span><span class="faq-arr">+</span></div><div class="faq-a"><p>Python and PyQt6. Native desktop app — no Electron, no web wrapper. Fast, light, genuinely native.</p></div></div>
+  </div>
+</section>
+
+<!-- LEGAL -->
+<section class="legal">
+  <div class="legal-grid">
+    <div><div class="legal-t">Terms of Use</div><p class="legal-p">MiniTools is provided by Aelovra Studio as-is. By downloading or using the Software you agree to these terms. We reserve the right to update these terms at any time. Continued use constitutes acceptance.</p></div>
+    <div><div class="legal-t">License & Permitted Use</div><p class="legal-p">MiniTools Lite is licensed for personal and professional use at no charge. You may not resell, sublicense, redistribute or reverse-engineer the Software without prior written permission. PRO is licensed to the individual purchaser and is non-transferable.</p></div>
+    <div><div class="legal-t">Privacy & Data</div><p class="legal-p">MiniTools operates entirely offline. We collect no personal data, telemetry or analytics of any kind. No account required. No network connection established during normal use. Your data stays on your device.</p></div>
+    <div><div class="legal-t">Disclaimer of Warranties</div><p class="legal-p">The Software is provided "as is" without warranties of any kind. Aelovra Studio does not warrant that the Software will be error-free or meet your specific requirements. Use is entirely at your own risk.</p></div>
+    <div><div class="legal-t">Limitation of Liability</div><p class="legal-p">To the maximum extent permitted by law, Aelovra Studio shall not be liable for any indirect, incidental or consequential damages arising from your use of the Software.</p></div>
+    <div><div class="legal-t">Intellectual Property</div><p class="legal-p">MiniTools, the MT logo, Aelovra Studio and all associated branding are the exclusive intellectual property of Aelovra Studio. All rights reserved. Contact <a href="mailto:aelovra@aelovra.com">aelovra@aelovra.com</a> for licensing enquiries.</p></div>
+  </div>
+  <div class="legal-bottom">
+    <div class="legal-copy">© 2026 Aelovra Studio. All rights reserved. MiniTools v9.</div>
+    <div class="legal-links">
+      <a href="mailto:aelovra@aelovra.com">Contact</a>
+      <a href="https://patreon.com/Aelovra" target="_blank">Patreon</a>
+      <a href="https://github.com/Aelovra" target="_blank">GitHub</a>
+      <a href="/">Aelovra.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20" style="opacity:.22;display:block;flex-shrink:0;border-radius:5px;">
+      <defs>
+        <linearGradient id="ft-mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D4F5DD"/><stop offset="40%" stop-color="#52b788"/><stop offset="100%" stop-color="#2d6a4f"/></linearGradient>
+        <clipPath id="ft-cp"><rect width="512" height="512" rx="112"/></clipPath>
+      </defs>
+      <rect width="512" height="512" rx="112" fill="#0A1410"/>
+      <g clip-path="url(#ft-cp)">
+        <path d="M80 360 L80 152 L180 152 L256 280 L332 152 L432 152 L432 360 L380 360 L380 240 L280 400 L232 400 L132 240 L132 360 Z" fill="url(#ft-mg)"/>
+        <rect x="96" y="152" width="320" height="52" rx="6" fill="#2d6a4f"/>
+        <rect x="230" y="152" width="52" height="208" rx="6" fill="#2d6a4f"/>
+      </g>
+    </svg>
+    <span class="footer-wm">MINITOOLS</span>
+  </div>
+  <div class="fc">© 2026 Aelovra Studio — MiniTools v9 · aelovra@aelovra.com</div>
+  <div class="fr"><a href="/">← Aelovra.com</a></div>
+</footer>
+
+<script>
+// ── MINITOOLS 3D HERO — PARTICLE MORPH ──
+// Particles morph between sphere → cube → scatter, smooth easing, theme-reactive
+(function(){
+  const canvas=document.getElementById('c-hero');if(!canvas)return;
+  const isMob=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||window.innerWidth<768;
+  const N=isMob?800:2200;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,alpha:true,powerPreference:'low-power'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,isMob?1:1.5));
+  renderer.setClearColor(0x000000,0);
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(55,2,.1,100);
+  cam.position.set(0,0,7);
+  function resize(){const w=canvas.parentElement.clientWidth,h=canvas.parentElement.clientHeight||700;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+  resize();window.addEventListener('resize',resize);
+
+  // ── Generate target position sets ──
+  function mkSphere(n,r=2.6){
+    const a=new Float32Array(n*3);
+    for(let i=0;i<n;i++){
+      const phi=Math.acos(2*Math.random()-1);
+      const theta=Math.random()*Math.PI*2;
+      a[i*3]=r*Math.sin(phi)*Math.cos(theta);
+      a[i*3+1]=r*Math.sin(phi)*Math.sin(theta);
+      a[i*3+2]=r*Math.cos(phi);
+    }return a;
+  }
+  function mkCube(n,s=2.4){
+    const a=new Float32Array(n*3);
+    const h2=s/2;
+    for(let i=0;i<n;i++){
+      const face=Math.floor(Math.random()*6);
+      let x,y,z;
+      const u=(Math.random()-.5)*s,v=(Math.random()-.5)*s;
+      if(face===0){x=h2;y=u;z=v;}else if(face===1){x=-h2;y=u;z=v;}
+      else if(face===2){y=h2;x=u;z=v;}else if(face===3){y=-h2;x=u;z=v;}
+      else if(face===4){z=h2;x=u;y=v;}else{z=-h2;x=u;y=v;}
+      a[i*3]=x;a[i*3+1]=y;a[i*3+2]=z;
+    }return a;
+  }
+  function mkScatter(n,sp=6){
+    const a=new Float32Array(n*3);
+    for(let i=0;i<n;i++){a[i*3]=(Math.random()-.5)*sp;a[i*3+1]=(Math.random()-.5)*sp*.7;a[i*3+2]=(Math.random()-.5)*3-1;}
+    return a;
+  }
+
+  // Three morph targets
+  const targets=[mkSphere(N),mkCube(N),mkScatter(N)];
+  // Current positions (start as sphere)
+  const pos=new Float32Array(targets[0]);
+
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const mat=new THREE.PointsMaterial({color:0x52b788,size:isMob?.055:.042,transparent:true,opacity:.75,sizeAttenuation:true});
+  const pts=new THREE.Points(geo,mat);
+  scene.add(pts);
+  window._morphMat=mat;
+
+  // ── Morph state machine ──
+  // States: 0=hold sphere, 1=morph→cube, 2=hold cube, 3=morph→scatter, 4=hold scatter, 5=morph→sphere
+  let state=0,stateT=0;
+  const HOLD=3.0,MORPH=2.2; // seconds
+  let fromTarget=0,toTarget=1;
+  const morphPos=new Float32Array(N*3); // lerp buffer
+
+  function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;} // ease-in-out cubic
+
+  // Mouse parallax
+  const mx={v:0},my={v:0};
+  if(!isMob)document.addEventListener('mousemove',e=>{mx.v=(e.clientX/innerWidth-.5)*1.5;my.v=-(e.clientY/innerHeight-.5)*1.0;});
+
+  let last=performance.now();
+  (function loop(){
+    requestAnimationFrame(loop);
+    const now=performance.now(),dt=Math.min((now-last)/1000,.05);last=now;
+    stateT+=dt;
+
+    if(state===0||state===2||state===4){
+      // Holding — particles gently breathe in place
+      if(stateT>HOLD){stateT=0;state++;if(state===6)state=0;}
+    } else {
+      // Morphing between targets
+      const prog=Math.min(stateT/MORPH,1);
+      const e=ease(prog);
+      const from=targets[fromTarget],to=targets[toTarget];
+      for(let i=0;i<N*3;i++)pos[i]=from[i]+(to[i]-from[i])*e;
+      geo.attributes.position.needsUpdate=true;
+      if(prog>=1){
+        stateT=0;
+        fromTarget=toTarget;
+        toTarget=(toTarget+1)%3;
+        state++;if(state===6)state=0;
+      }
+    }
+
+    // Slow whole-cloud rotation
+    pts.rotation.y+=.0025;pts.rotation.x+=.0008;
+
+    // Gentle scatter drift when in hold-scatter state
+    if(state===4){
+      const p=geo.attributes.position.array;
+      for(let i=0;i<N;i++){p[i*3+1]+=Math.sin(now*.0005+i*.1)*.0004;}
+      geo.attributes.position.needsUpdate=true;
+    }
+
+    // Mouse parallax
+    if(!isMob){cam.position.x+=(mx.v*.4-cam.position.x)*.04;cam.position.y+=(my.v*.3-cam.position.y)*.04;}
+    cam.lookAt(0,0,0);renderer.render(scene,cam);
+  })();
+})();
+
+// Theme color update
+function update3D(hex){
+  if(window._morphMat)window._morphMat.color.set(new THREE.Color(hex));
+}
+</script>
+
+<script>
+// Scroll reveal
+const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// FAQ
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelector('.faq-q').addEventListener('click',()=>{
+    const open=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!open)item.classList.add('open');
+  });
+});
+
+// Tool switcher
+const tools=['json','jwt','regex','diff','hash','ts','color','pwd'];
+function switchTool(id){
+  tools.forEach(t=>{
+    document.getElementById('tool-'+t).classList.remove('active');
+    document.getElementById('nav-'+t).classList.remove('active');
+  });
+  document.getElementById('tool-'+id).classList.add('active');
+  document.getElementById('nav-'+id).classList.add('active');
+}
+
+// Theme engine
+const themes={
+  green:{name:'AELOVRA GREEN',ac:'#52b788',ac2:'#40916c',ac3:'#2d6a4f',rgb:'82,183,136',bg:'#0A1410',bg2:'#0d1f17',bg3:'#1a3d28',logoA:'#D4F5DD',logoB:'#52b788',logoC:'#2d6a4f',logoBg:'#0A1410',logoT:'#2d6a4f',cur:'52b788',curBg:'0A1410'},
+  dark:{name:'DARK PRO',ac:'#e94560',ac2:'#c73652',ac3:'#a02840',rgb:'233,69,96',bg:'#141414',bg2:'#1e1e1e',bg3:'#252525',logoA:'#ff8099',logoB:'#e94560',logoC:'#c73652',logoBg:'#141414',logoT:'#5c1020',cur:'e94560',curBg:'141414'},
+  blue:{name:'MIDNIGHT BLUE',ac:'#4a9eff',ac2:'#2d8af0',ac3:'#1a6fd4',rgb:'74,158,255',bg:'#080c14',bg2:'#0d1422',bg3:'#121c30',logoA:'#a8d4ff',logoB:'#4a9eff',logoC:'#1a6fd4',logoBg:'#080c14',logoT:'#1a4080',cur:'4a9eff',curBg:'080c14'},
+  cyber:{name:'CYBERPUNK',ac:'#f0ff44',ac2:'#d4e030',ac3:'#b8c420',rgb:'240,255,68',bg:'#080810',bg2:'#0c0c18',bg3:'#101020',logoA:'#ffff88',logoB:'#f0ff44',logoC:'#b8c420',logoBg:'#080810',logoT:'#303010',cur:'f0ff44',curBg:'080810'},
+  teal:{name:'OCEAN TEAL',ac:'#00d4d4',ac2:'#00b0b0',ac3:'#008888',rgb:'0,212,212',bg:'#060e10',bg2:'#091518',bg3:'#0f2228',logoA:'#88ffff',logoB:'#00d4d4',logoC:'#008888',logoBg:'#060e10',logoT:'#004444',cur:'00d4d4',curBg:'060e10'},
+};
+
+function updLogo(ids,t){
+  ids.forEach(([s1,s2,s3,bg,t1,t2])=>{
+    const e=id=>document.getElementById(id);
+    if(e(s1))e(s1).setAttribute('stop-color',t.logoA);
+    if(e(s2))e(s2).setAttribute('stop-color',t.logoB);
+    if(e(s3))e(s3).setAttribute('stop-color',t.logoC);
+    if(e(bg))e(bg).setAttribute('fill',t.logoBg);
+    if(e(t1))e(t1).setAttribute('fill',t.logoT);
+    if(e(t2))e(t2).setAttribute('fill',t.logoT);
+  });
+}
+
+function setTheme(name,btn){
+  const t=themes[name];
+  const r=document.documentElement.style;
+  r.setProperty('--ac',t.ac);r.setProperty('--ac2',t.ac2);r.setProperty('--ac3',t.ac3);
+  r.setProperty('--ac-rgb',t.rgb);
+  r.setProperty('--bg',t.bg);r.setProperty('--bg2',t.bg2);r.setProperty('--bg3',t.bg3);
+  document.getElementById('active-theme-name').textContent=t.name;
+  document.getElementById('hero-l2').style.color=t.ac;
+  document.getElementById('dev-call-accent').style.color=t.ac;
+  // Update hero MT drop shadow color
+    // Update all logos
+  updLogo([
+    ['nav-s1','nav-s2','nav-s3','nav-bg','nav-t1','nav-t2'],
+    ['sb-s1','sb-s2','sb-s3','sb-bg','sb-t1','sb-t2'],
+  ],t);
+  update3D(t.ac);
+  // Force button text to always be dark on colored bg (cyberpunk fix)
+  document.querySelectorAll('.nav-dl,.btn-p').forEach(el=>el.style.color='#0a0a0a');
+  document.body.style.cursor=`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M3 2 L17 10 L10 11 L7 18 Z' fill='%23${t.cur}' stroke='%23${t.curBg}' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2,auto`;
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+if(/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)){document.body.style.cursor='auto';}
+</script>
+</body>
+</html>
