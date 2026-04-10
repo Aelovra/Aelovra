@@ -29,27 +29,9 @@ But that's not all we do. Alongside the serious stuff we build apps that are jus
 
 ### MiniTools Hub — [aelovra.com/minitools](https://aelovra.com/minitools)
 
-> 20+ developer utilities in one native desktop app.
+20+ developer utilities in one native desktop app. JSON, JWT, regex, hashing, diff, UUID, SQLite, cron, passwords, markdown and more — all in one window, instant, no browser tabs.
 
-The toolkit we built because we were fed up opening browser tabs for every little thing. JSON formatting, JWT decoding, regex testing, UUID generation, hashing, diff viewing, SQLite browsing, Base64, cron parsing, password generation, markdown preview — all of it, instant, in one window.
-
-| | |
-|---|---|
-| **Platform** | macOS (Windows in development) |
-| **Stack** | Python · PyQt6 |
-| **Edition** | Lite — free forever |
-| **PRO** | Coming soon — [early access on Patreon](https://patreon.com/Aelovra) |
-
-```
-Tools included in Lite v9:
-Server Manager  ·  Py→App Builder  ·  Diff Viewer  ·  UUID Generator
-Regex Tester  ·  JSON Formatter  ·  SQLite Viewer  ·  CSV Viewer
-Requirements Generator  ·  Hash Generator  ·  Base64  ·  JWT Decoder
-Cron Parser  ·  Clipboard Manager  ·  Color Picker  ·  Password Generator
-Timestamp Converter  ·  Markdown Previewer  ·  Local IP  ·  Logs Viewer
-```
-
-**[→ Download MiniTools Lite (free)](https://github.com/Aelovra/minitools/releases/download/v.9.0.0/MiniTools.-.V.9.app.zip)**
+Free forever on Lite. PRO coming soon — [early access on Patreon](https://patreon.com/Aelovra).
 
 ---
 
