@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="alov_l" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0%"   stop-color="#A8E0B4"/>
+      <stop offset="40%"  stop-color="#52b788"/>
+      <stop offset="100%" stop-color="#2d6a4f"/>
+    </linearGradient>
+    <linearGradient id="alov_r" x1="1" y1="0" x2="0.3" y2="1">
+      <stop offset="0%"   stop-color="#7ecfa4"/>
+      <stop offset="50%"  stop-color="#52b788"/>
+      <stop offset="100%" stop-color="#2d6a4f"/>
+    </linearGradient>
+    <clipPath id="alov_clip">
+      <rect x="0" y="0" width="512" height="512" rx="112"/>
+    </clipPath>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#0A1410"/>
+  <g clip-path="url(#alov_clip)">
+    <path d="M256 60 L90 452 L196 452 L226 378 L256 378 Z" fill="url(#alov_l)"/>
+    <path d="M256 60 L422 452 L316 452 L286 378 L256 378 Z" fill="url(#alov_r)"/>
+    <path d="M256 188 L196 368 L222 368 L256 278 L290 368 L316 368 Z" fill="#0A1410"/>
+  </g>
+</svg>
