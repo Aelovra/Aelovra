@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://aelovra.com/assets/logo.svg" width="72" height="72" alt="Aelovra Studio" />
+<img src="https://raw.githubusercontent.com/Aelovra/Aelovra/main/logo.svg" width="72" height="72" alt="Aelovra Studio" />
 
 # Aelovra Studio
 
@@ -17,9 +17,9 @@
 
 ## What We Build
 
-Aelovra Studio makes native desktop tools for developers who care about their workflow. No Electron. No web wrappers. No dark patterns. Just clean, fast, offline-first software that stays out of your way and does exactly what it says.
+Aelovra Studio makes native desktop tools for developers who care about their workflow. No Electron. No web wrappers. No dark patterns. Just clean, fast software that stays out of your way and does exactly what it says.
 
-Every tool we ship has one goal — replace the five browser tabs you have open right now with one app that opens instantly, works offline, and never asks for your email address.
+Every tool we ship has one goal — replace the five browser tabs you have open right now with one app that opens instantly and just works.
 
 ---
 
@@ -29,7 +29,7 @@ Every tool we ship has one goal — replace the five browser tabs you have open 
 
 > 20+ developer utilities in one native desktop app.
 
-The toolkit we built because we were fed up opening browser tabs for every little thing. JSON formatting, JWT decoding, regex testing, UUID generation, hashing, diff viewing, SQLite browsing, Base64, cron parsing, password generation, markdown preview — all of it, offline, instant, in one window.
+The toolkit we built because we were fed up opening browser tabs for every little thing. JSON formatting, JWT decoding, regex testing, UUID generation, hashing, diff viewing, SQLite browsing, Base64, cron parsing, password generation, markdown preview — all of it, instant, in one window.
 
 | | |
 |---|---|
@@ -53,7 +53,7 @@ Timestamp Converter  ·  Markdown Previewer  ·  Local IP  ·  Logs Viewer
 
 ## Philosophy
 
-**Offline first.** Your data doesn't leave your machine. No telemetry, no analytics, no network requests during normal use. What you paste into a tool stays on your device.
+**Privacy by default.** Your data doesn't leave your machine unless you choose it to. No hidden telemetry, no background requests, no selling your usage patterns to anyone.
 
 **Native, not wrapped.** We build with PyQt6 — a genuine native framework. The apps start fast, feel snappy, and don't consume 400MB of RAM to format a JSON string.
 
@@ -63,14 +63,11 @@ Timestamp Converter  ·  Markdown Previewer  ·  Local IP  ·  Logs Viewer
 
 ---
 
-## Tech Stack
+## Fluent In
 
 ```
-Language     Python 3.11+
-UI           PyQt6
-Packaging    PyInstaller
-Hosting      GitHub Pages · Cloudflare DNS
-Frontend     Vanilla HTML/CSS/JS · Three.js
+Python  ·  PyQt6  ·  JavaScript  ·  HTML  ·  CSS
+Three.js  ·  SQL  ·  Git  ·  CLI tooling  ·  macOS & Windows packaging
 ```
 
 ---
