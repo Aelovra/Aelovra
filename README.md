@@ -21,6 +21,8 @@ Aelovra Studio makes native desktop tools for developers who care about their wo
 
 Every tool we ship has one goal — replace the five browser tabs you have open right now with one app that opens instantly and just works.
 
+But that's not all we do. Alongside the serious stuff we build apps that are just genuinely fun to use — weird ideas, goofy experiments, things that make you smile. Not everything needs to be productive. Sometimes software can just be a good time.
+
 ---
 
 ## Products
@@ -60,6 +62,8 @@ Timestamp Converter  ·  Markdown Previewer  ·  Local IP  ·  Logs Viewer
 **Zero bloat.** If a feature doesn't earn its place it doesn't ship. Every tool is exactly as complex as it needs to be and no more.
 
 **Free as a foundation.** Lite editions are free forever — not free trials, not feature-locked demos. Genuinely free. PRO is for the devs who want more and want to support the work.
+
+**Serious tools. Goofy apps. Both welcome.** Not every release has to solve a problem. Some things we build just because the idea was funny or interesting. Good software doesn't have to take itself too seriously.
 
 ---
 
