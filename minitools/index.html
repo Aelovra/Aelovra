@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +44,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-links a:hover{color:var(--ac);}
 .nav-lh{display:none;}
 @media(min-width:640px){.nav-lh{display:list-item;}}
-.nav-dl{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.38rem .9rem;background:var(--ac);color:#080808;font-weight:700;text-decoration:none;transition:opacity .2s;border-radius:2px;}
+.nav-dl{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.38rem .9rem;background:var(--ac);color:var(--bg);font-weight:700;text-decoration:none;transition:opacity .2s,background .5s,color .5s;border-radius:2px;}
 .nav-dl:hover{opacity:.85;}
 
 /* SHARED */
@@ -142,30 +141,52 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 @keyframes cscroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 .c-card{min-width:210px;max-width:210px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:1.35rem 1.2rem;flex-shrink:0;backdrop-filter:blur(12px);transition:border-color .3s;}
 .c-card:hover{border-color:rgba(var(--ac-rgb),.3);}
-.c-card-icon{font-size:1.25rem;margin-bottom:.75rem;display:block;}
+.c-card-icon{width:28px;height:28px;margin-bottom:.85rem;display:block;flex-shrink:0;}
+.c-card-icon svg{width:28px;height:28px;display:block;}
 .c-card-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--w);margin-bottom:.4rem;}
 .c-card-desc{font-size:.7rem;color:var(--wm);line-height:1.6;font-weight:300;}
 .c-card-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.7rem;}
 .c-tag{font-family:'JetBrains Mono',monospace;font-size:.44rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--border);color:var(--wd);padding:.12rem .4rem;border-radius:1rem;}
 
-/* EDITIONS */
-.editions{padding:clamp(4rem,8vh,6.5rem) var(--pad);border-bottom:1px solid var(--border);background:rgba(0,0,0,.12);}
-.editions-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);margin-top:3rem;}
-@media(min-width:640px){.editions-grid{grid-template-columns:1fr 1fr;}}
-.edition{background:var(--bg);padding:2.5rem 2rem;position:relative;overflow:hidden;}
-.edition-pro{background:rgba(var(--ac-rgb),.04);border:1px solid rgba(var(--ac-rgb),.18);}
-.edition-pro::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ac);transition:background .5s;}
-.edition-badge{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;padding:.22rem .6rem;display:inline-block;margin-bottom:1.25rem;border-radius:2rem;}
-.badge-lite{background:rgba(255,255,255,.06);color:var(--wm);border:1px solid var(--border);}
-.badge-pro{background:rgba(var(--ac-rgb),.12);color:var(--ac);border:1px solid rgba(var(--ac-rgb),.25);transition:all .5s;}
-.edition-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4.5vw,3.5rem);line-height:1;color:var(--w);margin-bottom:.3rem;}
-.edition-pro .edition-name{color:var(--ac);transition:color .5s;}
-.edition-price{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;color:var(--wm);margin-bottom:1.75rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);}
-.edition-feats{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:2rem;}
-.edition-feats li{font-size:.78rem;color:var(--wm);display:flex;align-items:flex-start;gap:.7rem;line-height:1.5;font-weight:300;}
-.edition-feats li::before{content:'—';color:var(--wd);font-family:'JetBrains Mono',monospace;font-size:.62rem;flex-shrink:0;}
-.edition-feats li.on{color:var(--w);}
-.edition-feats li.on::before{content:'✓';color:var(--ac);transition:color .5s;}
+/* LITE EXPLANATION */
+.lite-explain{padding:clamp(4rem,8vh,6.5rem) var(--pad);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.lite-explain::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--ac),transparent);opacity:.4;transition:background .5s;}
+.lite-explain-inner{display:grid;grid-template-columns:1fr;gap:3.5rem;max-width:1100px;}
+@media(min-width:768px){.lite-explain-inner{grid-template-columns:1fr 1fr;gap:5rem;}}
+.lite-explain-body{font-size:.88rem;color:var(--wm);line-height:1.9;font-weight:300;}
+.lite-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.75rem;}
+.lite-pill{font-family:'JetBrains Mono',monospace;font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .7rem;border:1px solid rgba(var(--ac-rgb),.25);color:var(--ac);border-radius:2rem;background:rgba(var(--ac-rgb),.06);transition:background .3s,border-color .3s,transform .2s,color .5s;opacity:0;transform:translateY(8px);animation:pill-in .4s ease forwards;}
+.lite-pill:hover{background:rgba(var(--ac-rgb),.14);border-color:rgba(var(--ac-rgb),.5);transform:translateY(-1px);}
+.lite-pill:nth-child(1){animation-delay:.1s;}
+.lite-pill:nth-child(2){animation-delay:.18s;}
+.lite-pill:nth-child(3){animation-delay:.26s;}
+.lite-pill:nth-child(4){animation-delay:.34s;}
+.lite-pill:nth-child(5){animation-delay:.42s;}
+.lite-pill:nth-child(6){animation-delay:.5s;}
+@keyframes pill-in{to{opacity:1;transform:translateY(0);}}
+.lite-reasons{display:flex;flex-direction:column;gap:0;}
+.lite-reason{display:flex;gap:1.25rem;align-items:flex-start;padding:1.5rem 0;border-bottom:1px solid var(--border);opacity:0;transform:translateX(18px);transition:opacity .55s ease,transform .55s ease,border-color .5s;}
+.lite-reason:first-child{padding-top:0;}
+.lite-reason:last-child{border-bottom:none;}
+.lite-reason.visible{opacity:1;transform:translateX(0);}
+.lite-reason:nth-child(1){transition-delay:.05s;}
+.lite-reason:nth-child(2){transition-delay:.15s;}
+.lite-reason:nth-child(3){transition-delay:.25s;}
+.lite-reason:nth-child(4){transition-delay:.35s;}
+.lite-reason-num{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:rgba(var(--ac-rgb),.15);line-height:1;flex-shrink:0;width:2.4rem;transition:color .4s;letter-spacing:-.02em;}
+.lite-reason:hover .lite-reason-num{color:rgba(var(--ac-rgb),.55);}
+.lite-reason-title{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.04em;color:var(--w);margin-bottom:.35rem;transition:color .5s;}
+.lite-reason-desc{font-size:.72rem;color:var(--wm);line-height:1.7;font-weight:300;}
+
+/* PRO WHISPER WIDGET */
+.pro-whisper{padding:.9rem var(--pad);border-top:1px solid var(--border);background:rgba(var(--ac-rgb),.04);margin-top:3.5rem;margin-left:calc(var(--pad) * -1);margin-right:calc(var(--pad) * -1);margin-bottom:calc(clamp(4rem,8vh,6.5rem) * -1);}
+.pro-whisper-inner{display:flex;align-items:center;gap:1rem;max-width:1100px;margin:0 auto;flex-wrap:wrap;}
+.pro-whisper-icon{font-size:1.1rem;flex-shrink:0;}
+.pro-whisper-text{display:flex;align-items:baseline;gap:.6rem;flex:1;flex-wrap:wrap;}
+.pro-whisper-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.04em;color:var(--w);}
+.pro-whisper-sub{font-family:'JetBrains Mono',monospace;font-size:.48rem;letter-spacing:.08em;color:var(--wd);line-height:1.6;}
+.pro-whisper-cta{font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ac);border:1px solid rgba(var(--ac-rgb),.3);padding:.32rem .8rem;border-radius:2px;text-decoration:none;white-space:nowrap;transition:all .2s;flex-shrink:0;}
+.pro-whisper-cta:hover{background:rgba(var(--ac-rgb),.08);border-color:var(--ac);}
 
 /* DEV CALLOUT */
 .dev-call{padding:clamp(3.5rem,7vh,5.5rem) var(--pad);border-bottom:1px solid var(--border);background:rgba(var(--ac-rgb),.04);position:relative;overflow:hidden;}
@@ -286,7 +307,7 @@ footer{padding:1.75rem var(--pad);border-top:1px solid var(--border);background:
     <li class="nav-lh"><a href="#editions">Editions</a></li>
     <li class="nav-lh"><a href="#install">Install</a></li>
     <li class="nav-lh"><a href="#faq">FAQ</a></li>
-    <li><a href="https://github.com/Aelovra/minitools/releases/download/v.9.0.0/MiniTools.-.V.9.app.zip" target="_blank" class="nav-dl">↓ Download</a></li>
+    <li><a href="https://github.com/Aelovra/Aelovra/releases/download/v.9.0.0/MiniTools.LITE.app.zip" target="_blank" class="nav-dl">↓ Download</a></li>
   </ul>
 </nav>
 
@@ -295,16 +316,16 @@ footer{padding:1.75rem var(--pad);border-top:1px solid var(--border);background:
   <div class="hero-bg"></div>
   <canvas id="c-hero" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;"></canvas>
   <div class="hero-content" style="position:relative;z-index:2;">
-    <div class="hero-eyebrow">Aelovra Studio · 2026 · v9.0 · macOS</div>
+    <div class="hero-eyebrow">Built by a dev · For devs · 2026 · Free</div>
     <h1 class="hero-h1">
       <span class="l1">MINITOOLS</span>
       <span class="l2" id="hero-l2">YOUR WORKFLOW,</span>
       <span class="l3">AMPLIFIED.</span>
     </h1>
     <div class="hero-right">
-      <p class="hero-desc"><em>20+ dev utilities</em> in one clean desktop app. Offline, instant, no telemetry. Five themes. Lite is free forever.</p>
+      <p class="hero-desc"><em>20+ dev tools</em> in one clean app. Stop alt-tabbing to five different sites. Stop copy-pasting into random browser tabs. Just open MiniTools and get it done. Offline. Instant. Free.</p>
       <div class="hero-btns">
-        <a href="https://github.com/Aelovra/minitools/releases/download/v.9.0.0/MiniTools.-.V.9.app.zip" target="_blank" class="btn-p">↓ Download for macOS</a>
+        <a href="https://github.com/Aelovra/Aelovra/releases/download/v.9.0.0/MiniTools.LITE.app.zip" target="_blank" class="btn-p">↓ Download for macOS</a>
         <a href="#editions" class="btn-ghost">Editions →</a>
       </div>
     </div>
@@ -387,9 +408,9 @@ footer{padding:1.75rem var(--pad);border-top:1px solid var(--border);background:
           <div class="app-tool-title">Regex Tester</div>
           <div class="app-tool-sub">Live pattern matching</div>
           <div class="app-input">Pattern: ^[\w.]+@[\w.]+\.[a-z]{2,}$</div>
-          <div class="app-input dim">Test: dev@example.com</div>
+          <div class="app-input dim">Test: ada@aelovra.com</div>
           <div class="app-btn-row"><button class="app-btn">▶ Test</button><button class="app-btn flat">Flags</button></div>
-          <div class="app-output"><span class="hi">✓ Match found</span><br>dev@example.com → <span class="hi">PASS</span></div>
+          <div class="app-output"><span class="hi">✓ Match found</span><br>ada@aelovra.com → <span class="hi">PASS</span></div>
           <div class="app-tags"><span class="app-tag">Live</span><span class="app-tag">Groups</span><span class="app-tag">Flags</span></div>
         </div>
         <div class="app-tool-view" id="tool-diff">
@@ -438,6 +459,71 @@ footer{padding:1.75rem var(--pad);border-top:1px solid var(--border);background:
   </div>
 </section>
 
+<!-- WHAT IS MINITOOLS LITE -->
+<section class="lite-explain" id="editions">
+  <div class="lite-explain-inner">
+    <div class="lite-explain-left reveal">
+      <div class="sec-label">MiniTools Lite</div>
+      <h2 class="sec-h">THE TOOLKIT YOU<br><span class="out">ACTUALLY NEED.</span></h2>
+      <p class="lite-explain-body">You're in the middle of a build. You need to decode a JWT, format some JSON, check a regex, generate a UUID, and hash a string. Right now. Without opening five browser tabs, waiting for pages to load, or pasting your data into some random website you don't trust.</p>
+      <p class="lite-explain-body" style="margin-top:1rem;">MiniTools Lite is a native desktop app — 20+ developer tools, always offline, always instant. No account. No telemetry. No nonsense. Just open it and get back to building.</p>
+      <div class="lite-pills">
+        <span class="lite-pill">100% Offline</span>
+        <span class="lite-pill">Zero Telemetry</span>
+        <span class="lite-pill">No Account</span>
+        <span class="lite-pill">Native — Not Electron</span>
+        <span class="lite-pill">Free Forever</span>
+        <span class="lite-pill">macOS · Windows Soon</span>
+      </div>
+      <a href="https://github.com/Aelovra/Aelovra/releases/download/v.9.0.0/MiniTools.LITE.app.zip" target="_blank" class="btn-p" style="margin-top:2rem;">↓ Download Lite Free</a>
+    </div>
+    <div class="lite-explain-right reveal">
+      <div class="lite-reasons">
+        <div class="lite-reason">
+          <div class="lite-reason-num">01</div>
+          <div>
+            <div class="lite-reason-title">Stop trusting random websites with your data</div>
+            <div class="lite-reason-desc">Your JWT tokens, hashes, and database files never leave your machine. MiniTools runs entirely offline — no requests, no logs, no exposure.</div>
+          </div>
+        </div>
+        <div class="lite-reason">
+          <div class="lite-reason-num">02</div>
+          <div>
+            <div class="lite-reason-title">Everything in one place, always open</div>
+            <div class="lite-reason-desc">20+ tools in a single window. Switch between JSON formatter, regex tester, diff viewer and more in one click — no browser, no loading, no friction.</div>
+          </div>
+        </div>
+        <div class="lite-reason">
+          <div class="lite-reason-num">03</div>
+          <div>
+            <div class="lite-reason-title">Built by a developer who was fed up</div>
+            <div class="lite-reason-desc">Every tool was added because it was needed daily. No bloat, no dark patterns, no upsell popups every 5 minutes. Just the tools, working perfectly.</div>
+          </div>
+        </div>
+        <div class="lite-reason">
+          <div class="lite-reason-num">04</div>
+          <div>
+            <div class="lite-reason-title">Five themes. Yours to customise.</div>
+            <div class="lite-reason-desc">Aelovra Green, Dark Pro, Midnight Blue, Cyberpunk, Ocean Teal — switch the whole app theme live. Because your tools should match your vibe.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRO WHISPER — sits at bottom of Lite section -->
+  <div class="pro-whisper" id="pro-anchor">
+    <div class="pro-whisper-inner">
+      <span class="pro-whisper-icon">🤫</span>
+      <div class="pro-whisper-text">
+        <span class="pro-whisper-title">Shhh..... something PRO is coming!</span>
+        <span class="pro-whisper-sub">See behind the scenes &amp; development on Patreon. Early members get a guaranteed discount — locked in forever.</span>
+      </div>
+      <a href="https://patreon.com/Aelovra" target="_blank" class="pro-whisper-cta">Become an early member ↗</a>
+    </div>
+  </div>
+</section>
+
 <!-- CAROUSEL -->
 <div class="carousel-sec" id="features">
   <div class="carousel-header">
@@ -446,89 +532,49 @@ footer{padding:1.75rem var(--pad);border-top:1px solid var(--border);background:
   </div>
   <div class="carousel-track-wrap">
     <div class="carousel-track">
-      <div class="c-card"><span class="c-card-icon">{ }</span><div class="c-card-name">JSON Formatter</div><p class="c-card-desc">Format, validate and minify JSON instantly.</p><div class="c-card-tags"><span class="c-tag">Format</span><span class="c-tag">Validate</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🔑</span><div class="c-card-name">JWT Decoder</div><p class="c-card-desc">Decode and inspect JWT tokens offline.</p><div class="c-card-tags"><span class="c-tag">Decode</span><span class="c-tag">Inspect</span></div></div>
-      <div class="c-card"><span class="c-card-icon">.*</span><div class="c-card-name">Regex Tester</div><p class="c-card-desc">Live regex pattern testing with highlights.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Groups</span></div></div>
-      <div class="c-card"><span class="c-card-icon">#</span><div class="c-card-name">Hash Generator</div><p class="c-card-desc">MD5, SHA1, SHA256, SHA512 instantly.</p><div class="c-card-tags"><span class="c-tag">MD5</span><span class="c-tag">SHA256</span></div></div>
-      <div class="c-card"><span class="c-card-icon">↔</span><div class="c-card-name">Diff Viewer</div><p class="c-card-desc">Side-by-side text comparison with changes.</p><div class="c-card-tags"><span class="c-tag">Compare</span><span class="c-tag">Files</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🗄</span><div class="c-card-name">SQLite Viewer</div><p class="c-card-desc">Browse and query local SQLite databases.</p><div class="c-card-tags"><span class="c-tag">Browse</span><span class="c-tag">Query</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🐍</span><div class="c-card-name">Py → App</div><p class="c-card-desc">Build Python scripts via PyInstaller or Nuitka.</p><div class="c-card-tags"><span class="c-tag">PyInstaller</span><span class="c-tag">Nuitka</span></div></div>
-      <div class="c-card"><span class="c-card-icon">⧉</span><div class="c-card-name">UUID Generator</div><p class="c-card-desc">Bulk UUID v4 generation with export.</p><div class="c-card-tags"><span class="c-tag">Bulk</span><span class="c-tag">Export</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🕐</span><div class="c-card-name">Timestamp</div><p class="c-card-desc">Convert Unix timestamps, any timezone.</p><div class="c-card-tags"><span class="c-tag">Unix</span><span class="c-tag">UTC</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🎨</span><div class="c-card-name">Color Picker</div><p class="c-card-desc">Pick and convert HEX, RGB, HSL, CMYK.</p><div class="c-card-tags"><span class="c-tag">HEX</span><span class="c-tag">RGB</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🔒</span><div class="c-card-name">Password Gen</div><p class="c-card-desc">Secure random passwords, offline.</p><div class="c-card-tags"><span class="c-tag">Secure</span><span class="c-tag">Offline</span></div></div>
-      <div class="c-card"><span class="c-card-icon">📋</span><div class="c-card-name">Logs Viewer</div><p class="c-card-desc">Live log tailing, filtering and export.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Filter</span></div></div>
-      <div class="c-card"><span class="c-card-icon">64</span><div class="c-card-name">Base64</div><p class="c-card-desc">Encode and decode Base64 strings.</p><div class="c-card-tags"><span class="c-tag">Encode</span><span class="c-tag">Decode</span></div></div>
-      <div class="c-card"><span class="c-card-icon">⏱</span><div class="c-card-name">Cron Parser</div><p class="c-card-desc">Cron expressions to plain English.</p><div class="c-card-tags"><span class="c-tag">Parse</span><span class="c-tag">Preview</span></div></div>
-      <div class="c-card"><span class="c-card-icon">📡</span><div class="c-card-name">Server Manager</div><p class="c-card-desc">Manage local dev servers in one place.</p><div class="c-card-tags"><span class="c-tag">Start</span><span class="c-tag">Monitor</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 10 3 14 7 18"/><polyline points="21 10 25 14 21 18"/><line x1="15" y1="5" x2="13" y2="23"/></svg></span><div class="c-card-name">JSON Formatter</div><p class="c-card-desc">Paste messy JSON, get it clean instantly. Format, validate, minify — done.</p><div class="c-card-tags"><span class="c-tag">Format</span><span class="c-tag">Validate</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="22" height="14" rx="2"/><path d="M9 11V8a5 5 0 0110 0v3"/><line x1="14" y1="17" x2="14" y2="19"/><circle cx="14" cy="16" r="1" fill="var(--ac)"/></svg></span><div class="c-card-name">JWT Decoder</div><p class="c-card-desc">Drop in a token, see exactly what's inside. No secret needed.</p><div class="c-card-tags"><span class="c-tag">Decode</span><span class="c-tag">Inspect</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><circle cx="11" cy="11" r="3"/><line x1="16" y1="16" x2="24" y2="24"/></svg></span><div class="c-card-name">Regex Tester</div><p class="c-card-desc">Write a pattern, see live matches highlighted as you type.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Groups</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="8" x2="23" y2="8"/><line x1="5" y1="14" x2="23" y2="14"/><line x1="8" y1="4" x2="6" y2="24"/><line x1="15" y1="4" x2="13" y2="24"/></svg></span><div class="c-card-name">Hash Generator</div><p class="c-card-desc">MD5, SHA1, SHA256, SHA512 from text or files — instantly.</p><div class="c-card-tags"><span class="c-tag">MD5</span><span class="c-tag">SHA256</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="7" x2="13" y2="7"/><line x1="5" y1="11" x2="13" y2="11"/><line x1="5" y1="15" x2="11" y2="15"/><line x1="15" y1="7" x2="23" y2="7"/><line x1="15" y1="11" x2="23" y2="11"/><line x1="17" y1="15" x2="23" y2="15"/><line x1="14" y1="4" x2="14" y2="24"/></svg></span><div class="c-card-name">Diff Viewer</div><p class="c-card-desc">Side-by-side comparison. Every addition and deletion, crystal clear.</p><div class="c-card-tags"><span class="c-tag">Compare</span><span class="c-tag">Files</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="14" cy="7" rx="10" ry="3"/><path d="M4 7v7c0 1.66 4.48 3 10 3s10-1.34 10-3V7"/><path d="M4 14v7c0 1.66 4.48 3 10 3s10-1.34 10-3v-7"/></svg></span><div class="c-card-name">SQLite Viewer</div><p class="c-card-desc">Open any .db file, browse tables, run SQL. Zero setup.</p><div class="c-card-tags"><span class="c-tag">Browse</span><span class="c-tag">Query</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="22" height="22" rx="3"/><path d="M9 14l3 3 7-7"/></svg></span><div class="c-card-name">Py → App</div><p class="c-card-desc">Turn any .py script into a standalone app. PyInstaller, built in.</p><div class="c-card-tags"><span class="c-tag">Build</span><span class="c-tag">PyInstaller</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="22" height="10" rx="3"/><line x1="8" y1="14" x2="8.01" y2="14" stroke-width="2.5"/><line x1="14" y1="14" x2="18" y2="14"/><line x1="14" y1="11" x2="18" y2="11"/><line x1="14" y1="17" x2="18" y2="17"/></svg></span><div class="c-card-name">UUID Generator</div><p class="c-card-desc">v1, v4, v5, v7 — bulk generate, copy all, done.</p><div class="c-card-tags"><span class="c-tag">Bulk</span><span class="c-tag">Export</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="22" height="22" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="3" y1="10" x2="25" y2="10"/><line x1="14" y1="15" x2="14" y2="19"/><line x1="12" y1="17" x2="16" y2="17"/></svg></span><div class="c-card-name">Timestamp</div><p class="c-card-desc">Unix ↔ human date in any timezone. Relative time included.</p><div class="c-card-tags"><span class="c-tag">Unix</span><span class="c-tag">UTC</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="9" r="3"/><circle cx="18" cy="9" r="3"/><circle cx="10" cy="19" r="3"/><circle cx="18" cy="19" r="3"/><path d="M25 24c0-3.87-3.13-7-7-7"/><path d="M3 24c0-3.87 3.13-7 7-7"/></svg></span><div class="c-card-name">Color Picker</div><p class="c-card-desc">HEX, RGB, HSL, CMYK — convert between any format instantly.</p><div class="c-card-tags"><span class="c-tag">HEX</span><span class="c-tag">RGB</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="13" width="18" height="12" rx="2"/><path d="M10 13v-3a4 4 0 018 0v3"/><line x1="14" y1="18" x2="14" y2="20"/><circle cx="14" cy="17.5" r="1" fill="var(--ac)"/></svg></span><div class="c-card-name">Password Gen</div><p class="c-card-desc">Cryptographically secure. Custom length, charset, bulk output.</p><div class="c-card-tags"><span class="c-tag">Secure</span><span class="c-tag">Offline</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l4 4v16a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"/><polyline points="18 4 18 10 24 10"/><line x1="8" y1="14" x2="20" y2="14"/><line x1="8" y1="18" x2="14" y2="18"/></svg></span><div class="c-card-name">Logs Viewer</div><p class="c-card-desc">Live log tailing, filtering and export. Your terminal's smarter sibling.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Filter</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 8 4 4 24 4 24 8"/><line x1="10" y1="24" x2="18" y2="24"/><line x1="14" y1="4" x2="14" y2="24"/></svg></span><div class="c-card-name">Base64</div><p class="c-card-desc">Encode and decode in both directions. URL-safe variant handled too.</p><div class="c-card-tags"><span class="c-tag">Encode</span><span class="c-tag">Decode</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="11"/><polyline points="14 8 14 14 18 17"/></svg></span><div class="c-card-name">Cron Parser</div><p class="c-card-desc">Type a cron expression, get plain English + next 5 run times.</p><div class="c-card-tags"><span class="c-tag">Parse</span><span class="c-tag">Preview</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="24" height="8" rx="2"/><rect x="2" y="17" width="24" height="8" rx="2"/><circle cx="6" cy="9" r="1" fill="var(--ac)"/><circle cx="6" cy="21" r="1" fill="var(--ac)"/></svg></span><div class="c-card-name">Server Manager</div><p class="c-card-desc">Start, stop and monitor local dev servers. Logs streamed live.</p><div class="c-card-tags"><span class="c-tag">Start</span><span class="c-tag">Monitor</span></div></div>
       <!-- duplicate for seamless loop -->
-      <div class="c-card"><span class="c-card-icon">{ }</span><div class="c-card-name">JSON Formatter</div><p class="c-card-desc">Format, validate and minify JSON instantly.</p><div class="c-card-tags"><span class="c-tag">Format</span><span class="c-tag">Validate</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🔑</span><div class="c-card-name">JWT Decoder</div><p class="c-card-desc">Decode and inspect JWT tokens offline.</p><div class="c-card-tags"><span class="c-tag">Decode</span><span class="c-tag">Inspect</span></div></div>
-      <div class="c-card"><span class="c-card-icon">.*</span><div class="c-card-name">Regex Tester</div><p class="c-card-desc">Live regex pattern testing with highlights.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Groups</span></div></div>
-      <div class="c-card"><span class="c-card-icon">#</span><div class="c-card-name">Hash Generator</div><p class="c-card-desc">MD5, SHA1, SHA256, SHA512 instantly.</p><div class="c-card-tags"><span class="c-tag">MD5</span><span class="c-tag">SHA256</span></div></div>
-      <div class="c-card"><span class="c-card-icon">↔</span><div class="c-card-name">Diff Viewer</div><p class="c-card-desc">Side-by-side text comparison.</p><div class="c-card-tags"><span class="c-tag">Compare</span><span class="c-tag">Files</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🗄</span><div class="c-card-name">SQLite Viewer</div><p class="c-card-desc">Browse local SQLite databases.</p><div class="c-card-tags"><span class="c-tag">Browse</span><span class="c-tag">Query</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🐍</span><div class="c-card-name">Py → App</div><p class="c-card-desc">PyInstaller or Nuitka builds.</p><div class="c-card-tags"><span class="c-tag">PyInstaller</span><span class="c-tag">Nuitka</span></div></div>
-      <div class="c-card"><span class="c-card-icon">⧉</span><div class="c-card-name">UUID Generator</div><p class="c-card-desc">Bulk UUID v4 with export.</p><div class="c-card-tags"><span class="c-tag">Bulk</span><span class="c-tag">Export</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🕐</span><div class="c-card-name">Timestamp</div><p class="c-card-desc">Unix timestamps, any timezone.</p><div class="c-card-tags"><span class="c-tag">Unix</span><span class="c-tag">UTC</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🎨</span><div class="c-card-name">Color Picker</div><p class="c-card-desc">HEX, RGB, HSL, CMYK.</p><div class="c-card-tags"><span class="c-tag">HEX</span><span class="c-tag">RGB</span></div></div>
-      <div class="c-card"><span class="c-card-icon">🔒</span><div class="c-card-name">Password Gen</div><p class="c-card-desc">Secure offline passwords.</p><div class="c-card-tags"><span class="c-tag">Secure</span><span class="c-tag">Offline</span></div></div>
-      <div class="c-card"><span class="c-card-icon">📋</span><div class="c-card-name">Logs Viewer</div><p class="c-card-desc">Live tailing and filtering.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Filter</span></div></div>
-      <div class="c-card"><span class="c-card-icon">64</span><div class="c-card-name">Base64</div><p class="c-card-desc">Encode and decode strings.</p><div class="c-card-tags"><span class="c-tag">Encode</span><span class="c-tag">Decode</span></div></div>
-      <div class="c-card"><span class="c-card-icon">⏱</span><div class="c-card-name">Cron Parser</div><p class="c-card-desc">Cron to plain English.</p><div class="c-card-tags"><span class="c-tag">Parse</span><span class="c-tag">Preview</span></div></div>
-      <div class="c-card"><span class="c-card-icon">📡</span><div class="c-card-name">Server Manager</div><p class="c-card-desc">Manage local dev servers.</p><div class="c-card-tags"><span class="c-tag">Start</span><span class="c-tag">Monitor</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 10 3 14 7 18"/><polyline points="21 10 25 14 21 18"/><line x1="15" y1="5" x2="13" y2="23"/></svg></span><div class="c-card-name">JSON Formatter</div><p class="c-card-desc">Paste messy JSON, get it clean instantly.</p><div class="c-card-tags"><span class="c-tag">Format</span><span class="c-tag">Validate</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="22" height="14" rx="2"/><path d="M9 11V8a5 5 0 0110 0v3"/><circle cx="14" cy="16" r="1" fill="var(--ac)"/></svg></span><div class="c-card-name">JWT Decoder</div><p class="c-card-desc">Drop in a token, see what's inside.</p><div class="c-card-tags"><span class="c-tag">Decode</span><span class="c-tag">Inspect</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><circle cx="11" cy="11" r="3"/><line x1="16" y1="16" x2="24" y2="24"/></svg></span><div class="c-card-name">Regex Tester</div><p class="c-card-desc">Live matches highlighted as you type.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Groups</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="8" x2="23" y2="8"/><line x1="5" y1="14" x2="23" y2="14"/><line x1="8" y1="4" x2="6" y2="24"/><line x1="15" y1="4" x2="13" y2="24"/></svg></span><div class="c-card-name">Hash Generator</div><p class="c-card-desc">MD5, SHA1, SHA256, SHA512 instantly.</p><div class="c-card-tags"><span class="c-tag">MD5</span><span class="c-tag">SHA256</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="7" x2="13" y2="7"/><line x1="5" y1="11" x2="13" y2="11"/><line x1="15" y1="7" x2="23" y2="7"/><line x1="15" y1="11" x2="23" y2="11"/><line x1="14" y1="4" x2="14" y2="24"/></svg></span><div class="c-card-name">Diff Viewer</div><p class="c-card-desc">Every addition and deletion, crystal clear.</p><div class="c-card-tags"><span class="c-tag">Compare</span><span class="c-tag">Files</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="14" cy="7" rx="10" ry="3"/><path d="M4 7v7c0 1.66 4.48 3 10 3s10-1.34 10-3V7"/><path d="M4 14v7c0 1.66 4.48 3 10 3s10-1.34 10-3v-7"/></svg></span><div class="c-card-name">SQLite Viewer</div><p class="c-card-desc">Browse tables, run SQL. Zero setup.</p><div class="c-card-tags"><span class="c-tag">Browse</span><span class="c-tag">Query</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="22" height="22" rx="3"/><path d="M9 14l3 3 7-7"/></svg></span><div class="c-card-name">Py → App</div><p class="c-card-desc">PyInstaller built right in.</p><div class="c-card-tags"><span class="c-tag">Build</span><span class="c-tag">PyInstaller</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="22" height="10" rx="3"/><line x1="8" y1="14" x2="8.01" y2="14" stroke-width="2.5"/><line x1="14" y1="11" x2="18" y2="11"/><line x1="14" y1="14" x2="18" y2="14"/><line x1="14" y1="17" x2="18" y2="17"/></svg></span><div class="c-card-name">UUID Generator</div><p class="c-card-desc">v1, v4, v5, v7 — bulk generate.</p><div class="c-card-tags"><span class="c-tag">Bulk</span><span class="c-tag">Export</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="22" height="22" rx="2"/><line x1="3" y1="10" x2="25" y2="10"/><line x1="14" y1="15" x2="14" y2="19"/><line x1="12" y1="17" x2="16" y2="17"/></svg></span><div class="c-card-name">Timestamp</div><p class="c-card-desc">Unix ↔ human date, any timezone.</p><div class="c-card-tags"><span class="c-tag">Unix</span><span class="c-tag">UTC</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="9" r="3"/><circle cx="18" cy="9" r="3"/><circle cx="10" cy="19" r="3"/><circle cx="18" cy="19" r="3"/></svg></span><div class="c-card-name">Color Picker</div><p class="c-card-desc">HEX, RGB, HSL, CMYK conversions.</p><div class="c-card-tags"><span class="c-tag">HEX</span><span class="c-tag">RGB</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="13" width="18" height="12" rx="2"/><path d="M10 13v-3a4 4 0 018 0v3"/><circle cx="14" cy="17.5" r="1" fill="var(--ac)"/></svg></span><div class="c-card-name">Password Gen</div><p class="c-card-desc">Cryptographically secure passwords.</p><div class="c-card-tags"><span class="c-tag">Secure</span><span class="c-tag">Offline</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l4 4v16a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"/><line x1="8" y1="14" x2="20" y2="14"/><line x1="8" y1="18" x2="14" y2="18"/></svg></span><div class="c-card-name">Logs Viewer</div><p class="c-card-desc">Live tailing and filtering.</p><div class="c-card-tags"><span class="c-tag">Live</span><span class="c-tag">Filter</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 8 4 4 24 4 24 8"/><line x1="10" y1="24" x2="18" y2="24"/><line x1="14" y1="4" x2="14" y2="24"/></svg></span><div class="c-card-name">Base64</div><p class="c-card-desc">Encode and decode strings.</p><div class="c-card-tags"><span class="c-tag">Encode</span><span class="c-tag">Decode</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="11"/><polyline points="14 8 14 14 18 17"/></svg></span><div class="c-card-name">Cron Parser</div><p class="c-card-desc">Cron to plain English + next runs.</p><div class="c-card-tags"><span class="c-tag">Parse</span><span class="c-tag">Preview</span></div></div>
+      <div class="c-card"><span class="c-card-icon"><svg viewBox="0 0 28 28" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="24" height="8" rx="2"/><rect x="2" y="17" width="24" height="8" rx="2"/><circle cx="6" cy="9" r="1" fill="var(--ac)"/><circle cx="6" cy="21" r="1" fill="var(--ac)"/></svg></span><div class="c-card-name">Server Manager</div><p class="c-card-desc">Start, stop, monitor dev servers.</p><div class="c-card-tags"><span class="c-tag">Start</span><span class="c-tag">Monitor</span></div></div>
     </div>
   </div>
 </div>
-
-<!-- EDITIONS -->
-<section class="editions" id="editions">
-  <div class="sec-label">Pick Your Tier</div>
-  <h2 class="sec-h">LITE OR <span class="out">PRO.</span></h2>
-  <div class="editions-grid">
-    <div class="edition reveal">
-      <div class="edition-badge badge-lite">Free · Lite</div>
-      <div class="edition-name">LITE</div>
-      <div class="edition-price">Free forever · No card needed</div>
-      <ul class="edition-feats">
-        <li class="on">Full MiniTools v9 desktop app</li>
-        <li class="on">20+ dev utilities — all offline</li>
-        <li class="on">5 themes included</li>
-        <li class="on">macOS · Windows coming</li>
-        <li class="on">Zero telemetry, always</li>
-        <li>PRO-exclusive tools</li>
-        <li>Early access builds</li>
-        <li>Patreon supporter perks</li>
-      </ul>
-      <a href="https://github.com/Aelovra/minitools/releases/download/v.9.0.0/MiniTools.-.V.9.app.zip" target="_blank" class="btn-ghost" style="width:100%;justify-content:center;">↓ Download Free</a>
-    </div>
-    <div class="edition edition-pro reveal">
-      <div class="edition-badge badge-pro" id="pro-badge">Coming Soon · Pro</div>
-      <div class="edition-name">PRO</div>
-      <div class="edition-price">€9.85 · One-time · Yours forever</div>
-      <ul class="edition-feats">
-        <li class="on">Everything in LITE</li>
-        <li class="on">PRO-exclusive tools & features</li>
-        <li class="on">Early access on v1 launch day</li>
-        <li class="on">Patreon supporter perks</li>
-        <li class="on">Support indie dev directly</li>
-        <li class="on">Priority updates</li>
-        <li class="on">macOS + Windows</li>
-        <li class="on">Be part of building Aelovra</li>
-      </ul>
-      <a href="https://patreon.com/Aelovra" target="_blank" class="btn-p" style="width:100%;justify-content:center;">Support on Patreon ↗</a>
-    </div>
-  </div>
-</section>
 
 <!-- DEV CALL TO ARMS -->
 <section class="dev-call">
   <div class="dev-call-inner">
     <span class="dev-call-icon">⚒</span>
-    <h2 class="dev-call-h">GOT AN IDEA?<br><span id="dev-call-accent">WE'RE LISTENING.</span></h2>
-    <p class="dev-call-p">MiniTools is built for developers, by a developer. Want a tool added, a feature improved, or found a bug? Tell us. Every suggestion gets read. The best ones get shipped.</p>
+    <h2 class="dev-call-h">MISSING A TOOL?<br><span id="dev-call-accent">TELL US. WE'LL SHIP IT.</span></h2>
+    <p class="dev-call-p">MiniTools is built for developers, by a developer. If something annoys you, is missing, or could be smarter — say it. Every suggestion gets read. The good ones get built. No Jira ticket needed.</p>
     <div class="dev-call-links">
-      <a class="dev-link" href="mailto:aelovra@aelovra.com">✉ aelovra@aelovra.com</a>
+      <a class="dev-link" href="mailto:aelovra@outlook.com">✉ aelovra@outlook.com</a>
       <a class="dev-link" href="https://x.com/aelovra" target="_blank">𝕏 @aelovra</a>
       <a class="dev-link" href="https://github.com/Aelovra" target="_blank">⌥ GitHub Issues</a>
       <a class="dev-link" href="https://instagram.com/aelovra.studio" target="_blank">◎ Instagram</a>
@@ -544,7 +590,7 @@ footer{padding:1.75rem var(--pad);border-top:1px solid var(--border);background:
   <div class="install-grid">
     <div class="install-box mac reveal">
       <div class="install-plat">macOS</div>
-      <a href="https://github.com/Aelovra/minitools/releases/download/v.9.0.0/MiniTools.-.V.9.app.zip" target="_blank" class="btn-p" style="margin-bottom:1.5rem;font-size:.58rem;">↓ Download v9 for macOS</a>
+      <a href="https://github.com/Aelovra/Aelovra/releases/download/v.9.0.0/MiniTools.LITE.app.zip" target="_blank" class="btn-p" style="margin-bottom:1.5rem;font-size:.58rem;">↓ Download v9 for macOS</a>
       <div class="install-step"><div class="step-n">1</div><div><div class="step-t">Download & Unzip</div><p class="step-d">Click above — a .zip downloads. Double click to unzip.</p></div></div>
       <div class="install-step"><div class="step-n">2</div><div><div class="step-t">Drag to Applications</div><p class="step-d">Drag MiniTools.app into your Applications folder.</p></div></div>
       <div class="install-step"><div class="step-n">3</div><div><div class="step-t">Right Click → Open</div><p class="step-d">Right click the app and click Open — don't double click first.</p></div></div>
@@ -587,12 +633,12 @@ footer{padding:1.75rem var(--pad);border-top:1px solid var(--border);background:
     <div><div class="legal-t">Privacy & Data</div><p class="legal-p">MiniTools operates entirely offline. We collect no personal data, telemetry or analytics of any kind. No account required. No network connection established during normal use. Your data stays on your device.</p></div>
     <div><div class="legal-t">Disclaimer of Warranties</div><p class="legal-p">The Software is provided "as is" without warranties of any kind. Aelovra Studio does not warrant that the Software will be error-free or meet your specific requirements. Use is entirely at your own risk.</p></div>
     <div><div class="legal-t">Limitation of Liability</div><p class="legal-p">To the maximum extent permitted by law, Aelovra Studio shall not be liable for any indirect, incidental or consequential damages arising from your use of the Software.</p></div>
-    <div><div class="legal-t">Intellectual Property</div><p class="legal-p">MiniTools, the MT logo, Aelovra Studio and all associated branding are the exclusive intellectual property of Aelovra Studio. All rights reserved. Contact <a href="mailto:aelovra@aelovra.com">aelovra@aelovra.com</a> for licensing enquiries.</p></div>
+    <div><div class="legal-t">Intellectual Property</div><p class="legal-p">MiniTools, the MT logo, Aelovra Studio and all associated branding are the exclusive intellectual property of Aelovra Studio. All rights reserved. Contact <a href="mailto:aelovra@outlook.com">aelovra@outlook.com</a> for licensing enquiries.</p></div>
   </div>
   <div class="legal-bottom">
     <div class="legal-copy">© 2026 Aelovra Studio. All rights reserved. MiniTools v9.</div>
     <div class="legal-links">
-      <a href="mailto:aelovra@aelovra.com">Contact</a>
+      <a href="mailto:aelovra@outlook.com">Contact</a>
       <a href="https://patreon.com/Aelovra" target="_blank">Patreon</a>
       <a href="https://github.com/Aelovra" target="_blank">GitHub</a>
       <a href="/">Aelovra.com</a>
@@ -605,10 +651,14 @@ footer{padding:1.75rem var(--pad);border-top:1px solid var(--border);background:
   <div class="footer-logo">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20" style="opacity:.22;display:block;flex-shrink:0;border-radius:5px;">
       <defs>
-        <linearGradient id="ft-mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D4F5DD"/><stop offset="40%" stop-color="#52b788"/><stop offset="100%" stop-color="#2d6a4f"/></linearGradient>
+        <linearGradient id="ft-mg" x1="0" y1="0" x2="1" y2="1">
+          <stop id="ft-s1" offset="0%" stop-color="#D4F5DD"/>
+          <stop id="ft-s2" offset="40%" stop-color="#52b788"/>
+          <stop id="ft-s3" offset="100%" stop-color="#2d6a4f"/>
+        </linearGradient>
         <clipPath id="ft-cp"><rect width="512" height="512" rx="112"/></clipPath>
       </defs>
-      <rect width="512" height="512" rx="112" fill="#0A1410"/>
+      <rect id="ft-bg" width="512" height="512" rx="112" fill="#0A1410"/>
       <g clip-path="url(#ft-cp)">
         <path d="M80 360 L80 152 L180 152 L256 280 L332 152 L432 152 L432 360 L380 360 L380 240 L280 400 L232 400 L132 240 L132 360 Z" fill="url(#ft-mg)"/>
         <rect x="96" y="152" width="320" height="52" rx="6" fill="#2d6a4f"/>
@@ -617,7 +667,7 @@ footer{padding:1.75rem var(--pad);border-top:1px solid var(--border);background:
     </svg>
     <span class="footer-wm">MINITOOLS</span>
   </div>
-  <div class="fc">© 2026 Aelovra Studio — MiniTools v9 · aelovra@aelovra.com</div>
+  <div class="fc">© 2026 Aelovra Studio — MiniTools v9 · aelovra@outlook.com</div>
   <div class="fr"><a href="/">← Aelovra.com</a></div>
 </footer>
 
@@ -741,7 +791,7 @@ function update3D(hex){
 <script>
 // Scroll reveal
 const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+document.querySelectorAll('.reveal,.lite-reason').forEach(el=>ro.observe(el));
 
 // FAQ
 document.querySelectorAll('.faq-item').forEach(item=>{
@@ -793,20 +843,17 @@ function setTheme(name,btn){
   document.getElementById('active-theme-name').textContent=t.name;
   document.getElementById('hero-l2').style.color=t.ac;
   document.getElementById('dev-call-accent').style.color=t.ac;
-  // Update hero MT drop shadow color
-    // Update all logos
   updLogo([
     ['nav-s1','nav-s2','nav-s3','nav-bg','nav-t1','nav-t2'],
     ['sb-s1','sb-s2','sb-s3','sb-bg','sb-t1','sb-t2'],
+    ['ft-s1','ft-s2','ft-s3','ft-bg',null,null],
   ],t);
-  update3D(t.ac);
-  // Force button text to always be dark on colored bg (cyberpunk fix)
-  document.querySelectorAll('.nav-dl,.btn-p').forEach(el=>el.style.color='#0a0a0a');
+  // Cursor
   document.body.style.cursor=`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M3 2 L17 10 L10 11 L7 18 Z' fill='%23${t.cur}' stroke='%23${t.curBg}' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2,auto`;
+  update3D(t.ac);
   document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
 }
-if(/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)){document.body.style.cursor='auto';}
 </script>
 </body>
 </html>
