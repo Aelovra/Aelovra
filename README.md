@@ -80,7 +80,7 @@ Follow the build live on [Patreon](https://patreon.com/Aelovra) — early suppor
 | 𝕏 Twitter/X | [@aelovra](https://x.com/aelovra) |
 | ▶ YouTube | [@Aelovra](https://youtube.com/@Aelovra) |
 | ♥ Patreon | [patreon.com/Aelovra](https://patreon.com/Aelovra) |
-| ✉ Email | [aelovra@outlook.com](mailto:aelovra@outlook.com) |
+| ✉ Email | [aelovra@aelovra.com](mailto:aelovra@outlook.com) |
 
 ---
 
