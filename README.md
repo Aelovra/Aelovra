@@ -27,7 +27,7 @@ But that's not all we do. Alongside the serious stuff we build apps that are jus
 
 ## Products
 
-### MiniTools Hub — [aelovra.com/minitools](https://aelovra.com/minitools)
+### MiniTools — [aelovra.com/minitools](https://aelovra.com/minitools)
 
 20+ developer utilities in one native desktop app. JSON, JWT, regex, hashing, diff, UUID, SQLite, cron, passwords, markdown and more — all in one window, instant, no browser tabs.
 
@@ -60,8 +60,8 @@ Three.js  ·  SQL  ·  Git  ·  CLI tooling  ·  macOS & Windows packaging
 
 ## Roadmap
 
-- [x] MiniTools Hub v9 — Lite edition (macOS)
-- [ ] MiniTools Hub — Windows build
+- [x] MiniTools v9 — Lite edition (macOS)
+- [ ] MiniTools — Windows build
 - [ ] MiniTools PRO v1 — enhanced tools + PRO-exclusive utilities
 - [ ] Apple Developer certificate — removes macOS security prompt
 - [ ] Additional standalone tools
@@ -86,7 +86,7 @@ Follow the build live on [Patreon](https://patreon.com/Aelovra) — early suppor
 
 ## License
 
-MiniTools Hub Lite is free for personal and commercial use. Redistribution, resale, and reverse engineering are not permitted. See individual repository licenses for full terms.
+MiniTools Lite is free for personal and commercial use. Redistribution, resale, and reverse engineering are not permitted. See individual repository licenses for full terms.
 
 All branding — the Aelovra name, the Monolith logo, and MiniTools — are the intellectual property of Aelovra Studio. All rights reserved.
 
