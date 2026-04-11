@@ -111,7 +111,7 @@ subject to the exclusive jurisdiction of the courts of that jurisdiction.
 
 For licensing enquiries, permissions, or authorisation requests:
 
-  Email:    aelovra@outlook.com
+  Email:    aelovra@aelovra.com
   Web:      https://aelovra.com
   Patreon:  https://patreon.com/Aelovra
 
